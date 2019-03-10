@@ -6,7 +6,6 @@ import java.util.List;
 
 public class Lotto {
     private List<Integer> numbers;
-    private int amount;
 
     public Lotto(NumberGenerator numberGenerator) {
         this.numbers = numberGenerator.createNumbers();
@@ -29,7 +28,8 @@ public class Lotto {
 
         return amount;
     }
-    private boolean hasNumber(int winningNumber){
+
+    public boolean hasNumber(int winningNumber){
         return numbers.contains(winningNumber);
     }
 }
