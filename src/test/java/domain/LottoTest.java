@@ -3,6 +3,9 @@ package domain;
 import org.junit.Test;
 import util.FixedNumberGenerator;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class LottoTest {
@@ -15,4 +18,16 @@ public class LottoTest {
         assertThat(lotto.getNumbers()).contains(1,2,3,4,5,6);
     }
 
+
+    @Test
+    public void 번호_몇개_일치하는지_확인(){
+        FixedNumberGenerator fixedNumberGenerator = new FixedNumberGenerator();
+        Lotto lotto = new Lotto(fixedNumberGenerator);
+
+        List<Integer> winningNumbers = Arrays.asList(4,5,6,7,8,9);
+
+        int correctAmount=lotto.getCorrectAmount(winningNumbers);
+        assertThat(correctAmount).isEqualTo(3);
+
+    }
 }

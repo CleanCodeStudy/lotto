@@ -9,7 +9,7 @@ public class LottoListTest {
     @Test
     public void 가격을_넣었을때_가격만큼_로또생성() {
         //given
-        long price = 14000;
+        int price = 14000;
         //when
         LottoList lottoList = new LottoList(price);
         //then

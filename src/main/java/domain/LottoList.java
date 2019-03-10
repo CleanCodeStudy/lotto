@@ -28,5 +28,7 @@ public class LottoList {
 
         return lottos;
     }
+
+
 }
 
