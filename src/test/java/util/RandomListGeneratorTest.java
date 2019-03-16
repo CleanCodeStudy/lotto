@@ -1,14 +1,11 @@
 package util;
 
-import domain.Lotto;
-import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
-import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 
 public class RandomListGeneratorTest {
 
