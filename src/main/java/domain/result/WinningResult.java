@@ -6,17 +6,21 @@ import domain.PurchasedLottos;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class PurchasedResult {
+public class WinningResult {
     private List<LottoResult> lottoResults;
     private double yield;
 
-    public PurchasedResult(PurchasedLottos lottos, List<String> winningNumbers) {
-        this.lottoResults = confirmLotto(lottos.getLottos(), convertToBoxedInt(winningNumbers));
+    public WinningResult(PurchasedLottos lottos, List<String> winningNumbers) {
+        this.lottoResults = confirmLottos(lottos.getLottos(), convertToBoxedInt(winningNumbers));
         this.yield = calculateYield(lottos.getPrice());
     }
 
     public double getYield() {
         return yield;
+    }
+
+    public long getResult(Rank rank) {
+        return rank.count(lottoResults);
     }
 
     private double calculateYield(long buyPrice) {
@@ -27,7 +31,7 @@ public class PurchasedResult {
         return price * 100;
     }
 
-    private List<LottoResult> confirmLotto(List<Lotto> lottos, List<Integer> winningNumbers) {
+    private List<LottoResult> confirmLottos(List<Lotto> lottos, List<Integer> winningNumbers) {
         return lottos.stream()
                 .map(lotto -> new LottoResult(lotto, winningNumbers))
                 .collect(Collectors.toList());
@@ -42,9 +46,5 @@ public class PurchasedResult {
                 .mapToInt(Integer::parseInt)
                 .boxed()
                 .collect(Collectors.toList());
-    }
-
-    public long getResult(Rank rank) {
-        return rank.count(lottoResults);
     }
 }

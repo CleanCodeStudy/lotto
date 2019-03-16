@@ -1,5 +1,5 @@
 import domain.PurchasedLottos;
-import domain.result.PurchasedResult;
+import domain.result.WinningResult;
 import util.RandomNumberGenerator;
 import view.InputView;
 import view.ResultView;
@@ -14,7 +14,7 @@ public class LottoController {
         ResultView.printMyLottos(purchasedLottos);
 
         List<String> winningNumbers = InputView.inputWinningNumber(System.in);
-        PurchasedResult purchasedResult = purchasedLottos.confirmLottos(purchasedLottos, winningNumbers);
-        ResultView.printResults(purchasedResult);
+        WinningResult winningResult = purchasedLottos.confirmLottos(purchasedLottos, winningNumbers);
+        ResultView.printResults(winningResult);
     }
 }

@@ -1,6 +1,6 @@
 package domain;
 
-import domain.result.PurchasedResult;
+import domain.result.WinningResult;
 import util.NumberGenerator;
 
 import java.util.ArrayList;
@@ -36,8 +36,8 @@ public class PurchasedLottos {
         return lottos;
     }
 
-    public PurchasedResult confirmLottos(PurchasedLottos purchasedLottos, List<String> inputWinningNumber) {
-        return new PurchasedResult(purchasedLottos,inputWinningNumber);
+    public WinningResult confirmLottos(PurchasedLottos purchasedLottos, List<String> inputWinningNumber) {
+        return new WinningResult(purchasedLottos,inputWinningNumber);
     }
 }
 

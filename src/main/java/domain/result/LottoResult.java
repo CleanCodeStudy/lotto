@@ -10,17 +10,13 @@ public class LottoResult {
 
     public LottoResult(Lotto myLotto, List<Integer> winningNumbers) {
         this.myLotto = myLotto;
-        findCorrectNumber(winningNumbers);
+        confirmLotto(winningNumbers);
     }
 
-    private int findCorrectNumber(List<Integer> winnigNumbers) {
-        int amount = 0;
-
+    private void confirmLotto(List<Integer> winnigNumbers) {
         for (Integer winningNumber : winnigNumbers) {
             confirmNumber(winningNumber);
         }
-
-        return amount;
     }
 
     private void confirmNumber(int winnginNumber) {
