@@ -1,33 +1,25 @@
 package domain;
 
 import org.junit.Test;
-import util.FixedNumberGenerator;
+import util.FlexibleNumberGenerator;
 
-import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class LottoTest {
-
+    private Lotto lotto;
     @Test
-    public void 로또생성(){
-        FixedNumberGenerator fixedNumberGenerator = new FixedNumberGenerator();
-        Lotto lotto = new Lotto(fixedNumberGenerator);
+    public void 고정된_숫자를_넣을시_고정된_숫자를_갖는_로또생성(){
+        FlexibleNumberGenerator flexibleNumberGenerator = new FlexibleNumberGenerator(1);
+        List<Integer> numbers = flexibleNumberGenerator.createNumbers();
 
-        assertThat(lotto.getNumbers()).contains(1,2,3,4,5,6);
+        this.lotto = new Lotto(new FlexibleNumberGenerator(1));
+
+        numbers.forEach(this::assertThatNumber);
     }
 
-
-    @Test
-    public void 번호_몇개_일치하는지_확인(){
-        FixedNumberGenerator fixedNumberGenerator = new FixedNumberGenerator();
-        Lotto lotto = new Lotto(fixedNumberGenerator);
-
-        List<Integer> winningNumbers = Arrays.asList(4,5,6,7,8,9);
-
-        int correctAmount=lotto.getCorrectAmount(winningNumbers);
-        assertThat(correctAmount).isEqualTo(3);
-
+    private void assertThatNumber(int number){
+        assertThat(lotto.hasNumber(number)).isTrue();
     }
 }

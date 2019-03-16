@@ -10,14 +10,15 @@ public class RandomNumberGeneratorTest {
 
     @Test
     public void 난수번호_생성하기(){
+        //given
         RandomNumberGenerator randomNumberGenerator = new RandomNumberGenerator();
+
+        //when
         List<Integer> numbers =  randomNumberGenerator.createNumbers();
 
-        //사이즈검사
+        //then
         assertThat(numbers.size()).isEqualTo(6);
-        //오름차순검사
         assertThat(numbers).isSorted();
-
     }
 
 }
