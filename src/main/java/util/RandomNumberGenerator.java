@@ -14,7 +14,6 @@ public class RandomNumberGenerator implements NumberGenerator {
     @Override
     public List<Integer> createNumbers() {
         List<Integer> numbers = create();
-
         Collections.shuffle(numbers);
 
         return numbers.stream()
@@ -23,8 +22,8 @@ public class RandomNumberGenerator implements NumberGenerator {
                 .collect(Collectors.toList());
     }
 
-    private List<Integer> create(){
-        return IntStream.rangeClosed(LOTTO_START_NUMBER,LOTTO_END_NUMBER)
+    private List<Integer> create() {
+        return IntStream.rangeClosed(LOTTO_START_NUMBER, LOTTO_END_NUMBER)
                 .boxed()
                 .collect(Collectors.toList());
     }

@@ -15,4 +15,14 @@ public class LottoListTest {
         //then
         assertThat(lottoList.getLottos().size()).isEqualTo(14);
     }
+
+    @Test
+    public void 로또_만든거_출력() {
+        //given
+        int price = 14000;
+        //when
+        LottoList lottoList = new LottoList(price);
+        //then
+        lottoList.showList();
+    }
 }
