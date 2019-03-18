@@ -1,12 +1,10 @@
 package util;
 
-import domain.Lotto;
+import model.Lotto;
 import org.junit.Test;
 
-import java.util.List;
-
 import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
 public class FixedListGeneratorImplTest {
 
@@ -16,6 +14,6 @@ public class FixedListGeneratorImplTest {
         FixedListGeneratorImpl fixedListGenerator = new FixedListGeneratorImpl();
         Lotto myLotto = new Lotto(fixedListGenerator.getSixList());
 
-        assertThat(myLotto.getNumbers(),contains(1,2,3,4,5,6));
+        assertThat(myLotto.getNumbers(), contains(1, 2, 3, 4, 5, 6));
     }
 }

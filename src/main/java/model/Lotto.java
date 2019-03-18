@@ -1,4 +1,4 @@
-package domain;
+package model;
 
 import java.util.List;
 
@@ -15,7 +15,6 @@ public class Lotto {
     }
 
     public int getAnswer(List<Integer> correctAnswer) {
-
         return (int) numbers.stream()
                 .filter(correctAnswer::contains)
                 .count();
