@@ -15,10 +15,6 @@ public class LottoResult {
         this.yield = analyzeYield();
     }
 
-    public static float yieldFormula(int nowAmount, int beforeAmount) {
-        return nowAmount / (float) beforeAmount * PERCENTAGE;
-    }
-
     public Map<LottoRank, Integer> getLottoResultAnalysis() {
         return lottoResultAnalysis;
     }
@@ -35,5 +31,8 @@ public class LottoResult {
         return yieldFormula(nowAmount, beforeAmount);
     }
 
+    public static float yieldFormula(int nowAmount, int beforeAmount) {
+        return nowAmount / (float) beforeAmount * PERCENTAGE;
+    }
 
 }
