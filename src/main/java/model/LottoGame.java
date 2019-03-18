@@ -1,22 +1,26 @@
 package model;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class LottoGame {
 
     private List<Lotto> lottos;
-    private HashMap<LottoRank, Integer> resultMap = new HashMap<>();
+    private List<Integer> winNumbers;
 
-    public LottoGame(List<Lotto> lottos) {
+
+    public LottoGame(List<Lotto> lottos, List<Integer> winNumbers) {
         this.lottos = lottos;
+        this.winNumbers = winNumbers;
     }
 
-    public HashMap<LottoRank, Integer> getResult(List<Integer> correctAnswer){
-        for(LottoRank lottoRank : LottoRank.values()){
+    public Map<LottoRank, Integer> makeResult() {
+        Map<LottoRank, Integer> resultMap = new HashMap<>();
+
+        for (LottoRank lottoRank : LottoRank.values()) {
             Integer rankCount = Math.toIntExact(lottos.stream()
-                    .filter(lotto -> lotto.getAnswer(correctAnswer) == lottoRank.getCorrectRank())
+                    .filter(lotto -> lotto.getAnswer(winNumbers) == lottoRank.getCorrectRank())
                     .count());
             resultMap.put(lottoRank, rankCount);
         }

@@ -6,8 +6,8 @@ public enum LottoRank {
     FIRST(6, 2000000000),
     SECOND(5, 1500000),
     THIRD(4, 50000),
-    FOURTH(3, 5000),
-    OUT(0, 0);
+    FOURTH(3, 5000);
+//    OUT(0, 0);
 
     private int correctRank;
     private int price;
@@ -29,6 +29,6 @@ public enum LottoRank {
         return Arrays.stream(LottoRank.values())
                 .filter(rank -> rank.getCorrectRank() == correctRank)
                 .findAny()
-                .orElse(OUT);
+                .get();
     }
 }
