@@ -32,7 +32,7 @@ public class LottoResult {
     }
 
     public static float yieldFormula(int nowAmount, int beforeAmount){
-        return (float) (1 + (nowAmount - beforeAmount) / beforeAmount) * PERCENTAGE;
+        return  (1 - (nowAmount - beforeAmount) / (float)nowAmount) * PERCENTAGE;
     }
 
 

@@ -19,11 +19,13 @@ public class LottoGame {
         Map<LottoRank, Integer> resultMap = new HashMap<>();
 
         for (LottoRank lottoRank : LottoRank.values()) {
-            Integer rankCount = Math.toIntExact(lottos.stream()
-                    .filter(lotto -> lotto.getAnswer(winNumbers) == lottoRank.getCorrectRank())
-                    .count());
+            Integer rankCount = Math.toIntExact(
+                    lottos.stream()
+                            .filter(lotto -> lotto.getAnswer(winNumbers) == lottoRank.getCorrectRank())
+                            .count());
             resultMap.put(lottoRank, rankCount);
         }
+
         return resultMap;
     }
 

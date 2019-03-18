@@ -18,9 +18,9 @@ public class LottoResultTest {
         LottoResult lottoResult = new LottoResult(lottoRankIntegerMap, 3000);
 
         //when
-        float yield = lottoResult.analyzeYield();
+        float yield = lottoResult.getYield();
 
         //then
-        assertEquals(0, Float.compare(LottoResult.yieldFormula(15000, 3000), yield));
+        assertEquals(35.7,LottoResult.yieldFormula(14000,5000),0.1);
     }
 }

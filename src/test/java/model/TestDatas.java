@@ -27,7 +27,6 @@ public class TestDatas {
         expectedMap.put(LottoRank.SECOND, 0);
         expectedMap.put(LottoRank.THIRD, 0);
         expectedMap.put(LottoRank.FOURTH, 3);
-//        expectedMap.put(LottoRank.OUT, 0);
 
         return expectedMap;
     }

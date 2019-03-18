@@ -21,8 +21,9 @@ public class OutputView {
                             .collect(Collectors.joining(",", "[", "]\n")));
                 });
 
-        System.out.println(sb);
         System.out.println(lottos.size() + "개를 구매했습니다.");
+        System.out.println(sb);
+
 
     }
 
@@ -32,13 +33,15 @@ public class OutputView {
 
         Map<LottoRank, Integer> analysis = lottoResult.getLottoResultAnalysis();
 
+        System.out.println();
+        System.out.println("당첨통계\n---------");
         for (LottoRank lottoRank : analysis.keySet()) {
             sb.append(String.format("%d개 일치 (%d원)- %d개\n",
                     lottoRank.getCorrectRank(), lottoRank.getPrice(), analysis.get(lottoRank)));
         }
 
         System.out.println(sb);
-        System.out.println("총 수익률은" + lottoResult.getYield() + "입니다.");
+        System.out.println(String.format("총 수익률은 %.1f 입니다.", lottoResult.getYield()));
 
     }
 
