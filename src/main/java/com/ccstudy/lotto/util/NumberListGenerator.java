@@ -1,4 +1,4 @@
-package util;
+package com.ccstudy.lotto.util;
 
 import java.util.ArrayList;
 import java.util.List;
