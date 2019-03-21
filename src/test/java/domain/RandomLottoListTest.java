@@ -4,16 +4,16 @@ import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class LottoListTest {
+public class RandomLottoListTest {
 
     @Test
     public void 가격을_넣었을때_가격만큼_로또생성() {
         //given
         int price = 14000;
         //when
-        LottoList lottoList = new LottoList(price);
+        RandomLottoList randomLottoList = new RandomLottoList(price);
         //then
-        assertThat(lottoList.getLottos().size()).isEqualTo(14);
+        assertThat(randomLottoList.getLottos().size()).isEqualTo(14);
     }
 
     @Test
@@ -21,8 +21,8 @@ public class LottoListTest {
         //given
         int price = 14000;
         //when
-        LottoList lottoList = new LottoList(price);
+        RandomLottoList randomLottoList = new RandomLottoList(price);
         //then
-        lottoList.showList();
+        randomLottoList.showList();
     }
 }

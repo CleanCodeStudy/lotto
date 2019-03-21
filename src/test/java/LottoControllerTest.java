@@ -1,5 +1,5 @@
 import controller.LottoController;
-import domain.LottoList;
+import domain.RandomLottoList;
 import org.junit.Test;
 import view.InputView;
 
@@ -11,13 +11,13 @@ public class LottoControllerTest {
     @Test
     public void 로또사고_추첨하기() {
         InputView inputView = new InputView(new ByteArrayInputStream("14000".getBytes()));
-        LottoList lottoList = inputView.getLottoList();
+        RandomLottoList randomLottoList = inputView.getLottoList();
 
         inputView = new InputView(new ByteArrayInputStream("1, 2, 3, 4, 5, 6".getBytes()));
         List<Integer> winningNumbers = inputView.getWinningNumbers();
 
         LottoController lottoController = new LottoController();
-        System.out.println(lottoController.lotto(lottoList, winningNumbers));
+        System.out.println(lottoController.lotto(randomLottoList, winningNumbers));
     }
 
 }

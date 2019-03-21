@@ -3,6 +3,7 @@ package dto;
 import domain.FixedLottoList;
 import domain.Lotto;
 import domain.LottoList;
+import domain.RandomLottoList;
 import org.assertj.core.api.MapAssert;
 import org.junit.Test;
 import util.FixedNumberGenerator;
@@ -36,7 +37,7 @@ public class LottoResultDtoTest {
         //[9, 10, 11, 12, 13, 14]   -->1
         //[11, 12, 13, 14, 15, 16]  -->0
 
-        LottoList lottoList = new FixedLottoList(price, lottos);
+        LottoList fixedLottoList = new FixedLottoList(lottos);
         HashMap<Integer, Integer> expect = new HashMap<>();
 
         expect.put(3, 2);
@@ -45,7 +46,7 @@ public class LottoResultDtoTest {
         expect.put(6, 0);
 
         //when
-        LottoResultDto lottoResultDto = new LottoResultDto(lottoList, winningNumber);
+        LottoResultDto lottoResultDto = new LottoResultDto(fixedLottoList, winningNumber);
         //then
         MapAssert mapAssert = new MapAssert(lottoResultDto.getPrizeMap());
         mapAssert.containsAllEntriesOf(expect);
@@ -63,7 +64,7 @@ public class LottoResultDtoTest {
         }
 
         //when
-        FixedLottoList fixedLottoList = new FixedLottoList(price, fixedLottos);
+        FixedLottoList fixedLottoList = new FixedLottoList(fixedLottos);
         LottoResultDto lottoResultDto = new LottoResultDto(fixedLottoList, win1);
 
         //then
@@ -84,7 +85,7 @@ public class LottoResultDtoTest {
         }
 
         //when
-        FixedLottoList fixedLottoList = new FixedLottoList(price, fixedLottos);
+        FixedLottoList fixedLottoList = new FixedLottoList(fixedLottos);
         LottoResultDto lottoResultDto = new LottoResultDto(fixedLottoList, win1);
 
         //then
@@ -95,7 +96,7 @@ public class LottoResultDtoTest {
     public void 결과_출력() {
         //given
         int price = 14000;
-        LottoList lottoList = new LottoList(price);
+        RandomLottoList randomLottoList = new RandomLottoList(price);
         List<Integer> win1 = Arrays.asList(1, 2, 3, 4, 5, 6);
 
         //when
@@ -103,8 +104,8 @@ public class LottoResultDtoTest {
         for (int i = 2; i < 8; i++) {
             fixedLottos.add(new Lotto(new FixedNumberGenerator(i)));
         }
-        LottoResultDto lottoResultDto = new LottoResultDto(lottoList, win1);
-        FixedLottoList fixedLottoList = new FixedLottoList(price, fixedLottos);
+        LottoResultDto lottoResultDto = new LottoResultDto(randomLottoList, win1);
+        FixedLottoList fixedLottoList = new FixedLottoList(fixedLottos);
         LottoResultDto lottoResultDtoFixed = new LottoResultDto(fixedLottoList, win1);
 
         //then

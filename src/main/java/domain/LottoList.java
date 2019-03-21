@@ -6,22 +6,19 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class LottoList {
+public abstract class LottoList {
     private static final int LOTTO_PRICE = 1000;
     private static final int ZERO = 0;
 
-    private List<Lotto> lottos;
+    protected List<Lotto> lottos;
+
+    public <T> LottoList(T t) {
+        if (t != null)
+            this.lottos = buyLotto((Integer) t);
+    }
 
     public List<Lotto> getLottos() {
         return lottos;
-    }
-
-    protected void setLottos(List<Lotto> lottos) {
-        this.lottos = lottos;
-    }
-
-    public LottoList(int price) {
-        this.lottos = buyLotto(price);
     }
 
     private List<Lotto> buyLotto(int price) {
@@ -46,6 +43,4 @@ public class LottoList {
                 .collect(Collectors.joining("\n"));
         System.out.println(list);
     }
-
 }
-

@@ -22,7 +22,7 @@ public class FixedLottoListTest {
             fixedLottos.add(new Lotto(new FixedNumberGenerator(i)));
         }
 
-        FixedLottoList fixedLottoList = new FixedLottoList(price, fixedLottos);
+        LottoList fixedLottoList = new FixedLottoList(fixedLottos);
 
         for (int i = 0; i < fixedLottoList.getLottos().size(); i++) {
             System.out.println(fixedLottoList.getLottos().get(i).getNumbers());

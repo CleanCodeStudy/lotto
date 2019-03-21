@@ -32,10 +32,10 @@ public class LottoResultDto {
         return this.prizeMap;
     }
 
-    private HashMap<Integer, Integer> makeMap(LottoList lottoList) {
+    private HashMap<Integer, Integer> makeMap(LottoList randomLottoList) {
         HashMap<Integer, Integer> map = new HashMap<>();
         IntStream.rangeClosed(THREE, SIX)
-                .forEach(match -> map.put(match, lottoList.findListSizeByMatchAmount(match, winningNumber)));
+                .forEach(match -> map.put(match, randomLottoList.findListSizeByMatchAmount(match, winningNumber)));
         return map;
     }
 
@@ -51,8 +51,8 @@ public class LottoResultDto {
                 .getPrize(entry.getValue());
     }
 
-    private double getRate(LottoList lottoList) {
-        int inputPrice = lottoList.getLottos().size() * DEFAULT_PRICE;
+    private double getRate(LottoList randomLottoList) {
+        int inputPrice = randomLottoList.getLottos().size() * DEFAULT_PRICE;
         return (double) (getPrizeSum() - inputPrice) / inputPrice * PER;
     }
 
