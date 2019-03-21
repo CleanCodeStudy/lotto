@@ -6,13 +6,18 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class LottoResult {
+    public static final int MIN_WIN_COUNT = 3;
     private double yield;
     private List<Lotto> winningLottos;
+    private List<Integer> correctAnswer;
 
     public LottoResult(List<Lotto> lottos,List<Integer> correctAnswer) {
+        this.correctAnswer = correctAnswer;
+
         this.winningLottos = lottos.stream()
-                .filter(lotto -> lotto.isWinNumbers(correctAnswer))
+                .filter(lotto -> lotto.getAnswer(correctAnswer) >= MIN_WIN_COUNT)
                 .collect(Collectors.toList());
+
         this.yield = calculateYield(lottos.size() * LottoGame.LOTTO_PRICE);
     }
 
@@ -35,7 +40,7 @@ public class LottoResult {
         int receivedAmount = 0;
 
         for(Lotto lotto : winningLottos){
-            receivedAmount += ReceivedType.receivedAmount(lotto.getAnswer());
+            receivedAmount += ReceivedType.receivedAmount(lotto.getAnswer(correctAnswer));
         }
 
         return receivedAmount;
@@ -43,7 +48,7 @@ public class LottoResult {
 
     public int getWinningLottoCount(int correctCount){
         return (int)winningLottos.stream()
-                .filter(lotto -> lotto.getAnswer() == correctCount)
+                .filter(lotto -> lotto.getAnswer(correctAnswer) == correctCount)
                 .count();
     }
 

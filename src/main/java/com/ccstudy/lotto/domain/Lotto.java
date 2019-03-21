@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 
 public class Lotto {
     private List<Integer> numbers;
-    private int answer;
 
     public Lotto(List<Integer> numbers) {
         this.numbers = numbers.stream()
@@ -19,15 +18,9 @@ public class Lotto {
         return numbers;
     }
 
-    public int getAnswer() {
-        return answer;
-    }
-
-    public boolean isWinNumbers(List<Integer> correctAnswer){
-        answer = (int)numbers.stream()
+    public int getAnswer(List<Integer> correctAnswer) {
+        return (int)numbers.stream()
                 .filter(correctAnswer::contains)
                 .count();
-
-        return answer > 2;
     }
 }
