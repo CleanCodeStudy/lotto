@@ -28,6 +28,6 @@ public class LottoTest {
     public void 로또번호_출력_테스트() {
         FixedListGeneratorImpl fixedListGenerator = new FixedListGeneratorImpl(0);
         Lotto myLotto = new Lotto(fixedListGenerator.getSixList());
-        assertEquals("[1,2,3,4,5,6]",myLotto.convert());
+        assertEquals(myLotto.getNumbers().toString(),myLotto.convert());
     }
 }

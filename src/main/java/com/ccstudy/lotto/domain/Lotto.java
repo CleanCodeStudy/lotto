@@ -10,7 +10,9 @@ public class Lotto {
     private int answer;
 
     public Lotto(List<Integer> numbers) {
-        this.numbers = numbers;
+        this.numbers = numbers.stream()
+                .sorted()
+                .collect(Collectors.toList());
     }
 
     public List<Integer> getNumbers() {
@@ -27,14 +29,5 @@ public class Lotto {
                 .count();
 
         return answer > 2;
-    }
-
-    public String convert(){
-        return "[" +
-                numbers.stream()
-                        .sorted()
-                .map(Objects::toString)
-                .collect(Collectors.joining(","))
-                + "]";
     }
 }

@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 public class Output {
     public static void printPurchaseLottos(List<Lotto> lottos){
         lottos.stream()
-                .map(Lotto::convert)
+                .map(lotto -> lotto.getNumbers().toString())
                 .forEach(System.out::println);
     }
 
