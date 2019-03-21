@@ -1,12 +1,12 @@
 package view;
 
-import domain.RandomLottoList;
+import domain.LottoList;
 import dto.LottoResultDto;
 
 public class ResultView {
 
-    public void showBuyedList(RandomLottoList randomLottoList) {
-        randomLottoList.showList();
+    public void showBuyedList(LottoList lottoList) {
+        lottoList.showList();
     }
 
     public String getStats(LottoResultDto lottoResultDto) {

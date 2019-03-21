@@ -8,7 +8,7 @@ import java.util.stream.IntStream;
 
 public abstract class LottoList {
     private static final int LOTTO_PRICE = 1000;
-    private static final int ZERO = 0;
+    private static final int LOTTO_MIN_AMOUNT = 0;
 
     protected List<Lotto> lottos;
 
@@ -25,12 +25,12 @@ public abstract class LottoList {
         final int lottoAmount = price / LOTTO_PRICE;
         RandomNumberGenerator randomNumberGenerator = new RandomNumberGenerator();
 
-        return IntStream.range(ZERO, lottoAmount)
+        return IntStream.range(LOTTO_MIN_AMOUNT, lottoAmount)
                 .mapToObj(loop -> new Lotto(randomNumberGenerator))
                 .collect(Collectors.toList());
     }
 
-    public int findListSizeByMatchAmount(int match, List<Integer> winningNumber) {
+    public int getCountByMatchAmount(int match, List<Integer> winningNumber) {
         return (int) this.lottos.stream()
                 .filter(lotto -> lotto.isEqual(match, winningNumber))
                 .count();

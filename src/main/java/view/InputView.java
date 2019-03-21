@@ -1,5 +1,6 @@
 package view;
 
+import domain.LottoList;
 import domain.RandomLottoList;
 
 import java.io.InputStream;
@@ -19,17 +20,17 @@ public class InputView {
         return scanner.nextLine();
     }
 
-    public RandomLottoList getLottoList() {
+    public LottoList getLottoList() {
         System.out.println(
                 "로또 1장의 가격은 1000원이다.\n" +
                         "구입금액을 입력해 주세요.\n");
         int price = Integer.parseInt(inputString());
 
-        RandomLottoList randomLottoList = new RandomLottoList(price);
+        LottoList lottoList = new RandomLottoList(price);
 
-        new ResultView().showBuyedList(randomLottoList);
+        new ResultView().showBuyedList(lottoList);
 
-        return randomLottoList;
+        return lottoList;
     }
 
     public List<Integer> getWinningNumbers() {

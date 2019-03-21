@@ -29,12 +29,12 @@ public class FixedLottoListTest {
         }
 
         //when
-        int one = fixedLottoList.findListSizeByMatchAmount(1, win1);
-        int two = fixedLottoList.findListSizeByMatchAmount(2, win1);
-        int three = fixedLottoList.findListSizeByMatchAmount(3, win1);
-        int four = fixedLottoList.findListSizeByMatchAmount(4, win1);
-        int five = fixedLottoList.findListSizeByMatchAmount(5, win1);
-        int six = fixedLottoList.findListSizeByMatchAmount(6, win1);
+        int one = fixedLottoList.getCountByMatchAmount(1, win1);
+        int two = fixedLottoList.getCountByMatchAmount(2, win1);
+        int three = fixedLottoList.getCountByMatchAmount(3, win1);
+        int four = fixedLottoList.getCountByMatchAmount(4, win1);
+        int five = fixedLottoList.getCountByMatchAmount(5, win1);
+        int six = fixedLottoList.getCountByMatchAmount(6, win1);
 
         //then
         assertThat(one).isEqualTo(1);

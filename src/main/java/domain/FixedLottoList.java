@@ -6,7 +6,7 @@ public class FixedLottoList extends LottoList {
 
     public FixedLottoList(List<Lotto> lottoList) {
         super(null);
-        super.lottos=lottoList;
+        super.lottos = lottoList;
     }
 
 }

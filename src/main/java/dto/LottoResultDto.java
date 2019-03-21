@@ -12,8 +12,8 @@ import java.util.stream.IntStream;
 
 public class LottoResultDto {
 
-    public static final int THREE = 3;
-    public static final int SIX = 6;
+    public static final int LOTTO_MIN_MATCH = 3;
+    public static final int LOTTO_MAX_MATCH = 6;
     public static final int DEFAULT_PRICE = 1000;
     public static final int PER = 100;
     public static final int WIN_NUMBER = 3;
@@ -34,8 +34,8 @@ public class LottoResultDto {
 
     private HashMap<Integer, Integer> makeMap(LottoList randomLottoList) {
         HashMap<Integer, Integer> map = new HashMap<>();
-        IntStream.rangeClosed(THREE, SIX)
-                .forEach(match -> map.put(match, randomLottoList.findListSizeByMatchAmount(match, winningNumber)));
+        IntStream.rangeClosed(LOTTO_MIN_MATCH, LOTTO_MAX_MATCH)
+                .forEach(match -> map.put(match, randomLottoList.getCountByMatchAmount(match, winningNumber)));
         return map;
     }
 

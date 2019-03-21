@@ -1,6 +1,6 @@
 package controller;
 
-import domain.RandomLottoList;
+import domain.LottoList;
 import dto.LottoResultDto;
 import view.ResultView;
 
@@ -8,9 +8,9 @@ import java.util.List;
 
 public class LottoController {
 
-    public String lotto(RandomLottoList randomLottoList, List<Integer> winningNumbers) {
+    public String lotto(LottoList lottoList, List<Integer> winningNumbers) {
 
-        LottoResultDto lottoResultDto = new LottoResultDto(randomLottoList, winningNumbers);
+        LottoResultDto lottoResultDto = new LottoResultDto(lottoList, winningNumbers);
 
         return new ResultView().getStats(lottoResultDto);
     }
