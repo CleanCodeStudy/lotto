@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LottoGame {
+    public static final int LOTTO_PRICE = 1000;
     private List<Lotto> lottos;
 
     public LottoGame(int purchase,NumberListGenerator numberListGenerator) {
@@ -18,7 +19,7 @@ public class LottoGame {
     }
 
     public List<Lotto> createLottos(int purchase, NumberListGenerator numberListGenerator){
-        int lottoCount = purchase/LottoResult.LOTTO_PRICE;
+        int lottoCount = purchase/LOTTO_PRICE;
 
         List<Lotto> lottos = new ArrayList<>();
 

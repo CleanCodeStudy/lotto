@@ -26,13 +26,13 @@ public enum ReceivedType {
 
     public static int receivedAmount(int answerCount){
         return Arrays.stream(ReceivedType.values())
-                .filter(receivedType -> receivedType.findByCount(answerCount))
+                .filter(receivedType -> receivedType.isCorrectCount(answerCount))
                 .findAny()
                 .get()
                 .receivedAmount;
     }
 
-    public boolean findByCount(int answerCount){
+    public boolean isCorrectCount(int answerCount){
         return this.correctCount == answerCount;
     }
 }

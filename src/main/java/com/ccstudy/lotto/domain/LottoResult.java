@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class LottoResult {
-    public static final int LOTTO_PRICE = 1000;
     private double yield;
     private List<Lotto> winningLottos;
 
@@ -14,7 +13,7 @@ public class LottoResult {
         this.winningLottos = lottos.stream()
                 .filter(lotto -> lotto.isWinNumbers(correctAnswer))
                 .collect(Collectors.toList());
-        this.yield = calculateYield(lottos.size() * LOTTO_PRICE);
+        this.yield = calculateYield(lottos.size() * LottoGame.LOTTO_PRICE);
     }
 
     public double getYield(){
