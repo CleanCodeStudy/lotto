@@ -16,7 +16,7 @@ public class InputView {
         this.scanner = new Scanner(inputStream);
     }
 
-    public String inputString() {
+    private String inputString() {
         return scanner.nextLine();
     }
 

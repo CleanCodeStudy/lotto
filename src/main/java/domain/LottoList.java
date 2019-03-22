@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public abstract class LottoList {
+public class LottoList {
     private static final int LOTTO_PRICE = 1000;
     private static final int LOTTO_MIN_AMOUNT = 0;
 
