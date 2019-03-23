@@ -13,7 +13,7 @@ public class RandomListGeneratorTest {
 
     @Test
     public void 임의의_6자리_랜덤_리스트_생성() {
-        RandomListGeneratorImpl randomListGenerator = new RandomListGeneratorImpl();
+        RandomGeneratorImpl randomListGenerator = new RandomGeneratorImpl();
 
         List<Integer> random6 = randomListGenerator.getSixList();
 
