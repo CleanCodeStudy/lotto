@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class RandomListGeneratorImpl implements NumberListGenerator {
+public class RandomGeneratorImpl implements NumberGenerator {
     private List<Integer> lottoRange = IntStream.range(1, 45)
             .mapToObj(Integer::new)
             .collect(Collectors.toList());

@@ -6,7 +6,8 @@ public enum ReceivedType {
     THREE(3,5000),
     FOUR(4,50000),
     FIVE(5,1500000),
-    SIX(6,2000000000);
+    SIX(6, 2000000000),
+    DEFAULT(0, 0);
 
     private int correctCount;
     private int receivedAmount;
@@ -28,7 +29,7 @@ public enum ReceivedType {
         return Arrays.stream(ReceivedType.values())
                 .filter(receivedType -> receivedType.isCorrectCount(answerCount))
                 .findAny()
-                .get()
+                .orElse(DEFAULT)
                 .receivedAmount;
     }
 

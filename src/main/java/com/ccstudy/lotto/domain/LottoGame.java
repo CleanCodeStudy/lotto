@@ -1,7 +1,6 @@
 package com.ccstudy.lotto.domain;
 
-import com.ccstudy.lotto.util.NumberListGenerator;
-import com.ccstudy.lotto.util.RandomListGeneratorImpl;
+import com.ccstudy.lotto.util.NumberGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,21 +9,21 @@ public class LottoGame {
     public static final int LOTTO_PRICE = 1000;
     private List<Lotto> lottos;
 
-    public LottoGame(int purchase,NumberListGenerator numberListGenerator) {
-        this.lottos = createLottos(purchase,numberListGenerator);
+    public LottoGame(int purchase, NumberGenerator numberGenerator) {
+        this.lottos = createLottos(purchase, numberGenerator);
     }
 
     public List<Lotto> getLottos() {
         return lottos;
     }
 
-    public List<Lotto> createLottos(int purchase, NumberListGenerator numberListGenerator){
+    public List<Lotto> createLottos(int purchase, NumberGenerator numberGenerator) {
         int lottoCount = purchase/LOTTO_PRICE;
 
         List<Lotto> lottos = new ArrayList<>();
 
         for(int i = 0 ; i < lottoCount ; i++){
-            lottos.add(new Lotto(numberListGenerator.getSixList()));
+            lottos.add(new Lotto(numberGenerator.getSixList()));
         }
 
         return lottos;

@@ -2,7 +2,7 @@ package com.ccstudy.lotto.controller;
 
 import com.ccstudy.lotto.domain.LottoGame;
 import com.ccstudy.lotto.domain.LottoResult;
-import com.ccstudy.lotto.util.RandomListGeneratorImpl;
+import com.ccstudy.lotto.util.RandomGeneratorImpl;
 import com.ccstudy.lotto.view.Input;
 import com.ccstudy.lotto.view.Output;
 
@@ -14,7 +14,7 @@ public class LottoController {
 
         int purchase = input.inputPurchase();
 
-        LottoGame lottoGame = new LottoGame(purchase,new RandomListGeneratorImpl());
+        LottoGame lottoGame = new LottoGame(purchase, new RandomGeneratorImpl());
 
         Output.printPurchaseLottos(lottoGame.getLottos());
 

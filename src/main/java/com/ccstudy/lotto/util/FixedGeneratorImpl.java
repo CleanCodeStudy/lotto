@@ -4,13 +4,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class FixedListGeneratorImpl implements NumberListGenerator {
+public class FixedGeneratorImpl implements NumberGenerator {
     private List<Integer> lottoRange = IntStream.range(1, 45)
             .mapToObj(Integer::new)
             .collect(Collectors.toList());
     private int startIndex;
 
-    public FixedListGeneratorImpl(int startIndex) {
+    public FixedGeneratorImpl(int startIndex) {
         this.startIndex = startIndex;
     }
 
