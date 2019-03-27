@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+/*
+테스트 이외에 사용되지 않음.
+ */
 public class RandomLottoBundle extends LottoBundle {
 
     public RandomLottoBundle(int price) {
