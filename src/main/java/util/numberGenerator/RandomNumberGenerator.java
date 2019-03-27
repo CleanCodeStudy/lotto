@@ -1,4 +1,6 @@
-package util;
+package util.numberGenerator;
+
+import domain.LottoNo;
 
 import java.util.Collections;
 import java.util.List;
@@ -11,20 +13,21 @@ public class RandomNumberGenerator implements NumberGenerator {
     private final int LOTTO_START_NUMBER = 1;
     private final int LOTTO_END_NUMBER = 45;
 
+    private List<Integer> create() {
+        return IntStream.rangeClosed(LOTTO_START_NUMBER, LOTTO_END_NUMBER)
+                .boxed()
+                .collect(Collectors.toList());
+    }
+
     @Override
-    public List<Integer> createNumbers() {
+    public List<LottoNo> createLottoNumbers() {
         List<Integer> numbers = create();
         Collections.shuffle(numbers);
 
         return numbers.stream()
                 .limit(LOTTO_LIMIT)
                 .sorted()
-                .collect(Collectors.toList());
-    }
-
-    private List<Integer> create() {
-        return IntStream.rangeClosed(LOTTO_START_NUMBER, LOTTO_END_NUMBER)
-                .boxed()
+                .map(integer -> new LottoNo(integer))
                 .collect(Collectors.toList());
     }
 

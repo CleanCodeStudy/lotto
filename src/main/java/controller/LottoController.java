@@ -1,27 +1,29 @@
 package controller;
 
-import domain.LottoList;
+import domain.WinningLotto;
+import domain.bundle.LottoBundle;
 import dto.LottoResultDto;
 import view.InputView;
-import view.ResultView;
+import view.OutputView;
 
 import java.util.List;
 
 public class LottoController {
 
-    public String start() {
+    public static void main(String[] args) {
         InputView inputView = new InputView(System.in);
 
-        LottoList lottoList = inputView.getLottoList();
+        LottoBundle lottoBundle = inputView.getLottoBundle();
+
         List<Integer> winningNumbers = inputView.getWinningNumbers();
+        int bonus = inputView.getBonusNumber();
 
-        return lotto(lottoList, winningNumbers);
+        WinningLotto winningLotto = new WinningLotto(winningNumbers, bonus);
+
+
+        LottoResultDto lottoResultDto = new LottoResultDto(lottoBundle, winningLotto);
+
+        System.out.println(new OutputView().getStatistics(lottoResultDto));
     }
 
-    public String lotto(LottoList lottoList, List<Integer> winningNumbers) {
-
-        LottoResultDto lottoResultDto = new LottoResultDto(lottoList, winningNumbers);
-
-        return new ResultView().getStats(lottoResultDto);
-    }
 }

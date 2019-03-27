@@ -1,116 +1,110 @@
 package dto;
 
-import domain.FixedLottoList;
-import domain.Lotto;
-import domain.LottoList;
-import domain.RandomLottoList;
+import domain.LottoTicket;
+import domain.WinningLotto;
+import domain.bundle.FixedLottoBundle;
+import domain.bundle.LottoBundle;
 import org.assertj.core.api.MapAssert;
 import org.junit.Test;
-import util.FixedNumberGenerator;
+import util.PrizeGroup;
+import util.numberGenerator.FixedNumberGenerator;
+import util.numberGenerator.NumberGenerator;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class LottoResultDtoTest {
 
     @Test
-    public void 가지고있는_로또들의_맞춘개수_저장하기_후_비교() {
-        //given
-        int price = 14000;
-        List<Integer> winningNumber = Arrays.asList(4, 5, 6, 7, 8, 9);
-
-        List<Lotto> lottos = new ArrayList<>();
-        for (int i = 0; i < 12; i = i + 2) {
-            lottos.add(new Lotto(new FixedNumberGenerator(i)));
-        }
-        for (int i = 0; i < lottos.size(); i++) {
-            System.out.println(lottos.get(i).getNumbers());
-        }
-        //[1, 2, 3, 4, 5, 6]        -->3
-        //[3, 4, 5, 6, 7, 8]        -->5
-        //[5, 6, 7, 8, 9, 10]       -->5
-        //[7, 8, 9, 10, 11, 12]     -->3
-        //[9, 10, 11, 12, 13, 14]   -->1
-        //[11, 12, 13, 14, 15, 16]  -->0
-
-        LottoList fixedLottoList = new FixedLottoList(lottos);
-        HashMap<Integer, Integer> expect = new HashMap<>();
-
-        expect.put(3, 2);
-        expect.put(4, 0);
-        expect.put(5, 2);
-        expect.put(6, 0);
-
-        //when
-        LottoResultDto lottoResultDto = new LottoResultDto(fixedLottoList, winningNumber);
-        //then
-        MapAssert mapAssert = new MapAssert(lottoResultDto.getPrizeMap());
-        mapAssert.containsAllEntriesOf(expect);
-    }
-
-    @Test
     public void 로또_가격_맞는지_확인하기() {
         //given
         int price = 6000;
+        int bonus = 45;
         List<Integer> win1 = Arrays.asList(1, 2, 3, 4, 5, 6);
 
-        List<Lotto> fixedLottos = new ArrayList<>();
-        for (int i = 2; i < 8; i++) {
-            fixedLottos.add(new Lotto(new FixedNumberGenerator(i)));
-        }
+        WinningLotto winningLotto = new WinningLotto(win1, bonus);
+
+        List<LottoTicket> fixedLottoTickets = new ArrayList<>();
+        fixedLottoTickets.add(new LottoTicket(new FixedNumberGenerator(Arrays.asList(1, 2, 3, 4, 5, 6))));//1등
+        fixedLottoTickets.add(new LottoTicket(new FixedNumberGenerator(Arrays.asList(3, 4, 5, 6, 7, 8))));//5등
+        fixedLottoTickets.add(new LottoTicket(new FixedNumberGenerator(Arrays.asList(5, 6, 7, 8, 9, 10))));//0
+        fixedLottoTickets.add(new LottoTicket(new FixedNumberGenerator(Arrays.asList(7, 8, 9, 10, 11, 12))));//0
+        fixedLottoTickets.add(new LottoTicket(new FixedNumberGenerator(Arrays.asList(9, 10, 11, 12, 13, 14))));//0
+        fixedLottoTickets.add(new LottoTicket(new FixedNumberGenerator(Arrays.asList(11, 12, 13, 14, 15, 16))));//0
 
         //when
-        FixedLottoList fixedLottoList = new FixedLottoList(fixedLottos);
-        LottoResultDto lottoResultDto = new LottoResultDto(fixedLottoList, win1);
+        FixedLottoBundle fixedLottoList = new FixedLottoBundle(fixedLottoTickets);
+        LottoResultDto lottoResultDto = new LottoResultDto(fixedLottoList, winningLotto);
 
         //then
-        assertThat(lottoResultDto.getPrizeSum()).isEqualTo(55000);
+        assertThat(lottoResultDto.getSumOfReward()).isEqualTo(2000050000);
     }
 
     @Test
     public void 수익률_계산하기() {
         //given
         int price = 6000;
-        double rate = (double) (55000 - 6000) / 6000 * 100;
-        String expect = rate + "%";
+        double rate = (double) (2000050000 - 6000) / 6000 * 100;
+
+        int bonus = 45;
         List<Integer> win1 = Arrays.asList(1, 2, 3, 4, 5, 6);
 
-        List<Lotto> fixedLottos = new ArrayList<>();
-        for (int i = 2; i < 8; i++) {
-            fixedLottos.add(new Lotto(new FixedNumberGenerator(i)));
-        }
+        WinningLotto winningLotto = new WinningLotto(win1, bonus);
+
+        List<LottoTicket> fixedLottoTickets = new ArrayList<>();
+        fixedLottoTickets.add(new LottoTicket(new FixedNumberGenerator(Arrays.asList(1, 2, 3, 4, 5, 6))));
+        fixedLottoTickets.add(new LottoTicket(new FixedNumberGenerator(Arrays.asList(3, 4, 5, 6, 7, 8))));
+        fixedLottoTickets.add(new LottoTicket(new FixedNumberGenerator(Arrays.asList(5, 6, 7, 8, 9, 10))));
+        fixedLottoTickets.add(new LottoTicket(new FixedNumberGenerator(Arrays.asList(7, 8, 9, 10, 11, 12))));
+        fixedLottoTickets.add(new LottoTicket(new FixedNumberGenerator(Arrays.asList(9, 10, 11, 12, 13, 14))));
+        fixedLottoTickets.add(new LottoTicket(new FixedNumberGenerator(Arrays.asList(11, 12, 13, 14, 15, 16))));
 
         //when
-        FixedLottoList fixedLottoList = new FixedLottoList(fixedLottos);
-        LottoResultDto lottoResultDto = new LottoResultDto(fixedLottoList, win1);
+        FixedLottoBundle fixedLottoList = new FixedLottoBundle(fixedLottoTickets);
+        LottoResultDto lottoResultDto = new LottoResultDto(fixedLottoList, winningLotto);
 
         //then
-        assertThat(lottoResultDto.getRate()).isEqualTo(expect);
+        assertThat(lottoResultDto.getRate()).isEqualTo(rate);
     }
 
+
     @Test
-    public void 결과_출력() {
-        //given
-        int price = 14000;
-        RandomLottoList randomLottoList = new RandomLottoList(price);
-        List<Integer> win1 = Arrays.asList(1, 2, 3, 4, 5, 6);
+    public void 우승_로또랑_내가_수동으로_뽑은_로또_비교하기() {
+        int bonus = 7;
+        List<Integer> winningNumbers = Arrays.asList(1, 2, 3, 4, 5, 6);
 
-        //when
-        List<Lotto> fixedLottos = new ArrayList<>();
-        for (int i = 2; i < 8; i++) {
-            fixedLottos.add(new Lotto(new FixedNumberGenerator(i)));
-        }
-        LottoResultDto lottoResultDto = new LottoResultDto(randomLottoList, win1);
-        FixedLottoList fixedLottoList = new FixedLottoList(fixedLottos);
-        LottoResultDto lottoResultDtoFixed = new LottoResultDto(fixedLottoList, win1);
+        WinningLotto winningLotto = new WinningLotto(winningNumbers, bonus);
 
-        //then
-        System.out.println(lottoResultDto.getResult());
+        List<Integer> allMatchNumbers = Arrays.asList(1, 2, 3, 4, 5, 6);
+        List<Integer> matchFive = Arrays.asList(45, 2, 3, 4, 5, 6);
+        List<Integer> matchFiveWithBonus = Arrays.asList(1, 2, 3, 4, 5, 7);
 
-        System.out.println("\n" + lottoResultDtoFixed.getResult());
+        NumberGenerator numberGenerator = new FixedNumberGenerator(allMatchNumbers);
+        LottoTicket allMatchTicket = new LottoTicket(numberGenerator);
+        LottoTicket allMatchTicket2 = new LottoTicket(numberGenerator);
+        numberGenerator = new FixedNumberGenerator(matchFive);
+        LottoTicket matchFiveTicket = new LottoTicket(numberGenerator);
+        numberGenerator = new FixedNumberGenerator(matchFiveWithBonus);
+        LottoTicket matchFiveWithBonusTicket = new LottoTicket(numberGenerator);
+
+        List<LottoTicket> lottoTickets = Arrays.asList(allMatchTicket, allMatchTicket2, matchFiveTicket, matchFiveWithBonusTicket);
+
+        LottoBundle lottoBundle = new FixedLottoBundle(lottoTickets);
+
+        LottoResultDto lottoResultDto = new LottoResultDto(lottoBundle, winningLotto);
+
+        //로또 티켓 하나를 꺼내서 그거랑 위닝 로또랑 비교해서
+        //그에 해당하는 로또 랭크를 반환하자.
+        Map<PrizeGroup, Integer> expect = new HashMap<>();
+
+        expect.put(PrizeGroup.FIRST, 2);
+        expect.put(PrizeGroup.SECOND, 1);
+        expect.put(PrizeGroup.THIRD, 1);
+
+        MapAssert mapAssert = new MapAssert(expect);
+
+        mapAssert.containsAllEntriesOf(lottoResultDto.getPrizeMap());
+
     }
 }

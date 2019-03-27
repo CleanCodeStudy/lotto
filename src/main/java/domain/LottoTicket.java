@@ -1,0 +1,43 @@
+package domain;
+
+import util.numberGenerator.NumberGenerator;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class LottoTicket {
+    private List<LottoNo> lottoNumbers;
+
+    public LottoTicket(NumberGenerator numberGenerator) {
+        this.lottoNumbers = numberGenerator.createLottoNumbers();
+    }
+
+    public List<Integer> getNumbers() {
+        return lottoNumbers.stream()
+                .map(LottoNo::getNumber)
+                .collect(Collectors.toList());
+    }
+
+    public String getListString() {
+        return getNumbers().toString();
+    }
+
+    public boolean checkRank(int match, List<Integer> winningNumbers) {
+        return match == getCountOfMatch(winningNumbers);
+    }
+
+    public int getCountOfMatch(List<Integer> winningNumbers) {
+        return (int) winningNumbers.stream()
+                .filter(winningNumber -> hasNumber(winningNumber))
+                .count();
+    }
+
+    public boolean hasNumber(int winningNumber) {
+        return getNumbers().contains(winningNumber);
+    }
+
+    public boolean hasBonus(int bonus) {
+        return this.getNumbers()
+                .contains(bonus);
+    }
+}
