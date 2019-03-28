@@ -11,7 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class LottoGameTest {
     @Test
     public void 로또_3개_생성_테스트() {
-        LottoGame lottoGame = new LottoGame(3000, new FixedGeneratorImpl(0));
+        LottoGame lottoGame = new LottoGame(3000, new ArrayList<Lotto>(), new FixedGeneratorImpl(0));
 
         List<Lotto> fixedLottos = getFixedLottos(3);
 

@@ -1,6 +1,6 @@
 package com.ccstudy.lotto.domain;
 
-import com.ccstudy.lotto.util.ReceivedType;
+import com.ccstudy.lotto.util.LottoRank;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -8,25 +8,31 @@ import java.util.stream.Collectors;
 public class LottoResult {
     public static final int MIN_WIN_COUNT = 3;
     private double yield;
-    private List<Lotto> winningLottos;
-    private List<Integer> correctNumber;
+    private List<LottoRank> winningRanks;
+    private WinningNumber winningNumber;
 
-    public LottoResult(List<Lotto> lottos, List<Integer> correctNumber) {
-        this.correctNumber = correctNumber;
+    public LottoResult(List<Lotto> lottos, WinningNumber winningNumber) {
+        this.winningNumber = winningNumber;
 
-        this.winningLottos = lottos.stream()
-                .filter(lotto -> lotto.getAnswer(correctNumber) >= MIN_WIN_COUNT)
+        this.winningRanks = lottos.stream()
+                .map(lotto -> LottoRank.getRank(lotto, winningNumber))
+                .filter(receivedType -> receivedType != LottoRank.DEFAULT)
+                .sorted()
                 .collect(Collectors.toList());
 
         this.yield = calculateYield(lottos.size());
     }
 
-    public double getYield(){
-        return yield;
+    public List<LottoRank> getWinningRanks() {
+        return winningRanks;
     }
 
-    public List<Lotto> getWinningLottos() {
-        return winningLottos;
+    public WinningNumber getWinningNumber() {
+        return winningNumber;
+    }
+
+    public double getYield(){
+        return yield;
     }
 
     public double calculateYield(int amountOfLottos) {
@@ -40,16 +46,16 @@ public class LottoResult {
     public int getReceivedAmount() {
         int receivedAmount = 0;
 
-        for(Lotto lotto : winningLottos){
-            receivedAmount += ReceivedType.receivedAmount(lotto.getAnswer(correctNumber));
+        for (LottoRank rank : winningRanks) {
+            receivedAmount += rank.getReceivedAmount();
         }
 
         return receivedAmount;
     }
 
-    public int getWinningLottoCount(int correctCount){
-        return (int)winningLottos.stream()
-                .filter(lotto -> lotto.getAnswer(correctNumber) == correctCount)
+    public int getWinningLottoCount(LottoRank lottoRank) {
+        return (int) winningRanks.stream()
+                .filter(receivedType1 -> receivedType1 == lottoRank)
                 .count();
     }
 

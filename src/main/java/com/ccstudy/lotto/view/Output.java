@@ -2,13 +2,9 @@ package com.ccstudy.lotto.view;
 
 import com.ccstudy.lotto.domain.Lotto;
 import com.ccstudy.lotto.domain.LottoResult;
-import com.ccstudy.lotto.util.ReceivedType;
+import com.ccstudy.lotto.util.LottoRank;
 
-import java.io.OutputStream;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class Output {
     public static void printPurchaseLottos(List<Lotto> lottos){
@@ -21,9 +17,14 @@ public class Output {
         System.out.println("당첨 통계\n" +
                 "-------");
 
-        for(ReceivedType receivedType : ReceivedType.values()){
-            System.out.println(String.format("%d개 일치 (%d원)- %d개",receivedType.getCorrectCount(),
-                    receivedType.getReceivedAmount(),lottoResult.getWinningLottoCount(receivedType.getCorrectCount())));
+        for (LottoRank lottoRank : LottoRank.values()) {
+            String statistics = lottoRank.isCorrectBonus() ?
+                    String.format("%d개 일치,보너스 볼 일치 (%d원)- %d개", lottoRank.getCorrectCount(),
+                            lottoRank.getReceivedAmount(), lottoResult.getWinningLottoCount(lottoRank))
+                    : String.format("%d개 일치 (%d원)- %d개", lottoRank.getCorrectCount(),
+                    lottoRank.getReceivedAmount(), lottoResult.getWinningLottoCount(lottoRank));
+
+            System.out.println(statistics);
         }
 
     }

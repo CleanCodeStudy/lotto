@@ -9,27 +9,30 @@ public class LottoGame {
     public static final int LOTTO_PRICE = 1000;
     private List<Lotto> lottos;
 
-    public LottoGame(int purchase, NumberGenerator numberGenerator) {
-        this.lottos = createLottos(purchase, numberGenerator);
+    public LottoGame(int purchase, List<Lotto> manualLottos, NumberGenerator numberGenerator) {
+        this.lottos = createLottos(purchase, manualLottos, numberGenerator);
     }
 
     public List<Lotto> getLottos() {
         return lottos;
     }
 
-    public List<Lotto> createLottos(int purchase, NumberGenerator numberGenerator) {
-        int lottoCount = purchase/LOTTO_PRICE;
+    public List<Lotto> createLottos(int purchase, List<Lotto> manualLottos, NumberGenerator numberGenerator) {
+        int manualPurchas = manualLottos.size() * LOTTO_PRICE;
+        int randomLottoCount = (purchase - manualPurchas) / LOTTO_PRICE;
 
         List<Lotto> lottos = new ArrayList<>();
 
-        for(int i = 0 ; i < lottoCount ; i++){
+        lottos.addAll(manualLottos);
+
+        for (int i = 0; i < randomLottoCount; i++) {
             lottos.add(new Lotto(numberGenerator.getSixList()));
         }
 
         return lottos;
     }
 
-    public LottoResult gameStart(List<Integer> correctAnswer){
-        return new LottoResult(lottos,correctAnswer);
+    public LottoResult gameStart(WinningNumber winningNumber) {
+        return new LottoResult(lottos, winningNumber);
     }
 }
