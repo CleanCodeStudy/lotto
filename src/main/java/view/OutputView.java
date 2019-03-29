@@ -1,8 +1,8 @@
 package view;
 
-import model.Lotto;
 import model.LottoRank;
-import model.LottoResult;
+import model.LottoTicket;
+import model.LottoYield;
 
 import java.util.List;
 import java.util.Map;
@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 public class OutputView {
 
-    public static void viewRandomNum(List<Lotto> lottos) {
+    public static void viewRandomNum(List<LottoTicket> lottos) {
         StringBuilder sb = new StringBuilder();
 
         lottos.stream()
@@ -27,21 +27,20 @@ public class OutputView {
 
     }
 
-    public static void viewLottoAnalyze(LottoResult lottoResult) {
+    public static void viewLottoAnalyze(LottoYield lottoYield) {
 
         StringBuilder sb = new StringBuilder();
 
-        Map<LottoRank, Integer> analysis = lottoResult.getLottoResultAnalysis();
-
+        Map<LottoRank, List<LottoTicket>> analysis = lottoYield.getRankLottoGroup();
         System.out.println();
         System.out.println("당첨통계\n---------");
         for (LottoRank lottoRank : analysis.keySet()) {
             sb.append(String.format("%d개 일치 (%d원)- %d개\n",
-                    lottoRank.getCorrectRank(), lottoRank.getPrice(), analysis.get(lottoRank)));
+                    lottoRank.getCorrectRank(), lottoRank.getPrice(), analysis.get(lottoRank).size()));
         }
 
         System.out.println(sb);
-        System.out.println(String.format("총 수익률은 %.1f 입니다.", lottoResult.getYield()));
+        System.out.println(String.format("총 수익률은 %.1f 입니다.", lottoYield.getYield()));
 
     }
 

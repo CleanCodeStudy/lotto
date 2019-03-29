@@ -24,6 +24,6 @@ public class InputViewTest {
         String inputCorrectString = "1,3,6,7,8,9";
         InputStream inputCorrectStringStream = new ByteArrayInputStream(inputCorrectString.getBytes());
         InputView inputView = new InputView(inputCorrectStringStream);
-        assertThat(inputView.winNumber(), contains(1, 3, 6, 7, 8, 9));
+        assertThat(inputView.inputWinNumber(), contains(1, 3, 6, 7, 8, 9));
     }
 }

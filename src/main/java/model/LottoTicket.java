@@ -3,10 +3,10 @@ package model;
 import java.util.List;
 
 
-public class Lotto {
+public class LottoTicket {
     private List<Integer> numbers;
 
-    public Lotto(List<Integer> numbers) {
+    public LottoTicket(List<Integer> numbers) {
         this.numbers = numbers;
     }
 
@@ -19,4 +19,6 @@ public class Lotto {
                 .filter(correctAnswer::contains)
                 .count();
     }
+
+
 }

@@ -7,14 +7,14 @@ import java.util.Arrays;
 
 import static org.junit.Assert.assertEquals;
 
-public class LottoTest {
+public class LottoTicketTest {
 
     @Test
     public void 몇개_맞췄는지() {
         FixedListGeneratorImpl fixedListGenerator = new FixedListGeneratorImpl();
 
-        Lotto myLotto = new Lotto(fixedListGenerator.getSixList());
+        LottoTicket myLottoTicket = new LottoTicket(fixedListGenerator.getSixList());
 
-        assertEquals(3, myLotto.getAnswer(Arrays.asList(1, 2, 11, 8, 3, 10)));
+        assertEquals(3, myLottoTicket.getAnswer(Arrays.asList(1, 2, 11, 8, 3, 10)));
     }
 }

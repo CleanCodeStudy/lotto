@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
-import static controller.LottoController.LOTTO_PRICE;
+import static model.LottoGame.LOTTO_PRICE;
 
 public class InputView {
 
@@ -22,7 +22,7 @@ public class InputView {
         return sc.nextInt();
     }
 
-    public List<Integer> winNumber() {
+    public List<Integer> inputWinNumber() {
         System.out.println("지난 주 당첨 번호를 입력해 주세요.");
         String winNumberString = sc.next();
         return makeWinNumberList(winNumberString);

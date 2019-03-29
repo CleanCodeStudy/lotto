@@ -1,7 +1,10 @@
 package model;
 
 import org.junit.Test;
+import util.FixedListGeneratorImpl;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
@@ -9,27 +12,29 @@ import static org.junit.Assert.assertEquals;
 
 public class LottoGameTest {
 
-    private boolean areEqual(Map<LottoRank, Integer> first, Map<LottoRank, Integer> second) {
-        if (first.size() != second.size()) {
-            return false;
-        }
-        return first.entrySet().stream()
-                .allMatch(e -> e.getValue().equals(second.get(e.getKey())));
+
+
+    @Test
+    public void lottoMachine으로_뽑은lotto에대한_rankgroup_생성하기_사이즈체크() {
+        final List<Integer> correctAnswer = Arrays.asList(1, 2, 3, 0, 0, 0);
+        FixedListGeneratorImpl fixedListGenerator =new FixedListGeneratorImpl();
+        LottoMachine lottoMachine = new LottoMachine(6000, fixedListGenerator);
+        LottoGame lottoGame = new LottoGame(correctAnswer, lottoMachine);
+
+        Map<LottoRank, List<LottoTicket>> lottoRankListMap = lottoGame.getRankLottoGroup();
+
+        assertEquals(lottoRankListMap.get(LottoRank.FOURTH).size(), 6);
     }
 
     @Test
-    public void 현재_로또_게임의_결과_반환() {
+    public void rankGroup_OUT제거_keyset사이즈_체크() {
+        final List<Integer> correctAnswer = Arrays.asList(1, 2, 3, 0, 0, 0);
+        FixedListGeneratorImpl fixedListGenerator =new FixedListGeneratorImpl();
+        LottoMachine lottoMachine = new LottoMachine(6000, fixedListGenerator);
+        LottoGame lottoGame = new LottoGame(correctAnswer, lottoMachine);
 
-        //나의 로또게임
-        LottoGame myLottoGame = TestDatas.makeMyLottoGame();
+        Map<LottoRank, List<LottoTicket>> lottoRankListMap = lottoGame.getRankLottoGroup();
 
-        Map<LottoRank, Integer> lottoMap = myLottoGame.makeResult();
-
-        //기대하는 로또게임
-        Map<LottoRank, Integer> expectedMap = TestDatas.makeExpectedLottoResultMap();
-
-        assertEquals(true, areEqual(expectedMap, lottoMap));
+        assertEquals(lottoRankListMap.keySet().size(), 4);
     }
-
-
 }
