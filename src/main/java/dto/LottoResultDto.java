@@ -4,61 +4,55 @@ import domain.WinningLotto;
 import domain.bundle.LottoBundle;
 import util.PrizeGroup;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class LottoResultDto {
 
     private static final int DEFAULT_PRICE = 1000;
     private static final int PER = 100;
-    private static final int DEFAULT_AMOUNT = 1;
 
-    private Map<PrizeGroup, Integer> prizeMap;
+    private List<PrizeGroup> prizeStat;
+    private long sum;
     private double rate;
 
-    public LottoResultDto(LottoBundle lottoBundle, WinningLotto winningLotto) {
-        this.prizeMap = makeMap(lottoBundle, winningLotto);
-        this.rate = getRate(lottoBundle);
+    public List<PrizeGroup> getPrizeStat() {
+        return this.prizeStat;
     }
 
-    public Map<PrizeGroup, Integer> getPrizeMap() {
-        return this.prizeMap;
-    }
-
-    private Map<PrizeGroup, Integer> makeMap(LottoBundle lottoBundle, WinningLotto winningLotto) {
-        Map<PrizeGroup, Integer> map = new HashMap<>();
-
-        lottoBundle.getLottoTickets()
-                .stream()
-                .map(lottoTicket -> PrizeGroup.findRankByCountOfMatchAndBonus(lottoTicket, winningLotto))
-                .forEach(prizeGroup -> map.put(prizeGroup, getAmountOfPrizeGroup(map, prizeGroup)));
-
-        return map;
-    }
-
-    private int getAmountOfPrizeGroup(Map<PrizeGroup, Integer> map, PrizeGroup prizeGroup) {
-        if (map.containsKey(prizeGroup)) {
-            return map.get(prizeGroup) + DEFAULT_AMOUNT;
-        }
-        return DEFAULT_AMOUNT;
-    }
-
-
-    public int getSumOfReward() {
-        return prizeMap.entrySet()
-                .stream()
-                .mapToInt(entry -> entry.getKey()
-                        .getReward(entry.getValue()))
-                .sum();
-    }
-
-    private double getRate(LottoBundle randomLottoBundle) {
-        int inputPrice = randomLottoBundle.getLottoTickets().size() * DEFAULT_PRICE;
-        return (double) (getSumOfReward() - inputPrice) / inputPrice * PER;
+    public long getSum() {
+        return this.sum;
     }
 
     public double getRate() {
         return this.rate;
     }
+
+    public LottoResultDto(LottoBundle lottoBundle, WinningLotto winningLotto) {
+        this.prizeStat = getStat(lottoBundle, winningLotto);
+        this.sum = getAllPrize();
+        this.rate = getRate(lottoBundle);
+    }
+
+    private List<PrizeGroup> getStat(LottoBundle lottoBundle, WinningLotto winningLotto) {
+        return lottoBundle.getLottoTickets()
+                .stream()
+                .map(lottoTicket -> PrizeGroup.findRankByCountOfMatchAndBonus(lottoTicket, winningLotto))
+                .collect(Collectors.toList());
+    }
+
+    private long getAllPrize() {
+        return prizeStat.stream()
+                .mapToLong(PrizeGroup::getMoney)
+                .sum();
+    }
+
+    private double getRate(LottoBundle lottoBundle) {
+        int ticketAmount = lottoBundle.getLottoTickets().size();
+        int inputPrice = ticketAmount * DEFAULT_PRICE;
+
+        return (double) (this.sum - inputPrice) / inputPrice * PER;
+    }
+
 
 }

@@ -28,6 +28,10 @@ public enum PrizeGroup {
         return this.comment;
     }
 
+    public int getMoney() {
+        return this.money;
+    }
+
     public int getCountOfMatch() {
         return this.countOfMatch;
     }

@@ -4,13 +4,14 @@ import domain.LottoTicket;
 import domain.WinningLotto;
 import domain.bundle.FixedLottoBundle;
 import domain.bundle.LottoBundle;
-import org.assertj.core.api.MapAssert;
 import org.junit.Test;
 import util.PrizeGroup;
 import util.numberGenerator.FixedNumberGenerator;
 import util.numberGenerator.NumberGenerator;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -38,7 +39,7 @@ public class LottoResultDtoTest {
         LottoResultDto lottoResultDto = new LottoResultDto(fixedLottoList, winningLotto);
 
         //then
-        assertThat(lottoResultDto.getSumOfReward()).isEqualTo(2000050000);
+        assertThat(lottoResultDto.getSum()).isEqualTo(2000050000);
     }
 
     @Test
@@ -94,17 +95,9 @@ public class LottoResultDtoTest {
 
         LottoResultDto lottoResultDto = new LottoResultDto(lottoBundle, winningLotto);
 
-        //로또 티켓 하나를 꺼내서 그거랑 위닝 로또랑 비교해서
-        //그에 해당하는 로또 랭크를 반환하자.
-        Map<PrizeGroup, Integer> expect = new HashMap<>();
+        List<PrizeGroup> expect = Arrays.asList(PrizeGroup.FIRST, PrizeGroup.FIRST, PrizeGroup.SECOND, PrizeGroup.THIRD);
 
-        expect.put(PrizeGroup.FIRST, 2);
-        expect.put(PrizeGroup.SECOND, 1);
-        expect.put(PrizeGroup.THIRD, 1);
-
-        MapAssert mapAssert = new MapAssert(expect);
-
-        mapAssert.containsAllEntriesOf(lottoResultDto.getPrizeMap());
+        assertThat(lottoResultDto.getPrizeStat()).containsAll(expect);
 
     }
 }

@@ -16,6 +16,7 @@ public class InputView {
     private static Scanner scanner;
     private static String SPLITTER = ",";
     private static int ZERO_AMOUNT = 0;
+    private static int MIN_MONEY = 1000;
 
     public InputView(InputStream inputStream) {
         this.scanner = new Scanner(inputStream);
@@ -27,7 +28,8 @@ public class InputView {
 
     public LottoBundle getLottoBundle() {
         int price = getPrice();
-        if (price < 1000) throw new RuntimeException("최소 가격보다 적습니다.");
+        if (price < MIN_MONEY) throw new RuntimeException("최소 가격보다 적습니다.");
+
         int manualAmount = getManualAmount();
 
         List<LottoTicket> lottoTickets = getManualLottoTickets(manualAmount);
@@ -52,9 +54,11 @@ public class InputView {
 
     private List<LottoTicket> getManualLottoTickets(int amount) {
         List<LottoTicket> lottoTickets = new ArrayList<>();
+
         if (amount == ZERO_AMOUNT) {
             return lottoTickets;
         }
+
         System.out.println("수동으로 구매할 번호를 입력해 주세요.");
 
         for (int t = 0; t < amount; t++) {

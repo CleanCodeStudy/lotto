@@ -16,10 +16,10 @@ public class LottoController {
         LottoBundle lottoBundle = inputView.getLottoBundle();
 
         List<Integer> winningNumbers = inputView.getWinningNumbers();
+
         int bonus = inputView.getBonusNumber();
 
         WinningLotto winningLotto = new WinningLotto(winningNumbers, bonus);
-
 
         LottoResultDto lottoResultDto = new LottoResultDto(lottoBundle, winningLotto);
 
