@@ -12,19 +12,35 @@ public class LottoMachine {
 
 
     private List<LottoTicket> lottoTickets;
+    private int autoLottoTicketCount;
+    private int manualLottoTicektCount;
 
-    public LottoMachine(int myPurchaseMoney, NumberListGenerator numberListGenerator){
-        this.lottoTickets = makePurchaseLottoList(myPurchaseMoney, numberListGenerator);
+    public LottoMachine(int myPurchaseMoney, List<LottoTicket> manualLottos ,NumberListGenerator numberListGenerator){
+        this.autoLottoTicketCount = calculateAutoCount(myPurchaseMoney, manualLottos);
+        this.manualLottoTicektCount = manualLottos.size();
+        this.lottoTickets = makePurchaseLottoList(manualLottos,numberListGenerator);
     }
 
     public List<LottoTicket> getLottoTickets() {
         return lottoTickets;
     }
 
-    private List<LottoTicket> makePurchaseLottoList(int myPurchaseMoney, NumberListGenerator numberListGenerator) {
-        List<LottoTicket> purchaseLottoTickets = new ArrayList<>();
+    public int getAutoLottoTicketCount() {
+        return autoLottoTicketCount;
+    }
+
+    public int getManualLottoTicektCount() {
+        return manualLottoTicektCount;
+    }
+
+    private int calculateAutoCount(int myPurchaseMoney, List<LottoTicket> manualLottos){
         int myPurchaseAmount = myPurchaseMoney / LOTTO_PRICE;
-        for (int i = 0; i < myPurchaseAmount; i++) {
+        return myPurchaseAmount - manualLottos.size();
+    }
+
+    private List<LottoTicket> makePurchaseLottoList(List<LottoTicket>manualLottos, NumberListGenerator numberListGenerator) {
+        List<LottoTicket> purchaseLottoTickets = manualLottos;
+        for (int i = 0; i < autoLottoTicketCount; i++) {
             LottoTicket myLottoTicket = new LottoTicket(numberListGenerator.getSixList());
             purchaseLottoTickets.add(myLottoTicket);
         }
