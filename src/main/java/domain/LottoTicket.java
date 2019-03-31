@@ -1,6 +1,6 @@
 package domain;
 
-import util.numberGenerator.NumberGenerator;
+import util.PrizeGroup;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -8,8 +8,8 @@ import java.util.stream.Collectors;
 public class LottoTicket {
     private List<LottoNo> lottoNumbers;
 
-    public LottoTicket(NumberGenerator numberGenerator) {
-        this.lottoNumbers = numberGenerator.createLottoNumbers();
+    public LottoTicket(List<LottoNo> lottoNos) {
+        this.lottoNumbers = lottoNos;
     }
 
     public List<Integer> getNumbers() {
@@ -36,8 +36,12 @@ public class LottoTicket {
         return getNumbers().contains(winningNumber);
     }
 
-    public boolean hasBonus(int bonus) {
+    public boolean hasBonus(WinningLotto winningLotto) {
         return this.getNumbers()
-                .contains(bonus);
+                .contains(winningLotto.getBonusNumber());
+    }
+
+    public boolean hasCountOfSecondRank(WinningLotto winningLotto) {
+        return getCountOfMatch(winningLotto.getWinningLottoNumbers()) == PrizeGroup.SECOND.getCountOfMatch();
     }
 }

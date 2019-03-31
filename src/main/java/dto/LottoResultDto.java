@@ -9,7 +9,6 @@ import java.util.stream.Collectors;
 
 public class LottoResultDto {
 
-    private static final int DEFAULT_PRICE = 1000;
     private static final int PER = 100;
 
     private List<PrizeGroup> prizeStat;
@@ -48,8 +47,7 @@ public class LottoResultDto {
     }
 
     private double getRate(LottoBundle lottoBundle) {
-        int ticketAmount = lottoBundle.getLottoTickets().size();
-        int inputPrice = ticketAmount * DEFAULT_PRICE;
+        int inputPrice = lottoBundle.getInputMoney();
 
         return (double) (this.sum - inputPrice) / inputPrice * PER;
     }

@@ -1,8 +1,6 @@
 package domain;
 
 import org.junit.Test;
-import util.numberGenerator.FixedNumberGenerator;
-import util.numberGenerator.NumberGenerator;
 
 import java.util.Arrays;
 import java.util.List;
@@ -22,13 +20,13 @@ public class LottoNoTest {
 
     @Test
     public void 숫자_6개_만들기() {
-        List<Integer> input = Arrays.asList(1, 2, 3, 4, 5, 6);
-        NumberGenerator numberGenerator = new FixedNumberGenerator(input);
-        List<LottoNo> LottoNumbers =
-                numberGenerator.createLottoNumbers();
+        List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5, 6);
+        List<LottoNo> lottoNos = numbers.stream()
+                .map(integer -> new LottoNo(integer))
+                .collect(Collectors.toList());
 
-        assertThat(LottoNumbers.size()).isEqualTo(6);
-        assertThat(LottoNumbers.stream()
+        assertThat(lottoNos.size()).isEqualTo(6);
+        assertThat(lottoNos.stream()
                 .map(LottoNo::getNumber)
                 .collect(Collectors.toList()))
                 .contains(1, 2, 3, 4, 5, 6);

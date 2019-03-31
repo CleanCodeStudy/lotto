@@ -36,14 +36,10 @@ public enum PrizeGroup {
         return this.countOfMatch;
     }
 
-    public int getReward(int amount) {
-        return this.money * amount;
-    }
-
     public static PrizeGroup findRankByCountOfMatchAndBonus(LottoTicket lottoTicket, WinningLotto winningLotto) {
         return Arrays.stream(PrizeGroup.values())
                 .filter(prizeGroup -> prizeGroup.hasCountOfMatch(lottoTicket, winningLotto))
-                .map(prizeGroup -> prizeGroup.findRankByBonus(prizeGroup, lottoTicket, winningLotto))
+                .map(prizeGroup -> prizeGroup.findRankByBonus(lottoTicket, winningLotto))
                 .findFirst()
                 .orElse(PrizeGroup.MISS);
     }
@@ -52,19 +48,11 @@ public enum PrizeGroup {
         return lottoTicket.checkRank(this.countOfMatch, winningLotto.getWinningLottoNumbers());
     }
 
-    private PrizeGroup findRankByBonus(PrizeGroup prizeGroup, LottoTicket lottoTicket, WinningLotto winningLotto) {
-        if (hasCountOfSecondRank(lottoTicket, winningLotto) && !hasBonus(lottoTicket, winningLotto)) {
+    private PrizeGroup findRankByBonus(LottoTicket lottoTicket, WinningLotto winningLotto) {
+        if (lottoTicket.hasCountOfSecondRank(winningLotto) && !lottoTicket.hasBonus(winningLotto)) {
             return PrizeGroup.THIRD;
         }
-        return prizeGroup;
-    }
-
-    private boolean hasCountOfSecondRank(LottoTicket lottoTicket, WinningLotto winningLotto) {
-        return lottoTicket.getCountOfMatch(winningLotto.getWinningLottoNumbers()) == PrizeGroup.SECOND.countOfMatch;
-    }
-
-    private boolean hasBonus(LottoTicket lottoTicket, WinningLotto winningLotto) {
-        return lottoTicket.hasBonus(winningLotto.getBonusNumber());
+        return this;
     }
 
 }

@@ -1,5 +1,6 @@
 package view;
 
+import domain.LottoTicket;
 import domain.bundle.LottoBundle;
 import dto.LottoResultDto;
 import util.PrizeGroup;
@@ -12,8 +13,16 @@ public class OutputView {
 
     private static int MIN_RANK = 3;
 
-    public void showBuyedList(LottoBundle lottoBundle) {
-        lottoBundle.showList();
+    public String showBuyedList(LottoBundle lottoBundle) {
+        List<LottoTicket> lottoTickets = lottoBundle.getLottoTickets();
+        String buyAmount = String.format("수동으로 %d개, 자동으로 %d개 구매하였습니다.\n", lottoBundle.getManualAmount(), lottoBundle.getRadomAmount());
+        String list = lottoTickets.stream()
+                .map(LottoTicket::getListString)
+                .collect(Collectors.joining("\n"));
+        StringBuilder sb = new StringBuilder();
+        sb.append(buyAmount)
+                .append(list);
+        return sb.toString();
     }
 
     public String getStatistics(LottoResultDto lottoResultDto) {

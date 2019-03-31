@@ -1,15 +1,13 @@
 package dto;
 
-import domain.LottoTicket;
+import domain.LottoMachine.LottoMachine;
+import domain.LottoMachine.ManualLottoMachine;
+import domain.LottoMachine.RandomLottoMachine;
 import domain.WinningLotto;
-import domain.bundle.FixedLottoBundle;
 import domain.bundle.LottoBundle;
 import org.junit.Test;
 import util.PrizeGroup;
-import util.numberGenerator.FixedNumberGenerator;
-import util.numberGenerator.NumberGenerator;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -21,22 +19,38 @@ public class LottoResultDtoTest {
     public void 로또_가격_맞는지_확인하기() {
         //given
         int price = 6000;
+        int manualAmount = 6;
         int bonus = 45;
+
+
         List<Integer> win1 = Arrays.asList(1, 2, 3, 4, 5, 6);
 
         WinningLotto winningLotto = new WinningLotto(win1, bonus);
 
-        List<LottoTicket> fixedLottoTickets = new ArrayList<>();
-        fixedLottoTickets.add(new LottoTicket(new FixedNumberGenerator(Arrays.asList(1, 2, 3, 4, 5, 6))));//1등
-        fixedLottoTickets.add(new LottoTicket(new FixedNumberGenerator(Arrays.asList(3, 4, 5, 6, 7, 8))));//5등
-        fixedLottoTickets.add(new LottoTicket(new FixedNumberGenerator(Arrays.asList(5, 6, 7, 8, 9, 10))));//0
-        fixedLottoTickets.add(new LottoTicket(new FixedNumberGenerator(Arrays.asList(7, 8, 9, 10, 11, 12))));//0
-        fixedLottoTickets.add(new LottoTicket(new FixedNumberGenerator(Arrays.asList(9, 10, 11, 12, 13, 14))));//0
-        fixedLottoTickets.add(new LottoTicket(new FixedNumberGenerator(Arrays.asList(11, 12, 13, 14, 15, 16))));//0
+        ManualNumberDto manualNumberDto1 = new ManualNumberDto(Arrays.asList(1, 2, 3, 4, 5, 6));    //1등
+        ManualNumberDto manualNumberDto2 = new ManualNumberDto(Arrays.asList(3, 4, 5, 6, 7, 8));    //5등
+        ManualNumberDto manualNumberDto3 = new ManualNumberDto(Arrays.asList(5, 6, 7, 8, 9, 10));
+        ManualNumberDto manualNumberDto4 = new ManualNumberDto(Arrays.asList(7, 8, 9, 10, 11, 12));
+        ManualNumberDto manualNumberDto5 = new ManualNumberDto(Arrays.asList(9, 10, 11, 12, 13, 14));
+        ManualNumberDto manualNumberDto6 = new ManualNumberDto(Arrays.asList(11, 12, 13, 14, 15, 16));
+
+        List<ManualNumberDto> manualNumberDtos =
+                Arrays.asList(manualNumberDto1,
+                        manualNumberDto2,
+                        manualNumberDto3,
+                        manualNumberDto4,
+                        manualNumberDto5,
+                        manualNumberDto6);
+
+        InputDto inputDto = new InputDto(price, manualAmount, manualNumberDtos);
+
 
         //when
-        FixedLottoBundle fixedLottoList = new FixedLottoBundle(fixedLottoTickets);
-        LottoResultDto lottoResultDto = new LottoResultDto(fixedLottoList, winningLotto);
+        LottoMachine manual = new ManualLottoMachine(inputDto);
+        LottoMachine random = new RandomLottoMachine(inputDto);
+
+        LottoBundle lottoBundle = new LottoBundle(manual.buyLotto(), random.buyLotto());
+        LottoResultDto lottoResultDto = new LottoResultDto(lottoBundle, winningLotto);
 
         //then
         assertThat(lottoResultDto.getSum()).isEqualTo(2000050000);
@@ -46,24 +60,38 @@ public class LottoResultDtoTest {
     public void 수익률_계산하기() {
         //given
         int price = 6000;
+        int manualAmount = 6;
+        int bonus = 45;
         double rate = (double) (2000050000 - 6000) / 6000 * 100;
 
-        int bonus = 45;
         List<Integer> win1 = Arrays.asList(1, 2, 3, 4, 5, 6);
 
         WinningLotto winningLotto = new WinningLotto(win1, bonus);
 
-        List<LottoTicket> fixedLottoTickets = new ArrayList<>();
-        fixedLottoTickets.add(new LottoTicket(new FixedNumberGenerator(Arrays.asList(1, 2, 3, 4, 5, 6))));
-        fixedLottoTickets.add(new LottoTicket(new FixedNumberGenerator(Arrays.asList(3, 4, 5, 6, 7, 8))));
-        fixedLottoTickets.add(new LottoTicket(new FixedNumberGenerator(Arrays.asList(5, 6, 7, 8, 9, 10))));
-        fixedLottoTickets.add(new LottoTicket(new FixedNumberGenerator(Arrays.asList(7, 8, 9, 10, 11, 12))));
-        fixedLottoTickets.add(new LottoTicket(new FixedNumberGenerator(Arrays.asList(9, 10, 11, 12, 13, 14))));
-        fixedLottoTickets.add(new LottoTicket(new FixedNumberGenerator(Arrays.asList(11, 12, 13, 14, 15, 16))));
+        ManualNumberDto manualNumberDto1 = new ManualNumberDto(Arrays.asList(1, 2, 3, 4, 5, 6));    //1등
+        ManualNumberDto manualNumberDto2 = new ManualNumberDto(Arrays.asList(3, 4, 5, 6, 7, 8));    //5등
+        ManualNumberDto manualNumberDto3 = new ManualNumberDto(Arrays.asList(5, 6, 7, 8, 9, 10));
+        ManualNumberDto manualNumberDto4 = new ManualNumberDto(Arrays.asList(7, 8, 9, 10, 11, 12));
+        ManualNumberDto manualNumberDto5 = new ManualNumberDto(Arrays.asList(9, 10, 11, 12, 13, 14));
+        ManualNumberDto manualNumberDto6 = new ManualNumberDto(Arrays.asList(11, 12, 13, 14, 15, 16));
+
+        List<ManualNumberDto> manualNumberDtos =
+                Arrays.asList(manualNumberDto1,
+                        manualNumberDto2,
+                        manualNumberDto3,
+                        manualNumberDto4,
+                        manualNumberDto5,
+                        manualNumberDto6);
+
+        InputDto inputDto = new InputDto(price, manualAmount, manualNumberDtos);
+
 
         //when
-        FixedLottoBundle fixedLottoList = new FixedLottoBundle(fixedLottoTickets);
-        LottoResultDto lottoResultDto = new LottoResultDto(fixedLottoList, winningLotto);
+        LottoMachine manual = new ManualLottoMachine(inputDto);
+        LottoMachine random = new RandomLottoMachine(inputDto);
+
+        LottoBundle lottoBundle = new LottoBundle(manual.buyLotto(), random.buyLotto());
+        LottoResultDto lottoResultDto = new LottoResultDto(lottoBundle, winningLotto);
 
         //then
         assertThat(lottoResultDto.getRate()).isEqualTo(rate);
@@ -73,27 +101,27 @@ public class LottoResultDtoTest {
     @Test
     public void 우승_로또랑_내가_수동으로_뽑은_로또_비교하기() {
         int bonus = 7;
+        int price = 3000;
+        int manualAmount = 3;
         List<Integer> winningNumbers = Arrays.asList(1, 2, 3, 4, 5, 6);
 
         WinningLotto winningLotto = new WinningLotto(winningNumbers, bonus);
 
-        List<Integer> allMatchNumbers = Arrays.asList(1, 2, 3, 4, 5, 6);
-        List<Integer> matchFive = Arrays.asList(45, 2, 3, 4, 5, 6);
-        List<Integer> matchFiveWithBonus = Arrays.asList(1, 2, 3, 4, 5, 7);
 
-        NumberGenerator numberGenerator = new FixedNumberGenerator(allMatchNumbers);
-        LottoTicket allMatchTicket = new LottoTicket(numberGenerator);
-        LottoTicket allMatchTicket2 = new LottoTicket(numberGenerator);
-        numberGenerator = new FixedNumberGenerator(matchFive);
-        LottoTicket matchFiveTicket = new LottoTicket(numberGenerator);
-        numberGenerator = new FixedNumberGenerator(matchFiveWithBonus);
-        LottoTicket matchFiveWithBonusTicket = new LottoTicket(numberGenerator);
+        ManualNumberDto allMatchNumbers = new ManualNumberDto(Arrays.asList(1, 2, 3, 4, 5, 6));
+        ManualNumberDto matchFive = new ManualNumberDto(Arrays.asList(45, 2, 3, 4, 5, 6));
+        ManualNumberDto matchFiveWithBonus = new ManualNumberDto(Arrays.asList(1, 2, 3, 4, 5, 7));
 
-        List<LottoTicket> lottoTickets = Arrays.asList(allMatchTicket, allMatchTicket2, matchFiveTicket, matchFiveWithBonusTicket);
+        List<ManualNumberDto> manualNumberDtos = Arrays.asList(allMatchNumbers, matchFive, matchFiveWithBonus);
 
-        LottoBundle lottoBundle = new FixedLottoBundle(lottoTickets);
+        InputDto inputDto = new InputDto(price, manualAmount, manualNumberDtos);
 
+        LottoMachine manual = new ManualLottoMachine(inputDto);
+        LottoMachine random = new RandomLottoMachine(inputDto);
+
+        LottoBundle lottoBundle = new LottoBundle(manual.buyLotto(), random.buyLotto());
         LottoResultDto lottoResultDto = new LottoResultDto(lottoBundle, winningLotto);
+
 
         List<PrizeGroup> expect = Arrays.asList(PrizeGroup.FIRST, PrizeGroup.FIRST, PrizeGroup.SECOND, PrizeGroup.THIRD);
 

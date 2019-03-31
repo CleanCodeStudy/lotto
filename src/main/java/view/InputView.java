@@ -1,9 +1,6 @@
 package view;
 
-import domain.LottoTicket;
-import domain.bundle.LottoBundle;
-import domain.bundle.ManualLottoBundle;
-import util.numberGenerator.FixedNumberGenerator;
+import dto.ManualNumberDto;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -26,49 +23,34 @@ public class InputView {
         return scanner.nextLine();
     }
 
-    public LottoBundle getLottoBundle() {
-        int price = getPrice();
-        if (price < MIN_MONEY) throw new RuntimeException("최소 가격보다 적습니다.");
-
-        int manualAmount = getManualAmount();
-
-        List<LottoTicket> lottoTickets = getManualLottoTickets(manualAmount);
-        LottoBundle lottoBundle = new ManualLottoBundle(price, lottoTickets);
-
-        new OutputView().showBuyedList(lottoBundle);
-
-        return lottoBundle;
-    }
-
-    private int getPrice() {
+    public int getPrice() {
         System.out.println(
                 "로또 1장의 가격은 1000원이다.\n" +
                         "구입금액을 입력해 주세요.\n");
-        return Integer.parseInt(inputString());
+        int price = Integer.parseInt(inputString());
+        if (price < MIN_MONEY) throw new RuntimeException("최소 가격보다 적습니다.");
+        return price;
     }
 
-    private int getManualAmount() {
+    public int getManualAmount() {
         System.out.println("수동으로 구매할 로또 수를 입력해 주세요.");
-        return Integer.valueOf(inputString());
+        int amount = Integer.valueOf(inputString());
+        if (amount < 0) throw new RuntimeException("0보다 작은값을 입력할 수 없습니다.");
+        return amount;
     }
 
-    private List<LottoTicket> getManualLottoTickets(int amount) {
-        List<LottoTicket> lottoTickets = new ArrayList<>();
-
+    public List<ManualNumberDto> getManualLottoNumbers(int amount) {
         if (amount == ZERO_AMOUNT) {
-            return lottoTickets;
+            return new ArrayList<>();
         }
-
         System.out.println("수동으로 구매할 번호를 입력해 주세요.");
-
+        List<ManualNumberDto> manualNumberDtos = new ArrayList<>();
         for (int t = 0; t < amount; t++) {
             String line = inputString();
             List<Integer> numbers = convertStringToIntegerList(line);
-            LottoTicket ticket = new LottoTicket(new FixedNumberGenerator(numbers));
-            lottoTickets.add(ticket);
+            manualNumberDtos.add(new ManualNumberDto(numbers));
         }
-
-        return lottoTickets;
+        return manualNumberDtos;
     }
 
     public List<Integer> getWinningNumbers() {

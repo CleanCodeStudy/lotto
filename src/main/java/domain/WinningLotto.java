@@ -1,7 +1,5 @@
 package domain;
 
-import util.numberGenerator.FixedNumberGenerator;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -10,8 +8,9 @@ public class WinningLotto {
     private LottoNo bonusNumber;
 
     public WinningLotto(List<Integer> numbers, int bonusNumber) {
-
-        this.winningLottoNumbers = new FixedNumberGenerator(numbers).createLottoNumbers();
+        this.winningLottoNumbers = numbers.stream()
+                .map(integer -> new LottoNo(integer))
+                .collect(Collectors.toList());
         this.bonusNumber = new LottoNo(bonusNumber);
     }
 
