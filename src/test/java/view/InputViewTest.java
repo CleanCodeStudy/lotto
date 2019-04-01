@@ -23,7 +23,7 @@ public class InputViewTest {
     }
 
     @Test(expected = Exception.class)
-    public void 기본가격보다_적은_입력_테스트(){
+    public void 기본가격보다_적은_입력_테스트() {
         //given
         InputView inputView = new InputView(new ByteArrayInputStream("0".getBytes()));
 
@@ -32,7 +32,7 @@ public class InputViewTest {
     }
 
     @Test(expected = Exception.class)
-    public void 음수_입력_테스트(){
+    public void 음수_입력_테스트() {
         //given
         InputView inputView = new InputView(new ByteArrayInputStream("-1000".getBytes()));
 
@@ -80,7 +80,7 @@ public class InputViewTest {
         List<Integer> winningLotto = inputView.getWinningNumbers();
 
         //then
-        assertThat(winningLotto).contains(1,2,3,4,5,6);
+        assertThat(winningLotto).contains(1, 2, 3, 4, 5, 6);
     }
 
     @Test

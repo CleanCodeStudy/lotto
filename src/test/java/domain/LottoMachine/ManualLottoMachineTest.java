@@ -18,7 +18,7 @@ public class ManualLottoMachineTest {
         int amount = 1;
         ManualNumberDto manualNumberDto = new ManualNumberDto(Arrays.asList(1, 2, 3, 4, 5, 6));
         List<ManualNumberDto> manualNumberDtos = Arrays.asList(manualNumberDto);
-        InputDto inputDto = new InputDto(price,amount,manualNumberDtos);
+        InputDto inputDto = new InputDto(price, amount, manualNumberDtos);
         LottoMachine lottoMachine = new ManualLottoMachine(inputDto);
 
         //when

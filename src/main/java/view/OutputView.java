@@ -15,7 +15,7 @@ public class OutputView {
 
     public String showBuyedList(LottoBundle lottoBundle) {
         List<LottoTicket> lottoTickets = lottoBundle.getLottoTickets();
-        String buyAmount = String.format("수동으로 %d개, 자동으로 %d개 구매하였습니다.\n", lottoBundle.getManualAmount(), lottoBundle.getRadomAmount());
+        String buyAmount = String.format("수동으로 %d개, 자동으로 %d개 구매하였습니다.\n", lottoBundle.getManualAmount(), lottoBundle.getRandomAmount());
         String list = lottoTickets.stream()
                 .map(LottoTicket::getListString)
                 .collect(Collectors.joining("\n"));

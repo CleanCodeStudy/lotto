@@ -53,7 +53,7 @@ public class LottoResultDtoTest {
         LottoResultDto lottoResultDto = new LottoResultDto(lottoBundle, winningLotto);
 
         //then
-        assertThat(lottoResultDto.getSum()).isEqualTo(2000050000);
+        assertThat(lottoResultDto.getTotalPrize()).isEqualTo(2000050000);
     }
 
     @Test
@@ -69,7 +69,7 @@ public class LottoResultDtoTest {
         WinningLotto winningLotto = new WinningLotto(win1, bonus);
 
         ManualNumberDto manualNumberDto1 = new ManualNumberDto(Arrays.asList(1, 2, 3, 4, 5, 6));    //1등
-        ManualNumberDto manualNumberDto2 = new ManualNumberDto(Arrays.asList(3, 4, 5, 6, 7, 8));    //5등
+        ManualNumberDto manualNumberDto2 = new ManualNumberDto(Arrays.asList(3, 4, 5, 6, 7, 8));    //4등
         ManualNumberDto manualNumberDto3 = new ManualNumberDto(Arrays.asList(5, 6, 7, 8, 9, 10));
         ManualNumberDto manualNumberDto4 = new ManualNumberDto(Arrays.asList(7, 8, 9, 10, 11, 12));
         ManualNumberDto manualNumberDto5 = new ManualNumberDto(Arrays.asList(9, 10, 11, 12, 13, 14));
@@ -92,6 +92,10 @@ public class LottoResultDtoTest {
 
         LottoBundle lottoBundle = new LottoBundle(manual.buyLotto(), random.buyLotto());
         LottoResultDto lottoResultDto = new LottoResultDto(lottoBundle, winningLotto);
+
+        System.out.println("input money: " + lottoBundle.getInputMoney());
+        System.out.println("input manual: " + lottoBundle.getManualAmount());
+        System.out.println("input random: " + lottoBundle.getRandomAmount());
 
         //then
         assertThat(lottoResultDto.getRate()).isEqualTo(rate);
