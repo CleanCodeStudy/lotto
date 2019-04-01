@@ -1,35 +1,23 @@
 package com.ccstudy.lotto.domain;
 
+import com.ccstudy.lotto.view.InputDto;
 import org.junit.Test;
-import com.ccstudy.lotto.util.FixedGeneratorImpl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class LottoGameTest {
     @Test
-    public void 로또_3개_생성_테스트() {
-        LottoGame lottoGame = new LottoGame(3000, new ArrayList<Lotto>(), new FixedGeneratorImpl(0));
+    public void 수동_2개_생성_테스트() {
+        List<String> manualLottos = Arrays.asList("1,3,4,5,6,7", "13,14,15,16,18,20");
+        InputDto inputDto = new InputDto(2, manualLottos);
 
-        List<Lotto> fixedLottos = getFixedLottos(3);
+        LottoGame lottoGame = new LottoGame(2000, inputDto);
 
-        for(int i = 0 ; i < lottoGame.getLottos().size() ; i++){
-            assertThat(lottoGame.getLottos().get(i).getNumbers()).isEqualTo(fixedLottos.get(i).getNumbers());
-        }
-
-    }
-
-    public List<Lotto> getFixedLottos(int amoutOfLotto) {
-        List<Lotto> fixedLottos = new ArrayList<>();
-        FixedGeneratorImpl fixedListGenerator = new FixedGeneratorImpl(0);
-
-        for (int i = 0; i < amoutOfLotto; i++) {
-            Lotto myLotto = new Lotto(fixedListGenerator.getSixList());
-            fixedLottos.add(myLotto);
-        }
-
-        return fixedLottos;
+        assertThat(lottoGame.getLottoTickets().get(0).getLottoNumber()).contains(1, 3, 4, 5, 6, 7);
+        assertThat(lottoGame.getLottoTickets().get(1).getLottoNumber()).contains(13, 14, 15, 16, 18, 20);
     }
 }

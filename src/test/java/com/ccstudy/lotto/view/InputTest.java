@@ -1,13 +1,14 @@
 package com.ccstudy.lotto.view;
 
-import com.ccstudy.lotto.domain.Lotto;
+import com.ccstudy.lotto.domain.LottoNo;
+import com.ccstudy.lotto.domain.LottoTicket;
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -32,11 +33,10 @@ public class InputTest {
 
     @Test
     public void inputManualLottoNumber() {
-        Lotto expectedLotto = new Lotto(Arrays.asList(1, 2, 3, 4, 5, 6));
         InputStream inputStream = getInputStream("1, 2, 3, 4, 5, 6");
-        List<Lotto> actualLottos = new Input(inputStream).inputManualLottoNumber(1);
+        List<String> manualLottoNumber = new Input(inputStream).inputManualLottoNumber(1);
 
-        assertThat(actualLottos.get(0).getNumbers()).isEqualTo(expectedLotto.getNumbers());
+        assertThat(manualLottoNumber.get(0)).isEqualTo("1,2,3,4,5,6");
     }
 
     @Test
@@ -59,5 +59,12 @@ public class InputTest {
 
     public InputStream getInputStream(String inputValue) {
         return new ByteArrayInputStream(inputValue.getBytes());
+    }
+
+    public LottoTicket createLottoTicket(List<Integer> numbers) {
+        List<LottoNo> lottoNos = numbers.stream()
+                .map(integer -> new LottoNo(integer))
+                .collect(Collectors.toList());
+        return new LottoTicket(lottoNos);
     }
 }

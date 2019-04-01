@@ -1,38 +1,37 @@
 package com.ccstudy.lotto.domain;
 
-import com.ccstudy.lotto.util.NumberGenerator;
+import com.ccstudy.lotto.view.InputDto;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class LottoGame {
     public static final int LOTTO_PRICE = 1000;
-    private List<Lotto> lottos;
+    private List<LottoTicket> lottoTickets;
 
-    public LottoGame(int purchase, List<Lotto> manualLottos, NumberGenerator numberGenerator) {
-        this.lottos = createLottos(purchase, manualLottos, numberGenerator);
+    public LottoGame(int purchase, InputDto inputDto) {
+        this.lottoTickets = createLottos(purchase, inputDto);
     }
 
-    public List<Lotto> getLottos() {
-        return lottos;
+    public List<LottoTicket> getLottoTickets() {
+        return lottoTickets;
     }
 
-    public List<Lotto> createLottos(int purchase, List<Lotto> manualLottos, NumberGenerator numberGenerator) {
-        int manualPurchas = manualLottos.size() * LOTTO_PRICE;
-        int randomLottoCount = (purchase - manualPurchas) / LOTTO_PRICE;
+    public List<LottoTicket> createLottos(int purchase, InputDto inputDto) {
+        int amountOfRandomLotto = purchase / LOTTO_PRICE - inputDto.getManualAmountOfLotto();
 
-        List<Lotto> lottos = new ArrayList<>();
+        List<LottoTicket> lottoTickets = new ArrayList<>();
 
-        lottos.addAll(manualLottos);
+        List<LottoTicket> manualLottoTickets = LottoMachine.createManualLottoTickets(inputDto.getManualLottoNumbers());
+        List<LottoTicket> randomLottoTickets = LottoMachine.createRandomLottoTickets(amountOfRandomLotto);
 
-        for (int i = 0; i < randomLottoCount; i++) {
-            lottos.add(new Lotto(numberGenerator.getSixList()));
-        }
+        lottoTickets.addAll(manualLottoTickets);
+        lottoTickets.addAll(randomLottoTickets);
 
-        return lottos;
+        return lottoTickets;
     }
 
     public LottoResult gameStart(WinningNumber winningNumber) {
-        return new LottoResult(lottos, winningNumber);
+        return new LottoResult(lottoTickets, winningNumber);
     }
 }

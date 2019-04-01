@@ -2,6 +2,7 @@ package com.ccstudy.lotto.domain;
 
 import com.ccstudy.lotto.util.LottoRank;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -11,16 +12,14 @@ public class LottoResult {
     private List<LottoRank> winningRanks;
     private WinningNumber winningNumber;
 
-    public LottoResult(List<Lotto> lottos, WinningNumber winningNumber) {
+    public LottoResult(List<LottoTicket> lottoTickets, WinningNumber winningNumber) {
         this.winningNumber = winningNumber;
 
-        this.winningRanks = lottos.stream()
-                .map(lotto -> LottoRank.getRank(lotto, winningNumber))
-                .filter(receivedType -> receivedType != LottoRank.DEFAULT)
-                .sorted()
+        this.winningRanks = lottoTickets.stream()
+                .map(lottoTicket -> getMatchingRank(lottoTicket))
                 .collect(Collectors.toList());
 
-        this.yield = calculateYield(lottos.size());
+        this.yield = calculateYield(lottoTickets.size());
     }
 
     public List<LottoRank> getWinningRanks() {
@@ -57,6 +56,21 @@ public class LottoResult {
         return (int) winningRanks.stream()
                 .filter(receivedType1 -> receivedType1 == lottoRank)
                 .count();
+    }
+
+    public LottoRank getMatchingRank(LottoTicket lottoTicket) {
+        LottoRank matchingRank = LottoRank.DEFAULT;
+
+        for (LottoRank rank : LottoRank.values()) {
+            if (rank.isCorrectCount(winningNumber.getAnswerCount(lottoTicket))) {
+                matchingRank = rank;
+            }
+        }
+
+        if (matchingRank == LottoRank.THIRD && winningNumber.isCorrectBonus(lottoTicket)) {
+            matchingRank = LottoRank.SECOND;
+        }
+        return matchingRank;
     }
 
 }

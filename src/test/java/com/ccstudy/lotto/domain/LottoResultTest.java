@@ -1,6 +1,5 @@
 package com.ccstudy.lotto.domain;
 
-import com.ccstudy.lotto.util.FixedGeneratorImpl;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -13,32 +12,24 @@ public class LottoResultTest {
 
     @Test
     public void 총_획득금액_테스트(){
-        List<Lotto> lottos = getFixedLottos(3);
+        List<LottoTicket> lottoTickets = getFixedLottos(3);
         WinningNumber winningNumber = new WinningNumber(Arrays.asList(4, 5, 6, 7, 8, 9), 3);
-        LottoResult lottoResult = new LottoResult(lottos, winningNumber);
+        LottoResult lottoResult = new LottoResult(lottoTickets, winningNumber);
 
         assertThat(lottoResult.getReceivedAmount()).isEqualTo(30055000);
     }
 
     @Test
     public void 총_수익률_테스트(){
-        List<Lotto> lottos = getFixedLottos(3);
+        List<LottoTicket> lottoTickets = getFixedLottos(3);
         WinningNumber winningNumber = new WinningNumber(Arrays.asList(5, 6, 7, 8, 9, 10), 11);
-        LottoResult lottoResult = new LottoResult(lottos, winningNumber);
+        LottoResult lottoResult = new LottoResult(lottoTickets, winningNumber);
 
         assertThat(lottoResult.getYield()).isEqualTo(1833.33);
     }
 
-    public List<Lotto> getFixedLottos(int amoutOfLotto) {
-        List<Lotto> fixedLottos = new ArrayList<>();
-        FixedGeneratorImpl fixedListGenerator = new FixedGeneratorImpl(0);
-
-        for (int i = 0; i < amoutOfLotto; i++) {
-            Lotto myLotto = new Lotto(fixedListGenerator.getSixList());
-            fixedLottos.add(myLotto);
-        }
-
-        return fixedLottos;
+    public List<LottoTicket> getFixedLottos(int amoutOfLotto) {
+        return LottoMachine.createFixedLottoTicket(amoutOfLotto);
     }
 
 }

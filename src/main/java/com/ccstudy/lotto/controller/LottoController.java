@@ -1,11 +1,11 @@
 package com.ccstudy.lotto.controller;
 
-import com.ccstudy.lotto.domain.Lotto;
+import com.ccstudy.lotto.domain.LottoTicket;
 import com.ccstudy.lotto.domain.LottoGame;
 import com.ccstudy.lotto.domain.LottoResult;
 import com.ccstudy.lotto.domain.WinningNumber;
-import com.ccstudy.lotto.util.RandomGeneratorImpl;
 import com.ccstudy.lotto.view.Input;
+import com.ccstudy.lotto.view.InputDto;
 import com.ccstudy.lotto.view.Output;
 
 import java.util.List;
@@ -18,11 +18,13 @@ public class LottoController {
 
         int manualAmountOfLotto = input.inputManualAmountOfLotto();
 
-        List<Lotto> manualLottos = input.inputManualLottoNumber(manualAmountOfLotto);
+        List<String> manualLottoTickets = input.inputManualLottoNumber(manualAmountOfLotto);
 
-        LottoGame lottoGame = new LottoGame(purchase, manualLottos, new RandomGeneratorImpl());
+        InputDto inputDto = new InputDto(manualAmountOfLotto, manualLottoTickets);
 
-        Output.printPurchaseLottos(lottoGame.getLottos());
+        LottoGame lottoGame = new LottoGame(purchase, inputDto);
+
+        Output.printPurchaseLottos(inputDto, lottoGame.getLottoTickets());
 
         List<Integer> correctAnswer = input.inputCorrectAnswer();
 
