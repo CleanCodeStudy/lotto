@@ -2,7 +2,7 @@ package domain.result;
 
 import domain.PurchasedLottos;
 import org.junit.Test;
-import util.FlexibleNumberGenerator;
+import domain.factory.FlexibleNumberGenerator;
 
 import java.util.Arrays;
 import java.util.List;

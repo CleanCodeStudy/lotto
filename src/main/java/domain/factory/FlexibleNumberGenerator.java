@@ -1,4 +1,6 @@
-package util;
+package domain.factory;
+
+import domain.factory.NumberGenerator;
 
 import java.util.ArrayList;
 import java.util.List;

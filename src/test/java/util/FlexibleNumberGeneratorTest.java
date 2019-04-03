@@ -1,8 +1,7 @@
 package util;
 
+import domain.factory.FlexibleNumberGenerator;
 import org.junit.Test;
-
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

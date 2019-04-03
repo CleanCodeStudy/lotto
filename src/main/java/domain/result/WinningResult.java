@@ -1,6 +1,6 @@
 package domain.result;
 
-import domain.Lotto;
+import domain.LottoTicket;
 import domain.PurchasedLottos;
 
 import java.util.*;
@@ -11,7 +11,7 @@ public class WinningResult {
     private double yield;
 
     public WinningResult(PurchasedLottos lottos, List<String> winningNumbers) {
-        this.lottoResults = confirmLottos(lottos.getLottos(), convertToBoxedInt(winningNumbers));
+        this.lottoResults = confirmLottos(lottos.getLottoTickets(), convertToBoxedInt(winningNumbers));
         this.yield = calculateYield(lottos.getPrice());
     }
 
@@ -31,8 +31,8 @@ public class WinningResult {
         return price * 100;
     }
 
-    private List<LottoResult> confirmLottos(List<Lotto> lottos, List<Integer> winningNumbers) {
-        return lottos.stream()
+    private List<LottoResult> confirmLottos(List<LottoTicket> lottoTickets, List<Integer> winningNumbers) {
+        return lottoTickets.stream()
                 .map(lotto -> new LottoResult(lotto, winningNumbers))
                 .collect(Collectors.toList());
     }

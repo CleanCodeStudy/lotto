@@ -1,5 +1,7 @@
 package util;
 
+import domain.factory.NumberGenerator;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -10,7 +12,7 @@ public class RandomNumberGenerator implements NumberGenerator {
     private static final int LOTTO_LIMIT = 6;
     private static final int LOTTO_START_NUMBER = 1;
     private static final int LOTTO_END_NUMBER = 45;
-    
+
     @Override
     public List<Integer> createNumbers() {
         List<Integer> numbers = create();

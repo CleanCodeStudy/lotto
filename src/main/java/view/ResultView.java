@@ -8,7 +8,7 @@ import java.util.Arrays;
 
 public class ResultView {
     public static void printMyLottos(PurchasedLottos purchasedLottos) {
-        purchasedLottos.getLottos().forEach(lotto -> System.out.println(lotto.toString()));
+        purchasedLottos.getLottoTickets().forEach(lotto -> System.out.println(lotto.toString()));
     }
 
     public static void printResults(WinningResult winningResult) {

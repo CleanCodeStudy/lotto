@@ -1,7 +1,7 @@
 package domain;
 
 import org.junit.Test;
-import util.FlexibleNumberGenerator;
+import domain.factory.FlexibleNumberGenerator;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -14,6 +14,6 @@ public class PurchasedLottosTest {
         //when
         PurchasedLottos purchasedLottos = new PurchasedLottos(price,new FlexibleNumberGenerator(1));
         //then
-        assertThat(purchasedLottos.getLottos().size()).isEqualTo(14);
+        assertThat(purchasedLottos.getLottoTickets().size()).isEqualTo(14);
     }
 }

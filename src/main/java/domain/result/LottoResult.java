@@ -1,15 +1,15 @@
 package domain.result;
 
-import domain.Lotto;
+import domain.LottoTicket;
 
 import java.util.List;
 
 public class LottoResult {
-    private Lotto myLotto;
+    private LottoTicket myLottoTicket;
     private int correctAmount;
 
-    public LottoResult(Lotto myLotto, List<Integer> winningNumbers) {
-        this.myLotto = myLotto;
+    public LottoResult(LottoTicket myLottoTicket, List<Integer> winningNumbers) {
+        this.myLottoTicket = myLottoTicket;
         confirmLotto(winningNumbers);
     }
 
@@ -20,7 +20,7 @@ public class LottoResult {
     }
 
     private void confirmNumber(int winnginNumber) {
-        if (myLotto.hasNumber(winnginNumber)) {
+        if (myLottoTicket.hasNumber(winnginNumber)) {
             correctAmount++;
         }
     }

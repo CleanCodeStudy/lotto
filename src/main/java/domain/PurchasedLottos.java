@@ -1,7 +1,7 @@
 package domain;
 
 import domain.result.WinningResult;
-import util.NumberGenerator;
+import domain.factory.NumberGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,31 +9,31 @@ import java.util.List;
 public class PurchasedLottos {
     private static final int LOTTO_PRICE = 1000;
 
-    private List<Lotto> lottos;
+    private List<LottoTicket> lottoTickets;
     private long price;
 
     public PurchasedLottos(long price, NumberGenerator numberGenerator) {
-        this.lottos = buyLotto(price, numberGenerator);
+        this.lottoTickets = buyLotto(price, numberGenerator);
         this.price = price;
     }
 
-    public List<Lotto> getLottos() {
-        return lottos;
+    public List<LottoTicket> getLottoTickets() {
+        return lottoTickets;
     }
 
     public long getPrice() {
         return price;
     }
 
-    private List<Lotto> buyLotto(long price, NumberGenerator numberGenerator) {
+    private List<LottoTicket> buyLotto(long price, NumberGenerator numberGenerator) {
         long amountOfLotto = price / LOTTO_PRICE;
 
-        List<Lotto> lottos = new ArrayList<>();
+        List<LottoTicket> lottoTickets = new ArrayList<>();
         for (int i = 0; i < amountOfLotto; i++) {
-            lottos.add(new Lotto(numberGenerator));
+            lottoTickets.add(new LottoTicket(numberGenerator));
         }
 
-        return lottos;
+        return lottoTickets;
     }
 
     public WinningResult confirmLottos(PurchasedLottos purchasedLottos, List<String> inputWinningNumber) {

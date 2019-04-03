@@ -1,8 +1,8 @@
 package domain.result;
 
-import domain.Lotto;
+import domain.LottoTicket;
 import org.junit.Test;
-import util.FlexibleNumberGenerator;
+import domain.factory.FlexibleNumberGenerator;
 
 import java.util.Arrays;
 import java.util.List;
@@ -14,7 +14,7 @@ public class RankTest {
     @Test
     public void 삼등이_몇개_당첨되었는지_확인() {
         //given
-        Lotto lotto = new Lotto(new FlexibleNumberGenerator(1));
+        LottoTicket lottoTicket = new LottoTicket(new FlexibleNumberGenerator(1));
         List<LottoResult> lottoResults = Arrays.asList(createLottoResult(),createLottoResult());
 
         //when
@@ -25,7 +25,7 @@ public class RankTest {
     }
 
     private LottoResult createLottoResult(){
-        Lotto lotto = new Lotto(new FlexibleNumberGenerator(1));
-        return new LottoResult(lotto, Arrays.asList(3,4,5,6,7,8));
+        LottoTicket lottoTicket = new LottoTicket(new FlexibleNumberGenerator(1));
+        return new LottoResult(lottoTicket, Arrays.asList(3,4,5,6,7,8));
     }
 }
