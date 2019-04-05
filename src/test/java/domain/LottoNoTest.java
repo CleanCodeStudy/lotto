@@ -33,4 +33,13 @@ public class LottoNoTest {
 
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void 숫자_정상적인것만_받는지(){
+        List<Integer> numbers = Arrays.asList(0, 2, 3, 4, 5, 6);
+        List<LottoNo> lottoNos = numbers.stream()
+                .map(integer -> new LottoNo(integer))
+                .collect(Collectors.toList());
+    }
+
+
 }

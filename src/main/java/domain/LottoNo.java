@@ -17,7 +17,7 @@ public class LottoNo {
 
     private void validateCorrect(int number) {
         if (number < MIN_BOUNDARY || number > MAX_BOUNDARY) {
-            throw new RuntimeException();
+            throw new IllegalArgumentException();
         }
     }
 }
