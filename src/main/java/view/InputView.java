@@ -1,6 +1,8 @@
 package view;
 
+import dto.InputDto;
 import dto.ManualNumberDto;
+import dto.WinningInputDto;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -23,19 +25,29 @@ public class InputView {
         return scanner.nextLine();
     }
 
+    public InputDto getPriceAndManual(){
+        int price = getPrice();
+
+        int manualAmount = getManualAmount();
+
+        List<ManualNumberDto> manualNumbers = getManualLottoNumbers(manualAmount);
+
+        return new InputDto(price,manualAmount,manualNumbers);
+    }
+
     public int getPrice() {
         System.out.println(
                 "로또 1장의 가격은 1000원이다.\n" +
                         "구입금액을 입력해 주세요.\n");
         int price = Integer.parseInt(inputString());
-        if (price < MIN_MONEY) throw new RuntimeException("최소 가격보다 적습니다.");
+        if (price < MIN_MONEY) throw new IllegalArgumentException("최소 가격보다 적습니다.");
         return price;
     }
 
     public int getManualAmount() {
         System.out.println("수동으로 구매할 로또 수를 입력해 주세요.");
         int amount = Integer.valueOf(inputString());
-        if (amount < 0) throw new RuntimeException("0보다 작은값을 입력할 수 없습니다.");
+        if (amount < 0) throw new IllegalArgumentException("0보다 작은값을 입력할 수 없습니다.");
         return amount;
     }
 
@@ -51,6 +63,12 @@ public class InputView {
             manualNumberDtos.add(new ManualNumberDto(numbers));
         }
         return manualNumberDtos;
+    }
+
+    public WinningInputDto getWinInputDto(){
+        List<Integer> winNumbers = getWinningNumbers();
+        int bonus = getBonusNumber();
+        return new WinningInputDto(winNumbers,bonus);
     }
 
     public List<Integer> getWinningNumbers() {

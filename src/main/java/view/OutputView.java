@@ -13,8 +13,8 @@ public class OutputView {
 
     private static int MIN_RANK = 3;
 
-    public String showBuyedList(LottoBundle lottoBundle) {
-        List<LottoTicket> lottoTickets = lottoBundle.getLottoTickets();
+    public void getBuyList(LottoBundle lottoBundle) {
+        List<LottoTicket> lottoTickets = lottoBundle.getTickets();
         String buyAmount = String.format("수동으로 %d개, 자동으로 %d개 구매하였습니다.\n", lottoBundle.getManualAmount(), lottoBundle.getRandomAmount());
         String list = lottoTickets.stream()
                 .map(LottoTicket::getListString)
@@ -22,10 +22,10 @@ public class OutputView {
         StringBuilder sb = new StringBuilder();
         sb.append(buyAmount)
                 .append(list);
-        return sb.toString();
+        System.out.println(sb.toString());
     }
 
-    public String getStatistics(LottoResultDto lottoResultDto) {
+    public void getStatistics(LottoResultDto lottoResultDto) {
         String prefix = "당첨 통계\n----------\n";
         String body = getBody(lottoResultDto.getPrizeStat());
         String suffix = String.format("\n총 수익률은 %.2f%% 입니다.", lottoResultDto.getRate());
@@ -35,7 +35,7 @@ public class OutputView {
                 .append(body)
                 .append(suffix);
 
-        return stringBuilder.toString();
+        System.out.println(stringBuilder.toString());
     }
 
     private String getBody(List<PrizeGroup> prizeGroupList) {

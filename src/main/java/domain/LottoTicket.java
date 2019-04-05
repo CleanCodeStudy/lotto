@@ -36,6 +36,10 @@ public class LottoTicket {
         return getNumbers().contains(winningNumber);
     }
 
+    public boolean isSecondRank(WinningLotto winningLotto){
+        return (!hasBonus(winningLotto))&&hasCountOfSecondRank(winningLotto);
+    }
+
     public boolean hasBonus(WinningLotto winningLotto) {
         return this.getNumbers()
                 .contains(winningLotto.getBonusNumber());

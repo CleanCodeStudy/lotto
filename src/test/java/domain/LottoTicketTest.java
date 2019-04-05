@@ -1,5 +1,6 @@
 package domain;
 
+import dto.WinningInputDto;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -49,12 +50,14 @@ public class LottoTicketTest {
 
         int bonus = 3;
 
-        WinningLotto winningLotto = new WinningLotto(Arrays.asList(11, 12, 13, 14, 15, 16), bonus);
+        WinningInputDto winningInputDto = new WinningInputDto(Arrays.asList(11, 12, 13, 14, 15, 16), bonus);
+        WinningLotto winningLotto = new WinningLotto(winningInputDto);
         assertThat(lottoTicket.hasBonus(winningLotto)).isTrue();
 
         bonus = 45;
+        winningInputDto = new WinningInputDto(Arrays.asList(11, 12, 13, 14, 15, 16), bonus);
 
-        winningLotto = new WinningLotto(Arrays.asList(11, 12, 13, 14, 15, 16), bonus);
+        winningLotto = new WinningLotto(winningInputDto);
         assertThat(lottoTicket.hasBonus(winningLotto)).isFalse();
 
     }

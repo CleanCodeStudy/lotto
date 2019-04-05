@@ -2,40 +2,43 @@ package domain.bundle;
 
 import domain.LottoTicket;
 import domain.WinningLotto;
+import dto.BuyLottoTicketDto;
 import util.PrizeGroup;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class LottoBundle {
 
     private static final int LOTTO_DEFAULT_PRICE = 1000;
-    private static final String MANUAL_KEY = "manual";
-    private static final String RANDOM_KEY = "random";
+    private List<LottoTicket> tickets;
+    private int manualAmount;
+    private int randomAmount;
 
-    private Map<String, List<LottoTicket>> ticketMap = new HashMap<>();
-
-    public LottoBundle(List<LottoTicket> manual, List<LottoTicket> random) {
-        ticketMap.put(MANUAL_KEY, manual);
-        ticketMap.put(RANDOM_KEY, random);
-    }
-
-    public List<LottoTicket> getLottoTickets() {
-        List<LottoTicket> tickets = new ArrayList<>();
-        tickets.addAll(this.ticketMap.get(RANDOM_KEY));
-        tickets.addAll(this.ticketMap.get(MANUAL_KEY));
-        return tickets;
+    public List<LottoTicket> getTickets() {
+        return this.tickets;
     }
 
     public int getManualAmount() {
-        return this.ticketMap.get(MANUAL_KEY).size();
+        return this.manualAmount;
     }
 
     public int getRandomAmount() {
-        return this.ticketMap.get(RANDOM_KEY).size();
+        return this.randomAmount;
+    }
+
+    public LottoBundle(BuyLottoTicketDto buyLottoTicketDto) {
+        this.tickets = getLottoTickets(buyLottoTicketDto);
+        this.manualAmount = buyLottoTicketDto.getManualLottoTickets().size();
+        this.randomAmount = buyLottoTicketDto.getRandomLottoTickets().size();
+    }
+
+    public List<LottoTicket> getLottoTickets(BuyLottoTicketDto buyLottoTicketDto) {
+        List<LottoTicket> tickets = new ArrayList<>();
+        tickets.addAll(buyLottoTicketDto.getManualLottoTickets());
+        tickets.addAll(buyLottoTicketDto.getRandomLottoTickets());
+        return tickets;
     }
 
     public int getInputMoney() {
@@ -44,7 +47,7 @@ public class LottoBundle {
     }
 
     public List<PrizeGroup> getPrizeGroups(WinningLotto winningLotto) {
-        return getLottoTickets()
+        return getTickets()
                 .stream()
                 .map(lottoTicket -> PrizeGroup.findRankByCountOfMatchAndBonus(lottoTicket, winningLotto))
                 .collect(Collectors.toList());

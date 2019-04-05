@@ -7,7 +7,7 @@ public class LottoNo {
     private Integer number;
 
     public LottoNo(int number) {
-        isCorrect(number);
+        validateCorrect(number);
         this.number = number;
     }
 
@@ -15,11 +15,10 @@ public class LottoNo {
         return number;
     }
 
-    private boolean isCorrect(int number) {
+    private void validateCorrect(int number) {
         if (number < MIN_BOUNDARY || number > MAX_BOUNDARY) {
             throw new RuntimeException();
         }
-        return true;
     }
 }
 

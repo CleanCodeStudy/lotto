@@ -1,47 +1,38 @@
 package controller;
 
 import domain.LottoMachine.LottoMachine;
-import domain.LottoMachine.ManualLottoMachine;
-import domain.LottoMachine.RandomLottoMachine;
-import domain.LottoTicket;
 import domain.WinningLotto;
 import domain.bundle.LottoBundle;
+import dto.BuyLottoTicketDto;
 import dto.InputDto;
 import dto.LottoResultDto;
-import dto.ManualNumberDto;
+import dto.WinningInputDto;
 import view.InputView;
 import view.OutputView;
 
-import java.util.List;
-
 public class LottoController {
 
+    private static InputView inputView = new InputView(System.in);
+    private static OutputView outputView = new OutputView();
+
     public static void main(String[] args) {
-        InputView inputView = new InputView(System.in);
-        OutputView outputView = new OutputView();
+        InputDto inputDto = inputView.getPriceAndManual();
 
-        int price = inputView.getPrice();
-        int manualAmount = inputView.getManualAmount();
-        List<ManualNumberDto> manualNumbers = inputView.getManualLottoNumbers(manualAmount);
+        LottoMachine lottoMachine = new LottoMachine(inputDto);
 
-        InputDto inputDto = new InputDto(price, manualAmount, manualNumbers);
+        BuyLottoTicketDto buyLottoTicketDto = lottoMachine.buyLotto();
 
-        LottoMachine manualLottoMachine = new ManualLottoMachine(inputDto);
-        LottoMachine randomLottoMachine = new RandomLottoMachine(inputDto);
-        List<LottoTicket> manualLottoTickets = manualLottoMachine.buyLotto();
-        List<LottoTicket> randomLottoTickets = randomLottoMachine.buyLotto();
+        LottoBundle lottoBundle = new LottoBundle(buyLottoTicketDto);
 
-        LottoBundle lottoBundle = new LottoBundle(manualLottoTickets, randomLottoTickets);
+        outputView.getBuyList(lottoBundle);
 
-        System.out.println(outputView.showBuyedList(lottoBundle));
+        WinningInputDto winningInputDto = inputView.getWinInputDto();
 
-        List<Integer> winningNumbers = inputView.getWinningNumbers();
-        int bonus = inputView.getBonusNumber();
-
-        WinningLotto winningLotto = new WinningLotto(winningNumbers, bonus);
+        WinningLotto winningLotto = new WinningLotto(winningInputDto);
 
         LottoResultDto lottoResultDto = new LottoResultDto(lottoBundle, winningLotto);
-        System.out.println(new OutputView().getStatistics(lottoResultDto));
+
+        outputView.getStatistics(lottoResultDto);
     }
 
 }

@@ -1,13 +1,13 @@
 package util;
 
 import domain.LottoMachine.LottoMachine;
-import domain.LottoMachine.ManualLottoMachine;
-import domain.LottoMachine.RandomLottoMachine;
 import domain.LottoTicket;
 import domain.WinningLotto;
 import domain.bundle.LottoBundle;
+import dto.BuyLottoTicketDto;
 import dto.InputDto;
 import dto.ManualNumberDto;
+import dto.WinningInputDto;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -29,7 +29,8 @@ public class PrizeGroupTest {
         int manualAmount = 3;
         int bonus = 7;
         List<Integer> winningnumbers = Arrays.asList(1, 2, 3, 4, 5, 6);
-        WinningLotto winningLotto = new WinningLotto(winningnumbers, bonus);
+        WinningInputDto winningInputDto = new WinningInputDto(winningnumbers,bonus);
+        WinningLotto winningLotto = new WinningLotto(winningInputDto);
 
         ManualNumberDto manualNumberDto1 = new ManualNumberDto(Arrays.asList(1, 2, 3, 4, 5, 6));    //1등
         ManualNumberDto manualNumberDto2 = new ManualNumberDto(Arrays.asList(1, 2, 3, 4, 5, 7));    //2등
@@ -44,14 +45,14 @@ public class PrizeGroupTest {
 
 
         //when
-        LottoMachine manual = new ManualLottoMachine(inputDto);
-        LottoMachine random = new RandomLottoMachine(inputDto);
+        LottoMachine random = new LottoMachine(inputDto);
+        BuyLottoTicketDto buyLottoTicketDto = random.buyLotto();
 
-        LottoBundle lottoBundle = new LottoBundle(manual.buyLotto(), random.buyLotto());
+        LottoBundle lottoBundle = new LottoBundle(buyLottoTicketDto);
 
-        LottoTicket ticket1 = lottoBundle.getLottoTickets().get(0);
-        LottoTicket ticket2 = lottoBundle.getLottoTickets().get(1);
-        LottoTicket ticket3 = lottoBundle.getLottoTickets().get(2);
+        LottoTicket ticket1 = lottoBundle.getTickets().get(0);
+        LottoTicket ticket2 = lottoBundle.getTickets().get(1);
+        LottoTicket ticket3 = lottoBundle.getTickets().get(2);
 
 
         assertThat(PrizeGroup.findRankByCountOfMatchAndBonus(ticket1, winningLotto)).isEqualByComparingTo(PrizeGroup.FIRST);

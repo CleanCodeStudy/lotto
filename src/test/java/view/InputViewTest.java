@@ -22,7 +22,7 @@ public class InputViewTest {
         assertThat(price).isEqualTo(14000);
     }
 
-    @Test(expected = Exception.class)
+    @Test(expected = IllegalArgumentException.class)
     public void 기본가격보다_적은_입력_테스트() {
         //given
         InputView inputView = new InputView(new ByteArrayInputStream("0".getBytes()));
@@ -31,7 +31,7 @@ public class InputViewTest {
         int price = inputView.getPrice();
     }
 
-    @Test(expected = Exception.class)
+    @Test(expected = IllegalArgumentException.class)
     public void 음수_입력_테스트() {
         //given
         InputView inputView = new InputView(new ByteArrayInputStream("-1000".getBytes()));

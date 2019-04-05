@@ -49,7 +49,7 @@ public enum PrizeGroup {
     }
 
     private PrizeGroup findRankByBonus(LottoTicket lottoTicket, WinningLotto winningLotto) {
-        if (lottoTicket.hasCountOfSecondRank(winningLotto) && !lottoTicket.hasBonus(winningLotto)) {
+        if (lottoTicket.isSecondRank(winningLotto)) {
             return PrizeGroup.THIRD;
         }
         return this;
