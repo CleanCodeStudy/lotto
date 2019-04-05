@@ -1,6 +1,7 @@
 package com.ccstudy.lotto.view;
 
 import com.ccstudy.lotto.domain.LottoTicket;
+import com.ccstudy.lotto.domain.WinningNumber;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -15,6 +16,21 @@ public class Input {
 
     public Input(InputStream inputStream) {
         this.scanner = new Scanner(inputStream);
+    }
+
+    public InputDto purchaseLottos() {
+        int purchaseAmount = inputPurchase();
+        int manualAmountOfLotto = inputManualAmountOfLotto();
+        List<String> manualLottoNumber = inputManualLottoNumber(manualAmountOfLotto);
+
+        return new InputDto(purchaseAmount, manualAmountOfLotto, manualLottoNumber);
+    }
+
+    public WinningNumber inputWinningNumber() {
+        List<Integer> correctAnswer = inputCorrectAnswer();
+        int bonusNumber = inputBonusNumber();
+
+        return new WinningNumber(correctAnswer, bonusNumber);
     }
 
     public int inputPurchase(){

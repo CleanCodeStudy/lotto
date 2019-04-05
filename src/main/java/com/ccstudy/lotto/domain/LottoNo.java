@@ -1,9 +1,13 @@
 package com.ccstudy.lotto.domain;
 
-public class LottoNo {
-    public static final int LOTTO_NUMBER_MIN_BOUND = 1;
-    public static final int LOTTO_NUMBER_MAX_BOUND = 45;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
+public class LottoNo {
+    private static List<Integer> lottoRange = IntStream.range(1, 45)
+            .mapToObj(Integer::new)
+            .collect(Collectors.toList());
     private Integer number;
 
     public LottoNo(Integer number) {
@@ -16,7 +20,7 @@ public class LottoNo {
     }
 
     public void validateBound(Integer number) {
-        if (number < LOTTO_NUMBER_MIN_BOUND || number > LOTTO_NUMBER_MAX_BOUND) {
+        if (!lottoRange.contains(number)) {
             throw new RuntimeException("로또번호는 1 ~ 45 사이의 번호여야 합니다.");
         }
     }

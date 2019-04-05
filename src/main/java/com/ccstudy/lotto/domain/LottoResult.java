@@ -3,6 +3,7 @@ package com.ccstudy.lotto.domain;
 import com.ccstudy.lotto.util.LottoRank;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -59,17 +60,16 @@ public class LottoResult {
     }
 
     public LottoRank getMatchingRank(LottoTicket lottoTicket) {
-        LottoRank matchingRank = LottoRank.DEFAULT;
 
-        for (LottoRank rank : LottoRank.values()) {
-            if (rank.isCorrectCount(winningNumber.getAnswerCount(lottoTicket))) {
-                matchingRank = rank;
-            }
-        }
+        LottoRank matchingRank = Arrays.stream(LottoRank.values())
+                .filter(lottoRank -> lottoRank.isCorrectCount(winningNumber.getAnswerCount(lottoTicket)))
+                .findFirst()
+                .orElse(LottoRank.DEFAULT);
 
         if (matchingRank == LottoRank.THIRD && winningNumber.isCorrectBonus(lottoTicket)) {
             matchingRank = LottoRank.SECOND;
         }
+
         return matchingRank;
     }
 

@@ -5,21 +5,21 @@ import java.util.stream.Collectors;
 
 
 public class LottoTicket {
-    private List<LottoNo> lottoNumber;
+    private List<LottoNo> lottoNumbers;
 
-    public LottoTicket(List<LottoNo> lottoNumber) {
-        this.lottoNumber = lottoNumber;
+    public LottoTicket(List<LottoNo> lottoNumbers) {
+        this.lottoNumbers = lottoNumbers;
     }
 
-    public List<Integer> getLottoNumber() {
-        return lottoNumber.stream()
+    public List<Integer> getLottoNumbers() {
+        return lottoNumbers.stream()
                 .map(LottoNo::getNumber)
                 .sorted()
                 .collect(Collectors.toList());
     }
 
     public int getAnswer(List<Integer> correctAnswer) {
-        return (int) lottoNumber.stream()
+        return (int) lottoNumbers.stream()
                 .map(LottoNo::getNumber)
                 .filter(correctAnswer::contains)
                 .count();

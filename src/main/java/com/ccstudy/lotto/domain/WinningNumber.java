@@ -12,11 +12,11 @@ public class WinningNumber {
     }
 
     public boolean isCorrectBonus(LottoTicket lottoTicket) {
-        return (lottoTicket.getLottoNumber().contains(bonusNumber));
+        return (lottoTicket.getLottoNumbers().contains(bonusNumber));
     }
 
     public int getAnswerCount(LottoTicket lottoTicket) {
-        return (int) lottoTicket.getLottoNumber()
+        return (int) lottoTicket.getLottoNumbers()
                 .stream()
                 .filter(correctNumbers::contains)
                 .count();

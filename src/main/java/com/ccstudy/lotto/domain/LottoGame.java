@@ -9,16 +9,16 @@ public class LottoGame {
     public static final int LOTTO_PRICE = 1000;
     private List<LottoTicket> lottoTickets;
 
-    public LottoGame(int purchase, InputDto inputDto) {
-        this.lottoTickets = createLottos(purchase, inputDto);
+    public LottoGame(InputDto inputDto) {
+        this.lottoTickets = createLottos(inputDto);
     }
 
     public List<LottoTicket> getLottoTickets() {
         return lottoTickets;
     }
 
-    public List<LottoTicket> createLottos(int purchase, InputDto inputDto) {
-        int amountOfRandomLotto = purchase / LOTTO_PRICE - inputDto.getManualAmountOfLotto();
+    public List<LottoTicket> createLottos(InputDto inputDto) {
+        int amountOfRandomLotto = inputDto.getPurchaseAmount() / LOTTO_PRICE - inputDto.getManualAmountOfLotto();
 
         List<LottoTicket> lottoTickets = new ArrayList<>();
 

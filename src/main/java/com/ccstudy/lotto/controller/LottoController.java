@@ -14,23 +14,13 @@ public class LottoController {
     public static void main(String[] args) {
         Input input = new Input(System.in);
 
-        int purchase = input.inputPurchase();
+        InputDto inputDto = input.purchaseLottos();
 
-        int manualAmountOfLotto = input.inputManualAmountOfLotto();
-
-        List<String> manualLottoTickets = input.inputManualLottoNumber(manualAmountOfLotto);
-
-        InputDto inputDto = new InputDto(manualAmountOfLotto, manualLottoTickets);
-
-        LottoGame lottoGame = new LottoGame(purchase, inputDto);
+        LottoGame lottoGame = new LottoGame(inputDto);
 
         Output.printPurchaseLottos(inputDto, lottoGame.getLottoTickets());
 
-        List<Integer> correctAnswer = input.inputCorrectAnswer();
-
-        int bonusNumber = input.inputBonusNumber();
-
-        WinningNumber winningNumber = new WinningNumber(correctAnswer, bonusNumber);
+        WinningNumber winningNumber = input.inputWinningNumber();
 
         LottoResult lottoResult = lottoGame.gameStart(winningNumber);
 

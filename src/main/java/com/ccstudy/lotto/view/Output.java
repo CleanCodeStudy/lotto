@@ -13,7 +13,7 @@ public class Output {
         int amountOfRandomLotto = lottoTickets.size() - amountOfManualLotto;
         System.out.println(String.format("수동으로 %d장, 자동으로 %d개 구매하였습니다.", amountOfManualLotto, amountOfRandomLotto));
         lottoTickets.stream()
-                .map(lotto -> lotto.getLottoNumber().toString())
+                .map(lotto -> lotto.getLottoNumbers().toString())
                 .forEach(System.out::println);
     }
 

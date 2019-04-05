@@ -19,9 +19,10 @@ public class LottoMachine {
         for (int i = 0; i < amountOfRandomLotto; i++) {
             Collections.shuffle(lottoRange);
 
-            List<LottoNo> lottoNumbers = getSixLottoNoList(lottoRange.stream()
+            List<LottoNo> lottoNumbers = lottoRange.stream()
                     .limit(6)
-                    .collect(Collectors.toList()));
+                    .map(integer -> new LottoNo(integer))
+                    .collect(Collectors.toList());
 
             randomLottos.add(new LottoTicket(lottoNumbers));
         }
@@ -32,14 +33,12 @@ public class LottoMachine {
         List<LottoTicket> manualLottos = new ArrayList<>();
 
         for (String manualNumber : manualNumbers) {
-
-            List<Integer> splits = Arrays.stream(manualNumber.split(SPLITTER))
+            List<LottoNo> lottoNumbers = Arrays.stream(manualNumber.split(SPLITTER))
                     .map(Integer::valueOf)
+                    .map(integer -> new LottoNo(integer))
                     .collect(Collectors.toList());
-            List<LottoNo> lottoNumbers = getSixLottoNoList(splits);
 
             manualLottos.add(new LottoTicket(lottoNumbers));
-
         }
 
         return manualLottos;
@@ -49,25 +48,15 @@ public class LottoMachine {
         List<LottoTicket> fixedLottos = new ArrayList<>();
 
         for (int i = 0; i < amountOfFixedLotto; i++) {
-            List<Integer> sixList;
-
-            sixList = lottoRange.stream()
+            List<LottoNo> fixedNumbers = lottoRange.stream()
                     .skip(i)
                     .limit(6)
+                    .map(integer -> new LottoNo(integer))
                     .collect(Collectors.toList());
 
-            List<LottoNo> lottoNumbers = getSixLottoNoList(sixList);
-
-            fixedLottos.add(new LottoTicket(lottoNumbers));
+            fixedLottos.add(new LottoTicket(fixedNumbers));
         }
 
         return fixedLottos;
     }
-
-    public static List<LottoNo> getSixLottoNoList(List<Integer> numbers) {
-        return numbers.stream()
-                .map(number -> new LottoNo(number))
-                .collect(Collectors.toList());
-    }
-
 }
