@@ -3,7 +3,6 @@ package controller;
 import domain.LottoMachine.LottoMachine;
 import domain.WinningLotto;
 import domain.bundle.LottoBundle;
-import dto.BuyLottoTicketDto;
 import dto.InputDto;
 import dto.LottoResultDto;
 import dto.WinningInputDto;
@@ -20,9 +19,7 @@ public class LottoController {
 
         LottoMachine lottoMachine = new LottoMachine(inputDto);
 
-        BuyLottoTicketDto buyLottoTicketDto = lottoMachine.buyLotto();
-
-        LottoBundle lottoBundle = new LottoBundle(buyLottoTicketDto);
+        LottoBundle lottoBundle = lottoMachine.buyLottoTicket();
 
         outputView.getBuyList(lottoBundle);
 

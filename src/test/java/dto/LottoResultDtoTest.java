@@ -59,9 +59,8 @@ public class LottoResultDtoTest {
         //when
 
         LottoMachine random = new LottoMachine(inputDto);
-        BuyLottoTicketDto buyLottoTicketDto = random.buyLotto();
-
-        LottoBundle lottoBundle = new LottoBundle(buyLottoTicketDto);
+        LottoMachine lottoMachine = new LottoMachine(inputDto);
+        LottoBundle lottoBundle = lottoMachine.buyLottoTicket();
         LottoResultDto lottoResultDto = new LottoResultDto(lottoBundle, winningLotto);
 
         //then
@@ -95,9 +94,8 @@ public class LottoResultDtoTest {
 
         //when
         LottoMachine random = new LottoMachine(inputDto);
-        BuyLottoTicketDto buyLottoTicketDto = random.buyLotto();
-
-        LottoBundle lottoBundle = new LottoBundle(buyLottoTicketDto);
+        LottoMachine lottoMachine = new LottoMachine(inputDto);
+        LottoBundle lottoBundle = lottoMachine.buyLottoTicket();
         LottoResultDto lottoResultDto = new LottoResultDto(lottoBundle, winningLotto);
 
         System.out.println("input money: " + lottoBundle.getInputMoney());
@@ -128,10 +126,8 @@ public class LottoResultDtoTest {
 
         InputDto inputDto = new InputDto(price, manualAmount, manualNumberDtos);
 
-        LottoMachine random = new LottoMachine(inputDto);
-        BuyLottoTicketDto buyLottoTicketDto = random.buyLotto();
-
-        LottoBundle lottoBundle = new LottoBundle(buyLottoTicketDto);
+        LottoMachine lottoMachine = new LottoMachine(inputDto);
+        LottoBundle lottoBundle = lottoMachine.buyLottoTicket();
         LottoResultDto lottoResultDto = new LottoResultDto(lottoBundle, winningLotto);
 
 

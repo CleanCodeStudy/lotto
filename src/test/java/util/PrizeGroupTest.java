@@ -4,7 +4,6 @@ import domain.LottoMachine.LottoMachine;
 import domain.LottoTicket;
 import domain.WinningLotto;
 import domain.bundle.LottoBundle;
-import dto.BuyLottoTicketDto;
 import dto.InputDto;
 import dto.ManualNumberDto;
 import dto.WinningInputDto;
@@ -45,10 +44,9 @@ public class PrizeGroupTest {
 
 
         //when
-        LottoMachine random = new LottoMachine(inputDto);
-        BuyLottoTicketDto buyLottoTicketDto = random.buyLotto();
+        LottoMachine lottoMachine = new LottoMachine(inputDto);
 
-        LottoBundle lottoBundle = new LottoBundle(buyLottoTicketDto);
+        LottoBundle lottoBundle = lottoMachine.buyLottoTicket();
 
         LottoTicket ticket1 = lottoBundle.getTickets().get(0);
         LottoTicket ticket2 = lottoBundle.getTickets().get(1);

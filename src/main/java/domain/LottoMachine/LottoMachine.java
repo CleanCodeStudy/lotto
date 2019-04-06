@@ -2,7 +2,7 @@ package domain.LottoMachine;
 
 import domain.LottoNo;
 import domain.LottoTicket;
-import dto.BuyLottoTicketDto;
+import domain.bundle.LottoBundle;
 import dto.InputDto;
 
 import java.util.ArrayList;
@@ -26,13 +26,10 @@ public class LottoMachine {
         this.inputDto = inputDto;
     }
 
-    public BuyLottoTicketDto buyLotto() {
+    public LottoBundle buyLottoTicket() {
         List<LottoTicket> randoms = makeRandomLottoTickets();
         List<LottoTicket> manuals = makeManualLottoTickets();
-
-        BuyLottoTicketDto buyLottoTicketDto = new BuyLottoTicketDto(manuals, randoms);
-
-        return buyLottoTicketDto;
+        return new LottoBundle(manuals, randoms);
     }
 
     private List<LottoTicket> makeManualLottoTickets() {

@@ -2,7 +2,6 @@ package domain.bundle;
 
 import domain.LottoTicket;
 import domain.WinningLotto;
-import dto.BuyLottoTicketDto;
 import util.PrizeGroup;
 
 import java.util.ArrayList;
@@ -28,17 +27,13 @@ public class LottoBundle {
         return this.randomAmount;
     }
 
-    public LottoBundle(BuyLottoTicketDto buyLottoTicketDto) {
-        this.tickets = getLottoTickets(buyLottoTicketDto);
-        this.manualAmount = buyLottoTicketDto.getManualLottoTickets().size();
-        this.randomAmount = buyLottoTicketDto.getRandomLottoTickets().size();
-    }
-
-    public List<LottoTicket> getLottoTickets(BuyLottoTicketDto buyLottoTicketDto) {
+    public LottoBundle(List<LottoTicket> manual, List<LottoTicket> random) {
         List<LottoTicket> tickets = new ArrayList<>();
-        tickets.addAll(buyLottoTicketDto.getManualLottoTickets());
-        tickets.addAll(buyLottoTicketDto.getRandomLottoTickets());
-        return tickets;
+        tickets.addAll(manual);
+        tickets.addAll(random);
+        this.tickets = tickets;
+        this.manualAmount = manual.size();
+        this.randomAmount = random.size();
     }
 
     public int getInputMoney() {

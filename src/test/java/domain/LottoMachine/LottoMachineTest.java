@@ -1,6 +1,6 @@
 package domain.LottoMachine;
 
-import dto.BuyLottoTicketDto;
+import domain.bundle.LottoBundle;
 import dto.InputDto;
 import dto.ManualNumberDto;
 import org.junit.Test;
@@ -24,9 +24,9 @@ public class LottoMachineTest {
         LottoMachine lottoMachine = new LottoMachine(inputDto);
 
         //when
-        BuyLottoTicketDto buyLottoTicketDto = lottoMachine.buyLotto();
-        int manualAmount = buyLottoTicketDto.getManualLottoTickets().size();
-        int randomAmount = buyLottoTicketDto.getRandomLottoTickets().size();
+        LottoBundle lottoBundle = lottoMachine.buyLottoTicket();
+        int manualAmount = lottoBundle.getManualAmount();
+        int randomAmount = lottoBundle.getRandomAmount();
         int lottoAmount = manualAmount + randomAmount;
 
         //then
@@ -46,13 +46,13 @@ public class LottoMachineTest {
         LottoMachine lottoMachine = new LottoMachine(inputDto);
 
         //when
-        BuyLottoTicketDto buyLottoTicketDto = lottoMachine.buyLotto();
-        int manualAmount = buyLottoTicketDto.getManualLottoTickets().size();
-        int randomAmount = buyLottoTicketDto.getRandomLottoTickets().size();
+        LottoBundle lottoBundle = lottoMachine.buyLottoTicket();
+        int manualAmount = lottoBundle.getManualAmount();
+        int randomAmount = lottoBundle.getRandomAmount();
         int lottoAmount = manualAmount + randomAmount;
 
         //then
         assertThat(lottoAmount).isEqualTo(1);
-        assertThat(buyLottoTicketDto.getManualLottoTickets().get(0).getNumbers()).contains(1,2,3,4,5,6);
+        assertThat(lottoBundle.getTickets().get(0).getNumbers()).contains(1,2,3,4,5,6);
     }
 }
