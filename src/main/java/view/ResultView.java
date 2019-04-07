@@ -1,24 +1,25 @@
 package view;
 
-import domain.PurchasedLottos;
-import domain.result.WinningResult;
-import domain.result.Rank;
+import domain.LottoTicket;
+import domain.Rank;
+import dto.WinningResultDto;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class ResultView {
-    public static void printMyLottos(PurchasedLottos purchasedLottos) {
-        purchasedLottos.getLottoTickets().forEach(lotto -> System.out.println(lotto.toString()));
+    public static void printMyLottos(List<LottoTicket> lottoTickets) {
+        lottoTickets.forEach(System.out::println);
     }
 
-    public static void printResults(WinningResult winningResult) {
-        Arrays.stream(Rank.values())
-                .forEach(rank -> printResult(winningResult, rank));
-
-        System.out.println(String.format("총 수익률은 %2.1f입니다.", winningResult.getYield()));
+    public static void printResults(WinningResultDto winningResultDto) {
+        Arrays.stream(Rank.values()).forEach(rank ->printResult(rank, winningResultDto));
+        System.out.println(String.format("총 수익률은 %2.1f입니다.", winningResultDto.getYield()));
     }
 
-    private static void printResult(WinningResult result, Rank rank) {
-        System.out.println(String.format("%d개 일치 (%d원) - %d개", rank.getAmount(), rank.getPrice(), result.getResult(rank)));
+    private static void printResult(Rank rank, WinningResultDto result) {
+        if(Rank.꽝 !=rank) {
+            System.out.println(String.format("%d개 일치 (%d원) - %d개", rank.getAmount(), rank.getPrice(), result.getResults(rank)));
+        }
     }
 }

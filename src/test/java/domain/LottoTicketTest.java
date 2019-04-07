@@ -1,25 +1,21 @@
 package domain;
 
+import domain.vo.LottoNumber;
 import org.junit.Test;
-import domain.factory.FlexibleNumberGenerator;
-
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class LottoTicketTest {
-    private LottoTicket lottoTicket;
+
     @Test
-    public void 고정된_숫자를_넣을시_고정된_숫자를_갖는_로또생성(){
-        FlexibleNumberGenerator flexibleNumberGenerator = new FlexibleNumberGenerator(1);
-        List<Integer> numbers = flexibleNumberGenerator.createNumbers();
-
-        this.lottoTicket = new LottoTicket(new FlexibleNumberGenerator(1));
-
-        numbers.forEach(this::assertThatNumber);
-    }
-
-    private void assertThatNumber(int number){
-        assertThat(lottoTicket.hasNumber(number)).isTrue();
+    public void 수동로또의_번호확인하기() {
+        //given
+        //when
+        LottoTicket lottoTicket = LottoTicket.createManualLotto("1,2,3,4,5,6");
+        //then
+        for (int i = 1; i <=6 ; i++) {
+            LottoNumber lottoNumber = LottoNumber.pickNumber(i);
+            assertThat(lottoTicket.hasNumber(lottoNumber)).isTrue();
+        }
     }
 }
