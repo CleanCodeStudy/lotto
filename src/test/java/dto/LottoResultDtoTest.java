@@ -1,11 +1,11 @@
 package dto;
 
 import domain.LottoMachine.LottoMachine;
+import domain.prize.PrizeGroup;
 import domain.WinningLotto;
 import domain.bundle.LottoBundle;
 import org.junit.Before;
 import org.junit.Test;
-import util.PrizeGroup;
 
 import java.util.Arrays;
 import java.util.List;
@@ -14,21 +14,28 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class LottoResultDtoTest {
 
-    ManualNumberDto manualNumberDto1;
-    ManualNumberDto manualNumberDto2;
-    ManualNumberDto manualNumberDto3;
-    ManualNumberDto manualNumberDto4;
-    ManualNumberDto manualNumberDto5;
-    ManualNumberDto manualNumberDto6;
+    String manual1;
+    String manual2;
+    String manual3;
+    String manual4;
+    String manual5;
+    String manual6;
+    List<String> manuals;
 
     @Before
-    public void 로또_준비(){
-        manualNumberDto1 = new ManualNumberDto(Arrays.asList(1, 2, 3, 4, 5, 6));    //1
-        manualNumberDto2 = new ManualNumberDto(Arrays.asList(3, 4, 5, 6, 7, 8));    //5
-        manualNumberDto3 = new ManualNumberDto(Arrays.asList(5, 6, 7, 8, 9, 10));
-        manualNumberDto4 = new ManualNumberDto(Arrays.asList(7, 8, 9, 10, 11, 12));
-        manualNumberDto5 = new ManualNumberDto(Arrays.asList(9, 10, 11, 12, 13, 14));
-        manualNumberDto6 = new ManualNumberDto(Arrays.asList(11, 12, 13, 14, 15, 16));
+    public void 로또_준비() {
+        manual1 = "1, 2, 3, 4, 5, 6";    //1
+        manual2 = "3, 4, 5, 6, 7, 8";    //5
+        manual3 = "5, 6, 7, 8, 9, 10";
+        manual4 = "7, 8, 9, 10, 11, 12";
+        manual5 = "9, 10, 11, 12, 13, 14";
+        manual6 = "11, 12, 13, 14, 15, 16";
+        manuals = Arrays.asList(manual1,
+                manual2,
+                manual3,
+                manual4,
+                manual5,
+                manual6);
     }
 
     @Test
@@ -36,24 +43,13 @@ public class LottoResultDtoTest {
         //given
         int price = 6000;
         int manualAmount = 6;
-        int bonus = 45;
+        String bonus = "45";
+        String winningnumbers = "1,2,3,4,5,6";
+        WinningInputDto winningInputDto = new WinningInputDto(winningnumbers, bonus);
+        WinningLotto winningLotto = winningInputDto.toWinningLotto();
 
 
-        List<Integer> win1 = Arrays.asList(1, 2, 3, 4, 5, 6);
-
-        WinningInputDto winningInputDto = new WinningInputDto(win1,bonus);
-        WinningLotto winningLotto = new WinningLotto(winningInputDto);
-
-
-        List<ManualNumberDto> manualNumberDtos =
-                Arrays.asList(manualNumberDto1,
-                        manualNumberDto2,
-                        manualNumberDto3,
-                        manualNumberDto4,
-                        manualNumberDto5,
-                        manualNumberDto6);
-
-        InputDto inputDto = new InputDto(price, manualAmount, manualNumberDtos);
+        InputDto inputDto = new InputDto(price, manualAmount, manuals);
 
 
         //when
@@ -72,24 +68,15 @@ public class LottoResultDtoTest {
         //given
         int price = 6000;
         int manualAmount = 6;
-        int bonus = 45;
         double rate = (double) (2000050000 - 6000) / 6000 * 100;
 
-        List<Integer> win1 = Arrays.asList(1, 2, 3, 4, 5, 6);
+        String bonus = "45";
+        String winningnumbers = "1,2,3,4,5,6";
+        WinningInputDto winningInputDto = new WinningInputDto(winningnumbers, bonus);
+        WinningLotto winningLotto = winningInputDto.toWinningLotto();
 
-        WinningInputDto winningInputDto = new WinningInputDto(win1,bonus);
-        WinningLotto winningLotto = new WinningLotto(winningInputDto);
 
-
-        List<ManualNumberDto> manualNumberDtos =
-                Arrays.asList(manualNumberDto1,
-                        manualNumberDto2,
-                        manualNumberDto3,
-                        manualNumberDto4,
-                        manualNumberDto5,
-                        manualNumberDto6);
-
-        InputDto inputDto = new InputDto(price, manualAmount, manualNumberDtos);
+        InputDto inputDto = new InputDto(price, manualAmount, manuals);
 
 
         //when
@@ -109,22 +96,22 @@ public class LottoResultDtoTest {
 
     @Test
     public void 우승_로또랑_내가_수동으로_뽑은_로또_비교하기() {
-        int bonus = 7;
+
         int price = 3000;
         int manualAmount = 3;
-        List<Integer> winningNumbers = Arrays.asList(1, 2, 3, 4, 5, 6);
+        String bonus = "7";
+        String winningnumbers = "1,2,3,4,5,6";
+        WinningInputDto winningInputDto = new WinningInputDto(winningnumbers, bonus);
+        WinningLotto winningLotto = winningInputDto.toWinningLotto();
 
-        WinningInputDto winningInputDto = new WinningInputDto(winningNumbers,bonus);
-        WinningLotto winningLotto = new WinningLotto(winningInputDto);
 
+        String allMatchNumbers = "1, 2, 3, 4, 5, 6";
+        String matchFive = "45, 2, 3, 4, 5, 6";
+        String matchFiveWithBonus = "1, 2, 3, 4, 5, 7";
 
-        ManualNumberDto allMatchNumbers = new ManualNumberDto(Arrays.asList(1, 2, 3, 4, 5, 6));
-        ManualNumberDto matchFive = new ManualNumberDto(Arrays.asList(45, 2, 3, 4, 5, 6));
-        ManualNumberDto matchFiveWithBonus = new ManualNumberDto(Arrays.asList(1, 2, 3, 4, 5, 7));
+        List<String> customMunuals = Arrays.asList(allMatchNumbers, matchFive, matchFiveWithBonus);
 
-        List<ManualNumberDto> manualNumberDtos = Arrays.asList(allMatchNumbers, matchFive, matchFiveWithBonus);
-
-        InputDto inputDto = new InputDto(price, manualAmount, manualNumberDtos);
+        InputDto inputDto = new InputDto(price, manualAmount, customMunuals);
 
         LottoMachine lottoMachine = new LottoMachine(inputDto);
         LottoBundle lottoBundle = lottoMachine.buyLottoTicket();

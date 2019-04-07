@@ -1,15 +1,12 @@
 package view;
 
 import dto.InputDto;
-import dto.ManualNumberDto;
 import dto.WinningInputDto;
 
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
-import java.util.stream.Collectors;
 
 public class InputView {
     private static Scanner scanner;
@@ -25,14 +22,14 @@ public class InputView {
         return scanner.nextLine();
     }
 
-    public InputDto getPriceAndManual(){
+    public InputDto getPriceAndManual() {
         int price = getPrice();
 
         int manualAmount = getManualAmount();
 
-        List<ManualNumberDto> manualNumbers = getManualLottoNumbers(manualAmount);
+        List<String> manualNumbers = getManualNumbers(manualAmount);
 
-        return new InputDto(price,manualAmount,manualNumbers);
+        return new InputDto(price, manualAmount, manualNumbers);
     }
 
     public int getPrice() {
@@ -51,47 +48,33 @@ public class InputView {
         return amount;
     }
 
-    public List<ManualNumberDto> getManualLottoNumbers(int amount) {
+    public List<String> getManualNumbers(int amount) {
         if (amount == ZERO_AMOUNT) {
             return new ArrayList<>();
         }
         System.out.println("수동으로 구매할 번호를 입력해 주세요.");
-        List<ManualNumberDto> manualNumberDtos = new ArrayList<>();
+        List<String> numbers = new ArrayList<>();
         for (int t = 0; t < amount; t++) {
             String line = inputString();
-            List<Integer> numbers = convertStringToIntegerList(line);
-            manualNumberDtos.add(new ManualNumberDto(numbers));
+            numbers.add(line);
         }
-        return manualNumberDtos;
+        return numbers;
     }
 
-    public WinningInputDto getWinInputDto(){
-        List<Integer> winNumbers = getWinningNumbers();
-        int bonus = getBonusNumber();
-        return new WinningInputDto(winNumbers,bonus);
+    public WinningInputDto getWinningDto() {
+        String winningNumber = getWinningNumber();
+        String bonus = getBonus();
+        return new WinningInputDto(winningNumber, bonus);
     }
 
-    public List<Integer> getWinningNumbers() {
+    public String getWinningNumber() {
         System.out.println("\n지난 주 당첨 번호를 입력해 주세요.");
-        String winningNumberLine = inputString();
-
-        return convertStringToIntegerList(winningNumberLine);
+        return inputString();
     }
 
-    public Integer getBonusNumber() {
+    public String getBonus() {
         System.out.println("\n보너스 번호를 입력해 주세요.");
-        String bonus = inputString();
-        return Integer.valueOf(bonus);
+        return inputString();
     }
 
-    private List<Integer> convertStringToIntegerList(String src) {
-        String[] srcArr = src
-                .replace(" ", "")
-                .split(SPLITTER);
-
-        return Arrays.stream(srcArr)
-                .mapToInt(Integer::parseInt)
-                .boxed()
-                .collect(Collectors.toList());
-    }
 }

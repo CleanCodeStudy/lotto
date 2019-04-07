@@ -1,9 +1,9 @@
 package view;
 
 import domain.LottoTicket;
+import domain.prize.PrizeGroup;
 import domain.bundle.LottoBundle;
 import dto.LottoResultDto;
-import util.PrizeGroup;
 
 import java.util.Arrays;
 import java.util.List;

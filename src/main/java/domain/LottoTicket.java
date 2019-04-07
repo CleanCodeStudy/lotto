@@ -1,15 +1,17 @@
 package domain;
 
-import util.PrizeGroup;
+import domain.prize.PrizeGroup;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class LottoTicket {
+    public static final int DEFAULT_PRICE = 1000;
+
     private List<LottoNo> lottoNumbers;
 
-    public LottoTicket(List<LottoNo> lottoNos) {
-        this.lottoNumbers = lottoNos;
+    public LottoTicket(List<Integer> numbers) {
+        this.lottoNumbers = makeLottoNos(numbers);
     }
 
     public List<Integer> getNumbers() {
@@ -36,8 +38,8 @@ public class LottoTicket {
         return getNumbers().contains(winningNumber);
     }
 
-    public boolean isSecondRank(WinningLotto winningLotto){
-        return (!hasBonus(winningLotto))&&hasCountOfSecondRank(winningLotto);
+    public boolean isThirdRank(WinningLotto winningLotto) {
+        return (!hasBonus(winningLotto)) && hasCountOfSecondRank(winningLotto);
     }
 
     public boolean hasBonus(WinningLotto winningLotto) {
@@ -47,5 +49,11 @@ public class LottoTicket {
 
     public boolean hasCountOfSecondRank(WinningLotto winningLotto) {
         return getCountOfMatch(winningLotto.getWinningLottoNumbers()) == PrizeGroup.SECOND.getCountOfMatch();
+    }
+
+    private List<LottoNo> makeLottoNos(List<Integer> numbers) {
+        return numbers.stream()
+                .map(number -> new LottoNo(number))
+                .collect(Collectors.toList());
     }
 }

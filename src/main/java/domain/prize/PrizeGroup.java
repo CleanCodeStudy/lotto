@@ -1,4 +1,4 @@
-package util;
+package domain.prize;
 
 import domain.LottoTicket;
 import domain.WinningLotto;
@@ -49,7 +49,7 @@ public enum PrizeGroup {
     }
 
     private PrizeGroup findRankByBonus(LottoTicket lottoTicket, WinningLotto winningLotto) {
-        if (lottoTicket.isSecondRank(winningLotto)) {
+        if (lottoTicket.isThirdRank(winningLotto)) {
             return PrizeGroup.THIRD;
         }
         return this;

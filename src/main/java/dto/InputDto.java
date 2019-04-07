@@ -5,12 +5,12 @@ import java.util.List;
 public class InputDto {
     private int price;
     private int manualAmount;
-    private List<ManualNumberDto> manualNumberDtos;
+    private List<String> manuals;
 
-    public InputDto(int price, int manualAmount, List<ManualNumberDto> manualNumberDtos) {
+    public InputDto(int price, int manualAmount, List<String> manuals) {
         this.price = price;
         this.manualAmount = manualAmount;
-        this.manualNumberDtos = manualNumberDtos;
+        this.manuals = manuals;
     }
 
     public int getPrice() {
@@ -21,8 +21,7 @@ public class InputDto {
         return manualAmount;
     }
 
-
-    public List<ManualNumberDto> getManualNumberDtos() {
-        return manualNumberDtos;
+    public List<String> getManuals() {
+        return manuals;
     }
 }

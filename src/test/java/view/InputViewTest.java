@@ -1,7 +1,7 @@
 package view;
 
-import dto.ManualNumberDto;
 import org.junit.Test;
+import util.StringConverter;
 
 import java.io.ByteArrayInputStream;
 import java.util.List;
@@ -59,16 +59,12 @@ public class InputViewTest {
         int amount = 1;
 
         //when
-        List<ManualNumberDto> manualLottoNumbers = inputView.getManualLottoNumbers(amount);
+        List<String> manuals = inputView.getManualNumbers(amount);
 
         //then
-        assertThat(manualLottoNumbers.size()).isEqualTo(1);
-        assertThat(manualLottoNumbers.get(0).getLottoNos().get(0).getNumber()).isEqualTo(1);
-        assertThat(manualLottoNumbers.get(0).getLottoNos().get(1).getNumber()).isEqualTo(2);
-        assertThat(manualLottoNumbers.get(0).getLottoNos().get(2).getNumber()).isEqualTo(3);
-        assertThat(manualLottoNumbers.get(0).getLottoNos().get(3).getNumber()).isEqualTo(4);
-        assertThat(manualLottoNumbers.get(0).getLottoNos().get(4).getNumber()).isEqualTo(5);
-        assertThat(manualLottoNumbers.get(0).getLottoNos().get(5).getNumber()).isEqualTo(6);
+        assertThat(manuals.size()).isEqualTo(1);
+        assertThat(manuals.get(0)).isEqualTo("1,2,3,4,5,6");
+
     }
 
     @Test
@@ -77,7 +73,8 @@ public class InputViewTest {
         InputView inputView = new InputView(new ByteArrayInputStream("1,2,3,4,5,6".getBytes()));
 
         //when
-        List<Integer> winningLotto = inputView.getWinningNumbers();
+        String src = inputView.getWinningNumber();
+        List<Integer> winningLotto = StringConverter.stringToIntegerList(src);
 
         //then
         assertThat(winningLotto).contains(1, 2, 3, 4, 5, 6);
@@ -89,7 +86,7 @@ public class InputViewTest {
         InputView inputView = new InputView(new ByteArrayInputStream("7".getBytes()));
 
         //when
-        int bonus = inputView.getBonusNumber();
+        int bonus = Integer.valueOf(inputView.getBonus());
 
         //then
         assertThat(bonus).isEqualTo(7);

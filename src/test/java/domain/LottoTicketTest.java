@@ -14,10 +14,7 @@ public class LottoTicketTest {
     @Test
     public void 로또생성() {
         List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5, 6);
-        List<LottoNo> lottoNos = numbers.stream()
-                .map(integer -> new LottoNo(integer))
-                .collect(Collectors.toList());
-        LottoTicket lottoTicket = new LottoTicket(lottoNos);
+        LottoTicket lottoTicket = new LottoTicket(numbers);
 
         assertThat(lottoTicket.getNumbers()).contains(1, 2, 3, 4, 5, 6);
     }
@@ -26,10 +23,7 @@ public class LottoTicketTest {
     @Test
     public void 번호_몇개_일치하는지_확인() {
         List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5, 6);
-        List<LottoNo> lottoNos = numbers.stream()
-                .map(integer -> new LottoNo(integer))
-                .collect(Collectors.toList());
-        LottoTicket lottoTicket = new LottoTicket(lottoNos);
+        LottoTicket lottoTicket = new LottoTicket(numbers);
 
         List<Integer> winningNumbers = Arrays.asList(4, 5, 6, 7, 8, 9);
 
@@ -42,22 +36,22 @@ public class LottoTicketTest {
     @Test
     public void 보너스_번호_가지고있는지_확인하기() {
         List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5, 6);
-        List<LottoNo> lottoNos = numbers.stream()
-                .map(integer -> new LottoNo(integer))
-                .collect(Collectors.toList());
-        LottoTicket lottoTicket = new LottoTicket(lottoNos);
+
+        LottoTicket lottoTicket = new LottoTicket(numbers);
 
 
-        int bonus = 3;
+        String bonus = "3";
+        String winningnumbers = "11,12,13,14,15,16";
+        WinningInputDto winningInputDto = new WinningInputDto(winningnumbers, bonus);
+        WinningLotto winningLotto = winningInputDto.toWinningLotto();
 
-        WinningInputDto winningInputDto = new WinningInputDto(Arrays.asList(11, 12, 13, 14, 15, 16), bonus);
-        WinningLotto winningLotto = new WinningLotto(winningInputDto);
         assertThat(lottoTicket.hasBonus(winningLotto)).isTrue();
 
-        bonus = 45;
-        winningInputDto = new WinningInputDto(Arrays.asList(11, 12, 13, 14, 15, 16), bonus);
+        bonus = "45";
+        winningnumbers = "1,2,3,4,5,6";
+        winningInputDto = new WinningInputDto(winningnumbers, bonus);
+        winningLotto = winningInputDto.toWinningLotto();
 
-        winningLotto = new WinningLotto(winningInputDto);
         assertThat(lottoTicket.hasBonus(winningLotto)).isFalse();
 
     }

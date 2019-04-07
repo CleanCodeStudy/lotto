@@ -2,10 +2,10 @@ package util;
 
 import domain.LottoMachine.LottoMachine;
 import domain.LottoTicket;
+import domain.prize.PrizeGroup;
 import domain.WinningLotto;
 import domain.bundle.LottoBundle;
 import dto.InputDto;
-import dto.ManualNumberDto;
 import dto.WinningInputDto;
 import org.junit.Test;
 
@@ -26,21 +26,18 @@ public class PrizeGroupTest {
     public void 우승로또와_비교해서_로또순위_반환확인() {
         int price = 3000;
         int manualAmount = 3;
-        int bonus = 7;
-        List<Integer> winningnumbers = Arrays.asList(1, 2, 3, 4, 5, 6);
-        WinningInputDto winningInputDto = new WinningInputDto(winningnumbers,bonus);
-        WinningLotto winningLotto = new WinningLotto(winningInputDto);
+        String bonus = "7";
+        String winningnumbers = "1,2,3,4,5,6";
+        WinningInputDto winningInputDto = new WinningInputDto(winningnumbers, bonus);
+        WinningLotto winningLotto = winningInputDto.toWinningLotto();
 
-        ManualNumberDto manualNumberDto1 = new ManualNumberDto(Arrays.asList(1, 2, 3, 4, 5, 6));    //1등
-        ManualNumberDto manualNumberDto2 = new ManualNumberDto(Arrays.asList(1, 2, 3, 4, 5, 7));    //2등
-        ManualNumberDto manualNumberDto3 = new ManualNumberDto(Arrays.asList(1, 2, 3, 4, 5, 45));   //3등
+        String manual1 = "1, 2, 3, 4, 5, 6";//1등
+        String manual2 = "1, 2, 3, 4, 5, 7";//2등
+        String manual3 = "1, 2, 3, 4, 5, 45";  //3등
 
-        List<ManualNumberDto> manualNumberDtos =
-                Arrays.asList(manualNumberDto1,
-                        manualNumberDto2,
-                        manualNumberDto3);
+        List<String> manuals = Arrays.asList(manual1, manual2, manual3);
 
-        InputDto inputDto = new InputDto(price, manualAmount, manualNumberDtos);
+        InputDto inputDto = new InputDto(price, manualAmount, manuals);
 
 
         //when

@@ -23,11 +23,11 @@ public class LottoController {
 
         outputView.getBuyList(lottoBundle);
 
-        WinningInputDto winningInputDto = inputView.getWinInputDto();
+        WinningInputDto winningInputDto = inputView.getWinningDto();
 
-        WinningLotto winningLotto = new WinningLotto(winningInputDto);
+        WinningLotto winningLotto = winningInputDto.toWinningLotto();
 
-        LottoResultDto lottoResultDto = new LottoResultDto(lottoBundle, winningLotto);
+        LottoResultDto lottoResultDto = lottoBundle.match(winningLotto);
 
         outputView.getStatistics(lottoResultDto);
     }

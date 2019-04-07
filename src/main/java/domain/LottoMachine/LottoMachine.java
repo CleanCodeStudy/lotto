@@ -1,9 +1,9 @@
 package domain.LottoMachine;
 
-import domain.LottoNo;
 import domain.LottoTicket;
 import domain.bundle.LottoBundle;
 import dto.InputDto;
+import util.StringConverter;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -28,16 +28,18 @@ public class LottoMachine {
 
     public LottoBundle buyLottoTicket() {
         List<LottoTicket> randoms = makeRandomLottoTickets();
-        List<LottoTicket> manuals = makeManualLottoTickets();
+        List<LottoTicket> manuals = makeManualTickets();
         return new LottoBundle(manuals, randoms);
     }
 
-    private List<LottoTicket> makeManualLottoTickets() {
+    private List<LottoTicket> makeManualTickets() {
         if (inputDto.getManualAmount() == 0) {
             return new ArrayList<>();
         }
-        return inputDto.getManualNumberDtos().stream()
-                .map(manualNumberDto -> new LottoTicket(manualNumberDto.getLottoNos()))
+
+        return inputDto.getManuals().stream()
+                .map(manualString -> StringConverter.stringToIntegerList(manualString))
+                .map(numbers -> new LottoTicket(numbers))
                 .collect(Collectors.toList());
     }
 
@@ -49,15 +51,12 @@ public class LottoMachine {
                 .collect(Collectors.toList());
     }
 
-    private List<LottoNo> makeRandomNumbers() {
-        List<Integer> allLottoNumbers = ALL_NUMBER;
+    private List<Integer> makeRandomNumbers() {
 
-        Collections.shuffle(allLottoNumbers);
+        Collections.shuffle(ALL_NUMBER);
 
-        return allLottoNumbers.stream()
+        return ALL_NUMBER.stream()
                 .limit(LOTTO_CONTAIN_AMOUNT)
-                .sorted()
-                .map(number -> new LottoNo(number))
                 .collect(Collectors.toList());
     }
 
