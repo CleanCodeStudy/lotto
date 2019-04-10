@@ -24,10 +24,10 @@ public class LottoTicketTest {
     public void 번호_몇개_일치하는지_확인() {
         List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5, 6);
         LottoTicket lottoTicket = new LottoTicket(numbers);
+        
+        WinningLotto winningLotto = new WinningInputDto("4,5,6,7,8,9","45").toWinningLotto();
 
-        List<Integer> winningNumbers = Arrays.asList(4, 5, 6, 7, 8, 9);
-
-        int matchAmount = lottoTicket.getCountOfMatch(winningNumbers);
+        int matchAmount = lottoTicket.getCountOfMatch(winningLotto);
         assertThat(matchAmount).isEqualTo(3);
 
     }

@@ -46,8 +46,7 @@ public enum PrizeGroup {
     }
 
     private boolean hasMatch(LottoTicket lottoTicket, WinningLotto winningLotto){
-        List<Integer> winningNumbers = winningLotto.getWinningLottoNumbers();
-        return this.countOfMatch == lottoTicket.getCountOfMatch(winningNumbers);
+        return this.countOfMatch == lottoTicket.getCountOfMatch(winningLotto);
     }
 
     private PrizeGroup findRankByBonus(LottoTicket lottoTicket, WinningLotto winningLotto) {

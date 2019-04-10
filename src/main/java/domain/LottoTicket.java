@@ -42,8 +42,8 @@ public class LottoTicket {
         return getNumbers().toString();
     }
 
-    public int getCountOfMatch(List<Integer> winningNumbers) {
-        return (int) winningNumbers.stream()
+    public int getCountOfMatch(WinningLotto winningLotto) {
+        return (int) winningLotto.getWinningLottoNumbers().stream()
                 .filter(this::hasNumber)
                 .count();
     }
@@ -62,6 +62,6 @@ public class LottoTicket {
     }
 
     public boolean hasCountOfSecondRank(WinningLotto winningLotto) {
-        return getCountOfMatch(winningLotto.getWinningLottoNumbers()) == PrizeGroup.SECOND.getCountOfMatch();
+        return getCountOfMatch(winningLotto) == PrizeGroup.SECOND.getCountOfMatch();
     }
 }
