@@ -7,11 +7,19 @@ import java.util.stream.Collectors;
 
 public class LottoTicket {
     public static final int DEFAULT_PRICE = 1000;
+    public static final boolean MANUAL = Boolean.FALSE;
 
     private List<LottoNo> lottoNumbers;
+    private boolean isRandom;
 
     public LottoTicket(List<Integer> numbers) {
         this.lottoNumbers = makeLottoNos(numbers);
+        this.isRandom = Boolean.TRUE;
+    }
+
+    public LottoTicket(List<Integer> numbers, boolean isRandom) {
+        this.lottoNumbers = makeLottoNos(numbers);
+        this.isRandom = isRandom;
     }
 
     public List<Integer> getNumbers() {
@@ -20,17 +28,23 @@ public class LottoTicket {
                 .collect(Collectors.toList());
     }
 
+    public boolean isRandom() {
+        return this.isRandom;
+    }
+
+    private List<LottoNo> makeLottoNos(List<Integer> numbers) {
+        return numbers.stream()
+                .map(LottoNo::selectNumber)
+                .collect(Collectors.toList());
+    }
+
     public String getListString() {
         return getNumbers().toString();
     }
 
-    public boolean checkRank(int match, List<Integer> winningNumbers) {
-        return match == getCountOfMatch(winningNumbers);
-    }
-
     public int getCountOfMatch(List<Integer> winningNumbers) {
         return (int) winningNumbers.stream()
-                .filter(winningNumber -> hasNumber(winningNumber))
+                .filter(this::hasNumber)
                 .count();
     }
 
@@ -49,11 +63,5 @@ public class LottoTicket {
 
     public boolean hasCountOfSecondRank(WinningLotto winningLotto) {
         return getCountOfMatch(winningLotto.getWinningLottoNumbers()) == PrizeGroup.SECOND.getCountOfMatch();
-    }
-
-    private List<LottoNo> makeLottoNos(List<Integer> numbers) {
-        return numbers.stream()
-                .map(number -> new LottoNo(number))
-                .collect(Collectors.toList());
     }
 }

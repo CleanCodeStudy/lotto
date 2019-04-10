@@ -1,27 +1,19 @@
 package domain.bundle;
 
 import domain.LottoTicket;
-import domain.prize.PrizeGroup;
 import domain.WinningLotto;
+import domain.prize.PrizeGroup;
 import dto.LottoResultDto;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class LottoBundle {
 
     private List<LottoTicket> tickets;
-    private int manualAmount;
-    private int randomAmount;
 
-    public LottoBundle(List<LottoTicket> manual, List<LottoTicket> random) {
-        List<LottoTicket> tickets = new ArrayList<>();
-        tickets.addAll(manual);
-        tickets.addAll(random);
+    public LottoBundle(List<LottoTicket> tickets) {
         this.tickets = tickets;
-        this.manualAmount = manual.size();
-        this.randomAmount = random.size();
     }
 
     public List<LottoTicket> getTickets() {
@@ -29,11 +21,16 @@ public class LottoBundle {
     }
 
     public int getManualAmount() {
-        return this.manualAmount;
+        int total = this.tickets.size();
+        return total - (int) this.tickets.stream()
+                .filter(LottoTicket::isRandom)
+                .count();
     }
 
     public int getRandomAmount() {
-        return this.randomAmount;
+        return (int) this.tickets.stream()
+                .filter(LottoTicket::isRandom)
+                .count();
     }
 
     public int getInputMoney() {

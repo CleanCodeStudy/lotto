@@ -10,7 +10,6 @@ import java.util.Scanner;
 
 public class InputView {
     private static Scanner scanner;
-    private static String SPLITTER = ",";
     private static int ZERO_AMOUNT = 0;
     private static int MIN_MONEY = 1000;
 

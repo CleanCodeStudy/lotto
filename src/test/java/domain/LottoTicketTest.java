@@ -55,4 +55,13 @@ public class LottoTicketTest {
         assertThat(lottoTicket.hasBonus(winningLotto)).isFalse();
 
     }
+
+    @Test
+    public void 랜덤인지_수동인지_체크하기(){
+        LottoTicket mTicket = new LottoTicket(Arrays.asList(1,2,3,4,5,6),LottoTicket.MANUAL);
+        LottoTicket rTicket = new LottoTicket(Arrays.asList(1,2,3,4,5,6));
+
+        assertThat(mTicket.isRandom()).isFalse();
+        assertThat(rTicket.isRandom()).isTrue();
+    }
 }

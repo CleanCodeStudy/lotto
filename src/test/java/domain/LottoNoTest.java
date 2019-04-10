@@ -41,5 +41,12 @@ public class LottoNoTest {
                 .collect(Collectors.toList());
     }
 
+    @Test
+    public void 싱글톤_로또넘버_가져오기(){
+        LottoNo one = LottoNo.selectNumber(1);
+        LottoNo expect = new LottoNo(1);
+
+        assertThat(one.getNumber()).isEqualTo(expect.getNumber());
+    }
 
 }

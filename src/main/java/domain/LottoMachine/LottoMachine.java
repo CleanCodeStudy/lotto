@@ -29,7 +29,8 @@ public class LottoMachine {
     public LottoBundle buyLottoTicket() {
         List<LottoTicket> randoms = makeRandomLottoTickets();
         List<LottoTicket> manuals = makeManualTickets();
-        return new LottoBundle(manuals, randoms);
+        randoms.addAll(manuals);
+        return new LottoBundle(randoms);
     }
 
     private List<LottoTicket> makeManualTickets() {
@@ -39,7 +40,7 @@ public class LottoMachine {
 
         return inputDto.getManuals().stream()
                 .map(manualString -> StringConverter.stringToIntegerList(manualString))
-                .map(numbers -> new LottoTicket(numbers))
+                .map(numbers -> new LottoTicket(numbers, LottoTicket.MANUAL))
                 .collect(Collectors.toList());
     }
 
