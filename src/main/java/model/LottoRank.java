@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Arrays;
+
 public enum LottoRank {
     FIRST(6, 2000000000),
     SECOND(5, 1500000),
@@ -16,12 +18,12 @@ public enum LottoRank {
         this.price = price;
     }
 
-//    public static LottoRank findByCorrectRank(int correctAmount) {
-//        return Arrays.stream(LottoRank.values())
-//                .filter(rank -> rank.getCorrectRank() == correctAmount)
-//                .findAny()
-//                .orElse(OUT);
-//    }
+    public static LottoRank findByCorrectRank(int correctAmount) {
+        return Arrays.stream(LottoRank.values())
+                .filter(rank -> rank.getCorrectRank() == correctAmount)
+                .findAny()
+                .orElse(OUT);
+    }
 
     public int getCorrectRank() {
         return correctRank;
