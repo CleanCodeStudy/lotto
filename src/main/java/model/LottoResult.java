@@ -5,7 +5,6 @@ import data.WinnigNumber;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class LottoResult {
     private static final int PERCENTAGE = 100;
@@ -38,7 +37,7 @@ public class LottoResult {
         return nowPrice / (float) beforePrice * PERCENTAGE;
     }
 
-    public int getResultCount(LottoRank lottoRank){
+    public int getResultCount(LottoRank lottoRank) {
         int results = (int) lottoResultTickets.stream()
                 .filter(x -> x.getLottoRank().equals(lottoRank))
                 .count();

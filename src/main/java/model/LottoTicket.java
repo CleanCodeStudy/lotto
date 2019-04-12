@@ -1,5 +1,7 @@
 package model;
 
+import com.sun.deploy.util.StringUtils;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -25,8 +27,25 @@ public class LottoTicket {
                 .count();
     }
 
+    public int size(){
+        return numbers.size();
+    }
+
+    public void printList(){
+        String str = "["+ numbers.stream()
+                .map(num -> ""+num.getNumber())
+                .collect(Collectors.joining(","))+"]";
+        System.out.println(str);
+    }
+
     public boolean contains(LottoNum lottoNum){
-        return numbers.contains(lottoNum);
+
+        int checkNum = lottoNum.getNumber();
+        List<Integer> checking = numbers.stream()
+                .map(x -> x.getNumber())
+                .collect(Collectors.toList());
+
+        return checking.contains(checkNum);
     }
 
     private List<Integer> makeIntegerManualNumbers(String inputNums) {
@@ -41,7 +60,6 @@ public class LottoTicket {
             addNum(lottoNum);
         }
     }
-
 
     private void createRandomLottoNums() {
         for( Integer lottoNum : makeIntegerRandomNumbers()){
