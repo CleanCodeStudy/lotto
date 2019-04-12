@@ -1,7 +1,5 @@
 package model;
 
-import com.sun.deploy.util.StringUtils;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -17,7 +15,7 @@ public class LottoTicket {
         createManualLottoNums(manualString);
     }
 
-    public LottoTicket(){ //make Random
+    public LottoTicket() { //make Random
         createRandomLottoNums();
     }
 
@@ -27,18 +25,18 @@ public class LottoTicket {
                 .count();
     }
 
-    public int size(){
+    public int size() {
         return numbers.size();
     }
 
-    public void printList(){
-        String str = "["+ numbers.stream()
-                .map(num -> ""+num.getNumber())
-                .collect(Collectors.joining(","))+"]";
+    public void printList() {
+        String str = "[" + numbers.stream()
+                .map(num -> "" + num.getNumber())
+                .collect(Collectors.joining(",")) + "]";
         System.out.println(str);
     }
 
-    public boolean contains(LottoNum lottoNum){
+    public boolean contains(LottoNum lottoNum) {
 
         int checkNum = lottoNum.getNumber();
         List<Integer> checking = numbers.stream()
@@ -55,23 +53,23 @@ public class LottoTicket {
                 .collect(Collectors.toList());
     }
 
-    private void createManualLottoNums(String inputNums){
-        for( Integer lottoNum : makeIntegerManualNumbers(inputNums)){
+    private void createManualLottoNums(String inputNums) {
+        for (Integer lottoNum : makeIntegerManualNumbers(inputNums)) {
             addNum(lottoNum);
         }
     }
 
     private void createRandomLottoNums() {
-        for( Integer lottoNum : makeIntegerRandomNumbers()){
+        for (Integer lottoNum : makeIntegerRandomNumbers()) {
             addNum(lottoNum);
         }
     }
 
-    private void addNum (int lottoNumber){
+    private void addNum(int lottoNumber) {
         numbers.add(new LottoNum(lottoNumber));
     }
 
-    private List<Integer> makeIntegerRandomNumbers(){
+    private List<Integer> makeIntegerRandomNumbers() {
         List<Integer> randoms = IntStream.range(LottoNum.MIN_LOTTO_NUM, LottoNum.MAX_LOTTO_NUM)
                 .mapToObj(Integer::new)
                 .collect(Collectors.toList());
