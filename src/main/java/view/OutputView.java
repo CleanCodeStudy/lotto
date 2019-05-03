@@ -7,8 +7,6 @@ import model.LottoResult;
 import model.LottoTicket;
 
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 public class OutputView {
 
@@ -32,20 +30,20 @@ public class OutputView {
 
         System.out.println();
         System.out.println("당첨통계\n---------");
-        for(LottoRank lottoRank : LottoRank.values()){
-            if(lottoRank.getCorrectRank() == 0 )
+        for (LottoRank lottoRank : LottoRank.values()) {
+            if (lottoRank.getCorrectRank() == 0)
                 continue;
-            if(lottoRank.getCorrectRank() == -1){
+            if (lottoRank.getCorrectRank() == -1) {
                 sb.append(String.format("5개 일치,보너스볼 (%d원)- %d개\n",
                         lottoRank.getPrice(), lottoResult.getResultCount(lottoRank)));
-            }else{
+            } else {
                 sb.append(String.format("%d개 일치 (%d원)- %d개\n",
                         lottoRank.getCorrectRank(), lottoRank.getPrice(), lottoResult.getResultCount(lottoRank)));
             }
         }
 
         System.out.println(sb);
-        System.out.println(String.format("총 수익률은 %.1f", lottoResult.analyzeYield(purchaseInfo))+"% 입니다.");
+        System.out.println(String.format("총 수익률은 %.1f", lottoResult.analyzeYield(purchaseInfo)) + "% 입니다.");
 
     }
 }

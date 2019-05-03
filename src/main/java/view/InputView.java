@@ -1,26 +1,21 @@
 package view;
 
 import data.PurchaseInfo;
-import model.LottoTicket;
 
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
-import java.util.stream.Collectors;
-
 
 
 public class InputView {
 
-    public static Scanner sc;
     private static final int LOTTO_UNTI = 6;
+    public static Scanner sc;
 
     public InputView(InputStream inputStream) {
         sc = new Scanner(inputStream);
     }
-
 
 
     public int purchase() {
@@ -29,22 +24,20 @@ public class InputView {
         return sc.nextInt();
     }
 
-    public int getManualCount(){
+    public int getManualCount() {
         System.out.println("수동으로 구매할 로또 수를 입력해 주세요.");
         return sc.nextInt();
     }
 
-    public List<String> inputManualLotto(int count){
+    public List<String> inputManualLotto(int count) {
         System.out.println("수동으로 구매할 번호를 입력해 주세요.");
 
         List<String> lottoTickets = new ArrayList<>();
-        for(int i =0 ; i< count; i++){
+        for (int i = 0; i < count; i++) {
             lottoTickets.add(sc.next());
         }
         return lottoTickets;
     }
-
-
 
 
     public String inputWinNumber() {
@@ -52,7 +45,7 @@ public class InputView {
         return sc.next();
     }
 
-    public int inputBonus(){
+    public int inputBonus() {
         System.out.println("보너스 볼을 입력해 주세요.");
         return sc.nextInt();
     }

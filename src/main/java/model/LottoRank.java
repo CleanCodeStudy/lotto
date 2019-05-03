@@ -8,7 +8,7 @@ public enum LottoRank {
     SECOND_BONUS(-1, 30000000),
     THIRD(4, 50000),
     FOURTH(3, 5000),
-    OUT(0,0);
+    OUT(0, 0);
 
 
     private int correctRank;

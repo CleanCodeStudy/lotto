@@ -1,14 +1,13 @@
 package model;
 
 public class LottoNum {
+    public static final int MAX_LOTTO_NUM = 45;
+    public static final int MIN_LOTTO_NUM = 1;
     private int number;
 
-    public static final int MAX_LOTTO_NUM = 45;
-    public static final int MIN_LOTTO_NUM= 1;
+    public LottoNum(int number) {
 
-    public LottoNum(int number){
-
-        if( isValidRange(number) ) {
+        if (isValidRange(number)) {
             this.number = number;
         }
     }

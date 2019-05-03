@@ -2,7 +2,6 @@ package model;
 
 import data.PurchaseInfo;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,7 +22,7 @@ public class LottoMachine {
         return purchaseLottoTickets;
     }
 
-    private List<LottoTicket> buyManualLottos(List<String> manualLottos){
+    private List<LottoTicket> buyManualLottos(List<String> manualLottos) {
         return manualLottos.stream()
                 .map(x -> new LottoTicket(x))
                 .collect(Collectors.toList());
