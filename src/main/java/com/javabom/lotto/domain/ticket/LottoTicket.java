@@ -25,4 +25,8 @@ public class LottoTicket {
                 .map(LottoNumber::get)
                 .collect(Collectors.toList());
     }
+
+    public boolean isContain(LottoNumber number) {
+        return numbers.contains(number);
+    }
 }

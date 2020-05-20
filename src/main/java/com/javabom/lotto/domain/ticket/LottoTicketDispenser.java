@@ -1,6 +1,7 @@
 package com.javabom.lotto.domain.ticket;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class LottoTicketDispenser {
 
