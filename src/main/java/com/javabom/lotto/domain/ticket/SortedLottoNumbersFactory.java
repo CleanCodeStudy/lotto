@@ -3,7 +3,7 @@ package com.javabom.lotto.domain.ticket;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SortedLottoNumbers {
+public class SortedLottoNumbersFactory {
 
     public static List<LottoNumber> create() {
         ArrayList<LottoNumber> numbers = new ArrayList<>();

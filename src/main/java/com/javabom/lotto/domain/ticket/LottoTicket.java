@@ -1,6 +1,7 @@
 package com.javabom.lotto.domain.ticket;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class LottoTicket {
@@ -14,7 +15,7 @@ public class LottoTicket {
         this.numbers = numbers;
     }
 
-    void validateListSize(List<LottoNumber> numbers) {
+    private void validateListSize(List<LottoNumber> numbers) {
         if (numbers.size() != LOTTO_NUM_PICK_SIZE) {
             throw new IllegalArgumentException("로또 티켓에 6개 숫자를 넣어야 합니다.");
         }
@@ -28,5 +29,18 @@ public class LottoTicket {
 
     public boolean isContain(LottoNumber number) {
         return numbers.contains(number);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        LottoTicket that = (LottoTicket) o;
+        return Objects.equals(numbers, that.numbers);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(numbers);
     }
 }

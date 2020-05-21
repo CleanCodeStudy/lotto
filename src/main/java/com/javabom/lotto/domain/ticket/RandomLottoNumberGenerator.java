@@ -14,7 +14,7 @@ public class RandomLottoNumberGenerator implements LottoNumberGenerator {
 
     @Override
     public List<LottoNumber> getLottoNumbers() {
-        List<LottoNumber> numbers = SortedLottoNumbers.create();
+        List<LottoNumber> numbers = SortedLottoNumbersFactory.create();
         Collections.shuffle(numbers);
         return numbers.subList(0, LOTTO_NUM_PICK_SIZE);
     }
