@@ -1,6 +1,7 @@
 package com.javabom.lotto.domain.compare;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class LottoResults {
@@ -21,5 +22,18 @@ public class LottoResults {
         return lottoResults.stream()
                 .mapToLong(LottoResult::getPrice)
                 .sum();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        LottoResults that = (LottoResults) o;
+        return Objects.equals(lottoResults, that.lottoResults);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(lottoResults);
     }
 }

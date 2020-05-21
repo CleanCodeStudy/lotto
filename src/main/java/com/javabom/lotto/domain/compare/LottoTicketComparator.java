@@ -11,7 +11,6 @@ public class LottoTicketComparator {
 
     public LottoTicketComparator(LottoLuckyNumbers luckyNumbers) {
         this.luckyNumbers = luckyNumbers;
-        System.out.println(luckyNumbers.getBonusNumber().get());
     }
 
     public LottoResults getLottoResults(LottoTickets lottoTickets) {
