@@ -15,17 +15,26 @@ public class WinningNumber {
     }
 
     private List<Integer> splitWinningNumber(String winningNumber) {
-        List<Integer> splitWinningNumber = Arrays.stream(winningNumber.split(","))
+        validSplitNumber(winningNumber);
+        return Arrays.stream(winningNumber.split(","))
+                .map(String::trim)
+                .map(Integer::parseInt)
+                .collect(Collectors.toList());
+    }
+
+    private void validSplitNumber(String winningNumber) {
+        List<Integer> numbers = Arrays.stream(winningNumber.split(","))
                 .map(String::trim)
                 .map(m -> {
+                    validNumberFormat(m);
                     validLottoNumber(m);
                     return Integer.parseInt(m);
                 })
                 .collect(Collectors.toList());
-        validWinningNumberCount(splitWinningNumber);
-        validDuplicatedNumber(splitWinningNumber);
-        return splitWinningNumber;
+        validWinningNumberCount(numbers);
+        validDuplicatedNumber(numbers);
     }
+
 
     private void validDuplicatedNumber(List<Integer> winningNumber) {
         Set<Integer> set = new HashSet<>(winningNumber);
