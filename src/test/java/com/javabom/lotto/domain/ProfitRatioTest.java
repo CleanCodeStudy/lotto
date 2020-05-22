@@ -12,7 +12,7 @@ class ProfitRatioTest {
     public void getRatioTest() {
         ProfitRatio profitRatio = new ProfitRatio(3000, 12000);
 
-        assertEquals(40, profitRatio.getRatio());
+        assertEquals(25, profitRatio.getRatio());
     }
 
 }

@@ -40,7 +40,7 @@ class WinningStatisticsTest {
 
         // when
         ProfitRatio profitRatio = winningStatistics.getProfitRatio(gameMoney);
-        int ratio = (int) (LottoRank.FIFTH_PLACE.getPrizeMoney() / (double) gameMoney) * 100;
+        int ratio = (int) ((LottoRank.FIFTH_PLACE.getPrizeMoney() / (double) gameMoney) * 100);
 
         // then
         assertEquals(ratio, profitRatio.getRatio());
