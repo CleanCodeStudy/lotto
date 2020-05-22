@@ -9,7 +9,7 @@ public class ProfitRatio {
     }
 
     private int calculateRatio(int revenue, int gameMoney) {
-        return (int) (revenue / (double) gameMoney) * 100;
+        return (int) ((revenue / (double) gameMoney) * 100);
     }
 
     public int getRatio() {
