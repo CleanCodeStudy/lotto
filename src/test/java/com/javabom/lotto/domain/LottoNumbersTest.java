@@ -1,9 +1,9 @@
 package com.javabom.lotto.domain;
 
+import com.javabom.lotto.domain.lottery.LottoNumber;
+import com.javabom.lotto.domain.lottery.LottoNumbers;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 
 import java.util.Arrays;
 import java.util.List;
@@ -13,44 +13,31 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class LottoNumbersTest {
 
-    @DisplayName("당첨 결과를 제대로 찾는지 확인.")
-    @ParameterizedTest
-    @CsvSource(value = {"1,2,3,13,10,12 | 25 | 0", "1,2,3,4,10,12 | 25 | 1", "1,2,3,4,5,12 | 25 | 2", "1,2,3,4,5,12 | 6 | 3"
-    , "1,2,3,4,5,6 | 25 | 4", "1,2,14,13,10,12 | 25 | 5"}, delimiter = '|')
-    public void findLottoRanksTest(String winningNumbers, String bonusNumber, int rankInfoIndex) {
-        // given
-        int gameMoney = 1000;
-        List<Integer> numbers = Arrays.stream(new int[]{1, 2, 3, 4, 5, 6})
-                .boxed()
+    @Test
+    @DisplayName("당첨 번호와 같은 로또 번호의 개수를 제대로 반환하는지 테스트.")
+    void getSameCountByWinnerNumberTest() {
+        List<LottoNumber> lottoNumber = Arrays.stream(new int[]{1, 2, 3, 4, 5, 6})
+                .mapToObj(LottoNumber::new)
                 .collect(Collectors.toList());
-        LottoNumbers lottoNumbers = new LottoNumbers(gameMoney, new FixedLottoNumberGenerator(numbers));
 
-        // when
-        LottoRank[] winningRankInfos = LottoRank.values();
-        List<Integer> winningNumberList = Arrays.stream(winningNumbers.split(","))
-                .mapToInt(Integer::parseInt)
-                .boxed()
+        List<LottoNumber> winningNumber = Arrays.stream(new int[]{10, 11, 22, 4, 5, 6})
+                .mapToObj(LottoNumber::new)
                 .collect(Collectors.toList());
-        List<LottoRank> lottoRanks = lottoNumbers.findLottoRanks(winningNumberList, Integer.parseInt(bonusNumber));
+        FixedLottoNumberGenerator numberGenerator = new FixedLottoNumberGenerator(lottoNumber);
+        LottoNumbers lottoNumbers = new LottoNumbers(numberGenerator.getNumbers());
 
-        // then
-        assertEquals(winningRankInfos[rankInfoIndex], lottoRanks.get(0));
+        assertEquals(3, lottoNumbers.getSameCountByWinnerNumber(winningNumber));
     }
 
     @Test
-    public void getNumbersTest() {
-        // given
-        int gameMoney = 1000;
-        List<Integer> numbers = Arrays.stream(new int[]{1, 2, 3, 4, 5, 6})
-                .boxed()
+    @DisplayName("보너스 번호가 존재 유무를 확인하는 테스트.")
+    void hasBonusNumberTest() {
+        List<LottoNumber> lottoNumber = Arrays.stream(new int[]{1, 2, 3, 4, 5, 6})
+                .mapToObj(LottoNumber::new)
                 .collect(Collectors.toList());
-        LottoNumbers lottoNumbers = new LottoNumbers(gameMoney, new FixedLottoNumberGenerator(numbers));
-
-        // when
-        List<LottoNumber> lottoNumberList = lottoNumbers.getNumbers();
-
-        // then
-        assertEquals(numbers, lottoNumberList.get(0).getLottoNumber());
+        FixedLottoNumberGenerator numberGenerator = new FixedLottoNumberGenerator(lottoNumber);
+        LottoNumbers lottoNumbers = new LottoNumbers(numberGenerator.getNumbers());
+        assertTrue(lottoNumbers.hasBonusNumber(new LottoNumber(1)));
+        assertFalse(lottoNumbers.hasBonusNumber(new LottoNumber(25)));
     }
-
 }

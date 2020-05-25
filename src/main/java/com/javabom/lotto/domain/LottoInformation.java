@@ -1,11 +1,11 @@
 package com.javabom.lotto.domain;
 
-public class LottoInfo {
+public class LottoInformation {
 
     private final int gameMoney;
     public static final int lottoPrice = 1000;
 
-    public LottoInfo(String gameMoney) {
+    public LottoInformation(String gameMoney) {
         validGameMoney(gameMoney);
         this.gameMoney = Integer.parseInt(gameMoney);
     }

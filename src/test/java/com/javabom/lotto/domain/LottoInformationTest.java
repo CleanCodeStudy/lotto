@@ -8,17 +8,17 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-class LottoInfoTest {
+class LottoInformationTest {
 
     @ParameterizedTest
     @DisplayName("정수가 값과 음수 값이 들어올 시 예외처리.")
     @CsvSource(value = {"error,-1"})
     public void validIntegerValue(String notInteger, String negativeValue) {
-        assertThatThrownBy(() -> new LottoInfo(notInteger))
+        assertThatThrownBy(() -> new LottoInformation(notInteger))
                 .isInstanceOf(NumberFormatException.class)
                 .hasMessage("정수가 아닌 값이 입력 되었습니다.");
 
-        assertThatThrownBy(() -> new LottoInfo(negativeValue))
+        assertThatThrownBy(() -> new LottoInformation(negativeValue))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("구입금액이 음수 값으로 입력되었습니다.");
     }
@@ -28,7 +28,7 @@ class LottoInfoTest {
     public void getGameMoneyTest() {
         // given
         String gameMoney = "14000";
-        LottoInfo info = new LottoInfo(gameMoney);
+        LottoInformation info = new LottoInformation(gameMoney);
 
         Assertions.assertEquals(Integer.parseInt(gameMoney), info.getGameMoney());
     }

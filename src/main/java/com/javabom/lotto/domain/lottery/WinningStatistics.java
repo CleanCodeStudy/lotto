@@ -1,4 +1,6 @@
-package com.javabom.lotto.domain;
+package com.javabom.lotto.domain.lottery;
+
+import com.javabom.lotto.domain.lottery.LottoRank;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -12,14 +14,6 @@ public class WinningStatistics {
 
     public WinningStatistics(List<LottoRank> results) {
         this.results = results;
-    }
-
-    private int calculateRevenue() {
-        int revenue = 0;
-        for (LottoRank result : results) {
-            revenue += result.getPrizeMoney();
-        }
-        return revenue;
     }
 
     private int getRankCount(LottoRank lottoRank) {
@@ -40,8 +34,16 @@ public class WinningStatistics {
         return rankCountMap;
     }
 
-    public ProfitRatio getProfitRatio(int gameMoney) {
+    private int calculateRevenue() {
+        int revenue = 0;
+        for (LottoRank result : results) {
+            revenue += result.getPrizeMoney();
+        }
+        return revenue;
+    }
+
+    public int calculateProfitRatio(int gameMoney) {
         int revenue = calculateRevenue();
-        return new ProfitRatio(revenue, gameMoney);
+        return (int) ((revenue / (double) gameMoney) * 100);
     }
 }

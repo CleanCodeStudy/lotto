@@ -1,5 +1,7 @@
 package com.javabom.lotto.domain;
 
+import com.javabom.lotto.domain.lottery.LottoRank;
+import com.javabom.lotto.domain.lottery.WinningStatistics;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -31,7 +33,7 @@ class WinningStatisticsTest {
 
     @Test
     @DisplayName("수익금을 계산한 후 수익률을 잘 반환하는지 확인.")
-    public void getProfitRatio() {
+    public void calculateProfitRatioTest() {
         // given
         List<LottoRank> lottoRanks = new ArrayList<>();
         int gameMoney = 14000;
@@ -39,10 +41,9 @@ class WinningStatisticsTest {
         WinningStatistics winningStatistics = new WinningStatistics(lottoRanks);
 
         // when
-        ProfitRatio profitRatio = winningStatistics.getProfitRatio(gameMoney);
         int ratio = (int) ((LottoRank.FIFTH_PLACE.getPrizeMoney() / (double) gameMoney) * 100);
 
         // then
-        assertEquals(ratio, profitRatio.getRatio());
+        assertEquals(ratio, winningStatistics.calculateProfitRatio(gameMoney));
     }
 }

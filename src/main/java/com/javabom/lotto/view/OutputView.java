@@ -1,24 +1,33 @@
 package com.javabom.lotto.view;
 
-import com.javabom.lotto.domain.*;
+import com.javabom.lotto.domain.lottery.*;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class OutputView {
 
-    public static void printLottoNumbers(List<LottoNumber> lottoNumbers) {
+    public static void printLottoNumbers(LottoNumbersList lottoNumbers) {
         System.out.println(lottoNumbers.size() + "개를 구매했습니다.");
-        for (LottoNumber number : lottoNumbers) {
-            System.out.println(number.toString());
+        for (LottoNumbers number : lottoNumbers.getNumbers()) {
+            printLottoNumber(number);
         }
     }
 
-    public static void printWinningStatistics(HashMap<LottoRank, Integer> eachRackCount, int profitRatio) {
+    public static void printLottoNumber(LottoNumbers lottoNumbers) {
+        List<String> numbers = lottoNumbers.getNumbers().stream()
+                .map(LottoNumber::get)
+                .map(Object::toString)
+                .collect(Collectors.toList());
+        System.out.println("[" + String.join(", ", numbers) + "]");
+    }
+
+    public static void printWinningStatistics(WinningStatistics winningStatistics, int gameMoney) {
         System.out.println("\n당첨 통계");
         System.out.println("----------");
-        printWinningNumberCount(eachRackCount);
-        printProfitRatio(profitRatio);
+        printWinningNumberCount(winningStatistics.findEachRankCount());
+        printProfitRatio(winningStatistics.calculateProfitRatio(gameMoney));
     }
 
     private static void printProfitRatio(int profitRatio) {
