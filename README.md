@@ -33,3 +33,6 @@ private static final int COUNT_OF_LOTTO_NUMBER = 6;
 add시 발생하는 UnsupportedOperationException 는 그냥 던지게 남겨두면 되는건가 
 
 3. LottoTicket 일급컬렉션의 검증은 어디까지?
+
+
+4. 객체의 상태와 역할을 생각하면 가격은 티켓이 가지고 있어야 할 것 같은데, 계속 Getter로 가져오자니 비횰 ㅠ,,ㅇ?
