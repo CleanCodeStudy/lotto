@@ -7,7 +7,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
 
 class LottoTicketsTest {
 
@@ -16,15 +15,12 @@ class LottoTicketsTest {
     void calculateResult() {
         //given
         LottoTickets lottoTickets = new LottoTickets(createLottoTicket());
-        WinningResult winningResult = new WinningResult(Arrays.asList(4, 5, 6, 7, 8, 9));
+        WinningResult winningResult = new WinningResult("1,2,3,7,8,10");
         //when
         LottoGameResult lottoGameResult = lottoTickets.calculateResult(winningResult);
 
         //then
-        assertAll(
-                () -> assertThat(lottoGameResult.findByHitCount(3)).isEqualTo(1),
-                () -> assertThat(lottoGameResult.findByHitCount(5)).isEqualTo(1)
-        );
+        assertThat(lottoGameResult.findByHitCount(3)).isEqualTo(2);
     }
 
     private List<LottoTicket> createLottoTicket() {

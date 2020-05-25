@@ -1,6 +1,7 @@
 package com.javabom.lotto.domain;
 
 import java.util.Map;
+import java.util.Objects;
 
 public class LottoGameResult {
     private final Map<Integer, Long> hitCounts;
@@ -10,10 +11,17 @@ public class LottoGameResult {
     }
 
     public Long findByHitCount(final int hitCount) {
-        return hitCounts.get(hitCount);
+        Long frequency = this.hitCounts.get(hitCount);
+        return Objects.isNull(frequency) ? 0 : frequency;
     }
 
     public long calculateTotalReword() {
-        return LottoGamePrize.getTotalPrice(hitCounts);
+        return LottoGamePrize.calculateTotalPrice(hitCounts);
     }
+
+    public double calculateRateOfProfit(final int totalPrice) {
+        long totalReword = calculateTotalReword();
+        return (double) totalReword / totalPrice;
+    }
+
 }

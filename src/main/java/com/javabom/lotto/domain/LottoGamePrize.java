@@ -14,7 +14,7 @@ public enum LottoGamePrize {
         this.price = price;
     }
 
-    public static long getTotalPrice(Map<Integer, Long> lottoGameHits) {
+    public static long calculateTotalPrice(Map<Integer, Long> lottoGameHits) {
         return Arrays.stream(LottoGamePrize.values())
                 .filter(lottoGamePrize -> lottoGameHits.containsKey(lottoGamePrize.countOfHit))
                 .map(lottoGamePrize -> lottoGameHits.get(lottoGamePrize.countOfHit) * lottoGamePrize.price)

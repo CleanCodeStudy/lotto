@@ -8,18 +8,14 @@ public class InputView {
     private InputView() {
     }
 
-    public static String askTotalPrice() {
+    public static int askTotalPrice() {
         System.out.println("구입금액을 입력해주세요.");
-        return SCANNER.next();
+        return Integer.parseInt(SCANNER.nextLine());
     }
 
     public static String askLastWeekLottoNumber() {
         System.out.println("지난주 당첨 번호를 입력해주세요");
-        return SCANNER.next();
+        return SCANNER.nextLine();
     }
 
-    public static String askLastWeekBonusNumber() {
-        System.out.println("보너스번호를 입력해주세요");
-        return SCANNER.next();
-    }
 }

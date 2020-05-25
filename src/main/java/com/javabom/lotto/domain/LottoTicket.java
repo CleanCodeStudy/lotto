@@ -30,4 +30,8 @@ public class LottoTicket {
         return lottoNumbers;
     }
 
+    @Override
+    public String toString() {
+        return String.valueOf(lottoNumbers);
+    }
 }

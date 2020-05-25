@@ -1,5 +1,6 @@
 package com.javabom.lotto.domain;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -20,6 +21,10 @@ public class LottoTickets {
                 .collect(groupingBy(Function.identity(), counting()));
 
         return new LottoGameResult(hitRates);
+    }
+
+    public List<LottoTicket> getLottoTickets() {
+        return Collections.unmodifiableList(lottoTickets);
     }
 
     public int getNumberOfTickets() {
