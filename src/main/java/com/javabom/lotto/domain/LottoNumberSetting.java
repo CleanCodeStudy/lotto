@@ -1,17 +1,10 @@
 package com.javabom.lotto.domain;
 
-public enum LottoNumberSetting {
-    BEGIN_BOUND(1),
-    END_BOUND(45),
-    COUNT_OF_BALL(6);
+public class LottoNumberSetting {
+    public static final int NUMBER_BEGIN_BOUND = 1;
+    public static final int NUMBER_END_BOUND = 45;
+    public static final int COUNT_OF_NUMBER = 6;
 
-    private final int value;
-
-    LottoNumberSetting(int value) {
-        this.value = value;
-    }
-
-    public int getValue() {
-        return value;
+    private LottoNumberSetting() {
     }
 }

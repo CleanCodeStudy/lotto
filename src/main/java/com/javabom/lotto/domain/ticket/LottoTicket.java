@@ -1,6 +1,5 @@
 package com.javabom.lotto.domain.ticket;
 
-import com.javabom.lotto.domain.LottoNumberSetting;
 import com.javabom.lotto.domain.result.LottoPrize;
 import com.javabom.lotto.domain.result.WinningTicket;
 
@@ -10,6 +9,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static com.javabom.lotto.domain.LottoNumberSetting.*;
+
 public class LottoTicket {
     private final Set<Integer> lottoNumbers;
 
@@ -18,18 +19,17 @@ public class LottoTicket {
         this.lottoNumbers = lottoNumbers;
     }
 
+    private static boolean isValidNumber(Integer number) {
+        return number >= NUMBER_BEGIN_BOUND && number <= NUMBER_END_BOUND;
+    }
+
     private void validate(Set<Integer> lottoNumbers) {
         Set<Integer> validLottoNumbers = lottoNumbers.stream()
                 .filter(LottoTicket::isValidNumber)
                 .collect(Collectors.toSet());
-        if (validLottoNumbers.size() != LottoNumberSetting.COUNT_OF_BALL.getValue()) {
+        if (validLottoNumbers.size() != COUNT_OF_NUMBER) {
             throw new IllegalArgumentException("로또번호는 중복이 없는 6개의 1과 45사이의 숫자여야 합니다");
         }
-    }
-
-    private static boolean isValidNumber(Integer number) {
-        return number >= LottoNumberSetting.BEGIN_BOUND.getValue()
-                && number <= LottoNumberSetting.END_BOUND.getValue();
     }
 
     public LottoPrize calculateLottoPrize(WinningTicket winningTicket) {

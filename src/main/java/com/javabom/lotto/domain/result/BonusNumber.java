@@ -1,6 +1,7 @@
 package com.javabom.lotto.domain.result;
 
-import com.javabom.lotto.domain.LottoNumberSetting;
+import static com.javabom.lotto.domain.LottoNumberSetting.NUMBER_BEGIN_BOUND;
+import static com.javabom.lotto.domain.LottoNumberSetting.NUMBER_END_BOUND;
 
 public class BonusNumber {
     private final int number;
@@ -13,7 +14,7 @@ public class BonusNumber {
     }
 
     private boolean isValidNumber(int number) {
-        return number < LottoNumberSetting.BEGIN_BOUND.getValue() || number > LottoNumberSetting.END_BOUND.getValue();
+        return number < NUMBER_BEGIN_BOUND || number > NUMBER_END_BOUND;
     }
 
     public int getNumber() {

@@ -6,13 +6,14 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.IntStream;
 
+import static com.javabom.lotto.domain.LottoNumberSetting.*;
 import static java.util.stream.Collectors.toList;
 
 public class AutoLottoNumberGenerator implements LottoNumberGenerator {
     private final List<Integer> lottoBalls;
 
     public AutoLottoNumberGenerator() {
-        this.lottoBalls = IntStream.rangeClosed(LottoNumberSetting.BEGIN_BOUND.getValue(), LottoNumberSetting.END_BOUND.getValue())
+        this.lottoBalls = IntStream.rangeClosed(NUMBER_BEGIN_BOUND, NUMBER_END_BOUND)
                 .boxed()
                 .collect(toList());
     }
@@ -24,6 +25,6 @@ public class AutoLottoNumberGenerator implements LottoNumberGenerator {
     }
 
     private List<Integer> pickLottoBalls() {
-        return lottoBalls.subList(0, LottoNumberSetting.COUNT_OF_BALL.getValue());
+        return lottoBalls.subList(0, COUNT_OF_NUMBER);
     }
 }
