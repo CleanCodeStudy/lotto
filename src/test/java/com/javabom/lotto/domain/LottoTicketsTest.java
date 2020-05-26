@@ -1,37 +1,41 @@
 package com.javabom.lotto.domain;
 
+import com.javabom.lotto.domain.result.LottoPrize;
+import com.javabom.lotto.domain.result.LottoResult;
+import com.javabom.lotto.domain.ticket.LottoTicket;
+import com.javabom.lotto.domain.ticket.LottoTickets;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
 
 class LottoTicketsTest {
 
-    @DisplayName("당첨 번호를 입력하면 번호일치율을 알고있는 LottoGameResult를 반환한다")
+    @DisplayName("당첨번호를 입력하면 당첨통계를 반환한다")
     @Test
-    void calculateResult() {
+    void resultTest() {
         //given
-        LottoTickets lottoTickets = new LottoTickets(createLottoTicket());
-        WinningResult winningResult = new WinningResult(Arrays.asList(4, 5, 6, 7, 8, 9));
+        LottoTickets lottoTickets = createLottoTickets();
+        LottoTicket winningLottoTicket = new LottoTicket(new HashSet<>(Arrays.asList(1, 2, 3, 4, 5, 6)));
+        List<LottoPrize> expectedLottoPrizes = Arrays.asList(LottoPrize.SIX_HIT, LottoPrize.FIVE_HIT, LottoPrize.THREE_HIT);
+
         //when
-        LottoGameResult lottoGameResult = lottoTickets.calculateResult(winningResult);
+        LottoResult lottoResult = lottoTickets.getLottoResult(winningLottoTicket);
 
         //then
-        assertAll(
-                () -> assertThat(lottoGameResult.findByHitCount(3)).isEqualTo(1),
-                () -> assertThat(lottoGameResult.findByHitCount(5)).isEqualTo(1)
-        );
+        assertThat(lottoResult.getLottoStatistics()).isEqualTo(expectedLottoPrizes);
     }
 
-    private List<LottoTicket> createLottoTicket() {
-        LottoTicket lottoTicket1 = new LottoTicket(Arrays.asList(1, 2, 3, 4, 5, 6));
-        LottoTicket lottoTicket2 = new LottoTicket(Arrays.asList(3, 4, 5, 6, 7, 8));
-        LottoTicket lottoTicket3 = new LottoTicket(Arrays.asList(10, 11, 12, 13, 14, 15));
+    private LottoTickets createLottoTickets() {
+        LottoTicket lottoTicket1 = new LottoTicket(new HashSet<>(Arrays.asList(1, 2, 3, 4, 5, 6))); // 6
+        LottoTicket lottoTicket2 = new LottoTicket(new HashSet<>(Arrays.asList(7, 1, 2, 4, 5, 6))); // 5
+        LottoTicket lottoTicket3 = new LottoTicket(new HashSet<>(Arrays.asList(1, 21, 3, 43, 12, 6))); // 3
 
-        return Arrays.asList(lottoTicket1, lottoTicket2, lottoTicket3);
+        return new LottoTickets(Arrays.asList(lottoTicket1, lottoTicket2, lottoTicket3));
     }
+
 }
