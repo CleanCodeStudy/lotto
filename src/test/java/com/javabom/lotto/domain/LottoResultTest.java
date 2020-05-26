@@ -21,8 +21,8 @@ class LottoResultTest {
         LottoResult lottoResult = new LottoResult(statistics);
 
         assertAll(
-                () -> AssertionsForClassTypes.assertThat(lottoResult.getRateOfProfit(new Money(60000))).isEqualTo(1),
-                () -> AssertionsForClassTypes.assertThat(lottoResult.getRateOfProfit(new Money(120000))).isEqualTo(0.5)
+                () -> AssertionsForClassTypes.assertThat(lottoResult.getRateOfProfit(new Money(60000))).isEqualTo(100),
+                () -> AssertionsForClassTypes.assertThat(lottoResult.getRateOfProfit(new Money(120000))).isEqualTo(50)
         );
     }
 
