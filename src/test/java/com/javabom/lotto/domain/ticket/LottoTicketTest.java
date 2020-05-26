@@ -8,6 +8,8 @@ import org.junit.jupiter.params.provider.CsvSource;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -19,13 +21,9 @@ class LottoTicketTest {
     void getNumbers() {
         // given
         List<Integer> expectedIntegers = Arrays.asList(1, 2, 3, 4, 5, 6);
-        List<LottoNumber> stubLottoNumbers = Arrays.asList(
-                new LottoNumber(1),
-                new LottoNumber(2),
-                new LottoNumber(3),
-                new LottoNumber(4),
-                new LottoNumber(5),
-                new LottoNumber(6));
+        List<LottoNumber> stubLottoNumbers = expectedIntegers.stream()
+                .map(LottoNumber::new)
+                .collect(Collectors.toList());
         LottoTicket lottoTicket = new LottoTicket(stubLottoNumbers);
 
         // then
@@ -37,13 +35,11 @@ class LottoTicketTest {
     @ParameterizedTest
     void isContain(int matchNumber, boolean isNumberContain) {
         // given
-        List<LottoNumber> stubLottoNumbers = Arrays.asList(
-                new LottoNumber(1),
-                new LottoNumber(2),
-                new LottoNumber(3),
-                new LottoNumber(4),
-                new LottoNumber(5),
-                new LottoNumber(6));
+        List<LottoNumber> stubLottoNumbers = IntStream.rangeClosed(1, 6)
+                .boxed()
+                .map(LottoNumber::new)
+                .collect(Collectors.toList());
+
         LottoTicket lottoTicket = new LottoTicket(stubLottoNumbers);
         LottoNumber matchLottoNumber = new LottoNumber(matchNumber);
         // then
@@ -55,19 +51,13 @@ class LottoTicketTest {
     @ParameterizedTest
     void validateLottoNumbersSize(int size) {
         // given
-        List<LottoNumber> lottoNumbers = stubLottoNumbers(size);
-
+        List<LottoNumber> stubLottoNumbers = IntStream.rangeClosed(1, size)
+                .boxed()
+                .map(LottoNumber::new)
+                .collect(Collectors.toList());
         // then
-        assertThatThrownBy(() -> new LottoTicket(lottoNumbers))
+        assertThatThrownBy(() -> new LottoTicket(stubLottoNumbers))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("로또 티켓에 6개 숫자를 넣어야 합니다.");
-    }
-
-    private List<LottoNumber> stubLottoNumbers(int size) {
-        ArrayList<LottoNumber> numbers = new ArrayList<>();
-        for (int i = 0; i < size; i++) {
-            numbers.add(new LottoNumber(size));
-        }
-        return numbers;
     }
 }

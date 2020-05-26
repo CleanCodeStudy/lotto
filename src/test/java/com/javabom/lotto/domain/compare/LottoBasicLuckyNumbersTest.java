@@ -17,7 +17,7 @@ class LottoBasicLuckyNumbersTest {
     @ParameterizedTest
     void validateLottoNumbersSize(int size) {
         // given
-        List<Integer> lottoNumbers = IntStream.range(0, size)
+        List<Integer> lottoNumbers = IntStream.rangeClosed(1, size)
                 .boxed()
                 .collect(Collectors.toList());
 

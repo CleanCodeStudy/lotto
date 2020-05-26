@@ -19,13 +19,13 @@ class LottoTicketComparatorTest {
     @Test
     void getLottoResults() {
         // given
-        List<Integer> LottoIntegerNumbers = Arrays.asList(1, 2, 3, 4, 5, 6);
-        List<LottoNumber> stubLottoNumbers = LottoIntegerNumbers.stream()
+        List<Integer> lottoIntegerNumbers = Arrays.asList(1, 2, 3, 4, 5, 6);
+        List<LottoNumber> stubLottoNumbers = lottoIntegerNumbers.stream()
                 .map(LottoNumber::new)
                 .collect(Collectors.toList());
 
         LottoNumber bonusNumber = new LottoNumber(7);
-        LottoBasicLuckyNumbers basicLuckyNumbers = new LottoBasicLuckyNumbers(LottoIntegerNumbers);
+        LottoBasicLuckyNumbers basicLuckyNumbers = new LottoBasicLuckyNumbers(lottoIntegerNumbers);
 
         LottoLuckyNumbers lottoLuckyNumbers = new LottoLuckyNumbers(basicLuckyNumbers, bonusNumber);
         LottoTicketComparator lottoTicketComparator = new LottoTicketComparator(lottoLuckyNumbers);

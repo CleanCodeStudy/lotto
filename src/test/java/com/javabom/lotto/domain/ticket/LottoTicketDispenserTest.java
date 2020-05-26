@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -15,13 +17,10 @@ class LottoTicketDispenserTest {
     void getAutoTickets() {
         // given
         LottoTicketDispenser lottoTicketDispenser = new LottoTicketDispenser(new FixedLottoNumberGenerator());
-        List<LottoNumber> stubLottoNumbers = Arrays.asList(
-                new LottoNumber(1),
-                new LottoNumber(2),
-                new LottoNumber(3),
-                new LottoNumber(4),
-                new LottoNumber(5),
-                new LottoNumber(6));
+        List<LottoNumber> stubLottoNumbers = IntStream.rangeClosed(1, 6)
+                .boxed()
+                .map(LottoNumber::new)
+                .collect(Collectors.toList());
         LottoTicket stubLottoTicket = new LottoTicket(stubLottoNumbers);
         LottoTickets expectedLottoTickets = new LottoTickets(Arrays.asList(stubLottoTicket));
 
