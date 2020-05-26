@@ -24,6 +24,6 @@ public class OutputView {
         System.out.printf("5개 일치(1500000) - %d개%n", lottoResult.getNumberOfHitTickets(LottoPrize.THIRD));
         System.out.printf("5개 일치, 보너스볼일치(30000000) - %d개%n", lottoResult.getNumberOfHitTickets(LottoPrize.SECOND));
         System.out.printf("6개 일치(2000000000) - %d개%n", lottoResult.getNumberOfHitTickets(LottoPrize.FIRST));
-        System.out.println("총 수익률은 " + lottoResult.getRateOfProfit(spentMoney) + "입니다.");
+        System.out.println("총 수익률은 " + lottoResult.getRateOfProfit(spentMoney) + "%입니다.");
     }
 }

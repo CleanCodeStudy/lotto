@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class LottoResult {
+    private static final int PERCENTAGE = 100;
     private final List<LottoPrize> lottoStatistics;
 
     public LottoResult(List<LottoPrize> lottoPrizes) {
@@ -20,7 +21,7 @@ public class LottoResult {
 
     public double getRateOfProfit(final Money spentMoney) {
         Money totalProfit = LottoPrize.calculateTotalReword(lottoStatistics);
-        return (double) totalProfit.getValue() / spentMoney.getValue();
+        return (double) totalProfit.getValue() / spentMoney.getValue() * PERCENTAGE;
     }
 
     public List<LottoPrize> getLottoStatistics() {
