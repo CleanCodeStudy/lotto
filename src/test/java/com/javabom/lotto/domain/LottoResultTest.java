@@ -1,6 +1,5 @@
 package com.javabom.lotto.domain;
 
-
 import com.javabom.lotto.domain.result.LottoPrize;
 import com.javabom.lotto.domain.result.LottoResult;
 import com.javabom.lotto.vo.Money;
@@ -28,7 +27,7 @@ class LottoResultTest {
     }
 
     private List<LottoPrize> createStatistics() {
-        return Arrays.asList(LottoPrize.THREE_HIT, LottoPrize.THREE_HIT, LottoPrize.FOUR_HIT);
+        return Arrays.asList(LottoPrize.FIFTH, LottoPrize.FIFTH, LottoPrize.FOURTH);
     }
 
 }

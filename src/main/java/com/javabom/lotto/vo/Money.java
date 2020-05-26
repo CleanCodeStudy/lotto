@@ -1,7 +1,7 @@
 package com.javabom.lotto.vo;
 
 public class Money {
-    private final long value;
+    private long value;
 
     public Money(long value) {
         this.value = value;

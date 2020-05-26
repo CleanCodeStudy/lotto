@@ -1,6 +1,5 @@
 package com.javabom.lotto.domain;
 
-
 import com.javabom.lotto.domain.ticket.LottoTicket;
 import com.javabom.lotto.domain.ticket.LottoTickets;
 import com.javabom.lotto.vo.Money;

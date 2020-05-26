@@ -2,6 +2,7 @@ package com.javabom.lotto.domain.ticket;
 
 import com.javabom.lotto.domain.LottoNumberSetting;
 import com.javabom.lotto.domain.result.LottoPrize;
+import com.javabom.lotto.domain.result.WinningTicket;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -17,11 +18,6 @@ public class LottoTicket {
         this.lottoNumbers = lottoNumbers;
     }
 
-    private static boolean isValidNumber(Integer number) {
-        return number >= LottoNumberSetting.BEGIN_BOUND.getValue()
-                && number <= LottoNumberSetting.END_BOUND.getValue();
-    }
-
     private void validate(Set<Integer> lottoNumbers) {
         Set<Integer> validLottoNumbers = lottoNumbers.stream()
                 .filter(LottoTicket::isValidNumber)
@@ -31,12 +27,19 @@ public class LottoTicket {
         }
     }
 
-    public LottoPrize calculateLottoPrize(LottoTicket winningTicket) {
+    private static boolean isValidNumber(Integer number) {
+        return number >= LottoNumberSetting.BEGIN_BOUND.getValue()
+                && number <= LottoNumberSetting.END_BOUND.getValue();
+    }
+
+    public LottoPrize calculateLottoPrize(WinningTicket winningTicket) {
         int matchCount = Math.toIntExact(lottoNumbers.stream()
                 .filter(winningTicket::contains)
                 .count());
+        boolean matchBonus = lottoNumbers.stream()
+                .anyMatch(winningTicket::matchBonus);
 
-        return LottoPrize.findByMathCount(matchCount);
+        return LottoPrize.findByMathCount(matchCount, matchBonus);
     }
 
     public boolean contains(int number) {
