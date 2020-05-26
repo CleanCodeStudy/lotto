@@ -4,6 +4,7 @@ import com.javabom.lotto.domain.compare.LottoResult;
 import com.javabom.lotto.domain.compare.LottoResults;
 import com.javabom.lotto.domain.ticket.LottoTicket;
 import com.javabom.lotto.domain.ticket.LottoTickets;
+import com.javabom.lotto.domain.ticket.Money;
 
 import java.util.stream.Collectors;
 
@@ -57,8 +58,8 @@ public class OutputView {
         printLineOf(stringBuilder.toString());
     }
 
-    public static void printEarningRate(long spendMoney, long earnMoney) {
-        double rate = (double) earnMoney / spendMoney * 100;
+    public static void printEarningRate(Money spendMoney, Money earnMoney) {
+        double rate = (double) earnMoney.get() / spendMoney.get() * 100;
         printLineOf(String.format(NOTICE_EARNING_RATE, (int) rate));
     }
 

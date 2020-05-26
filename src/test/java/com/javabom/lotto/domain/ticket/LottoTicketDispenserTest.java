@@ -26,9 +26,27 @@ class LottoTicketDispenserTest {
         LottoTickets expectedLottoTickets = new LottoTickets(Arrays.asList(stubLottoTicket));
 
         // when
-        LottoTickets receivedLottoTicket = lottoTicketDispenser.getAutoTickets(1);
+        Money money = new Money(1_000);
+        LottoTickets receivedLottoTicket = lottoTicketDispenser.getAutoTickets(money);
 
         // then
         assertThat(receivedLottoTicket).isEqualTo(expectedLottoTickets);
     }
+
+    @DisplayName("로또 발급기가 원하는 개수의 티켓을 뽑아내는지 확인")
+    @Test
+    void name() {
+        // given
+        LottoTicketDispenser lottoTicketDispenser = new LottoTicketDispenser(new RandomLottoNumberGenerator());
+
+        // when
+        int expectedTicketQuantity = 1;
+        Money money = new Money(1_000 * expectedTicketQuantity);
+        LottoTickets lottoTickets = lottoTicketDispenser.getAutoTickets(money);
+
+        // then
+        assertThat(lottoTickets.get().size()).isEqualTo(expectedTicketQuantity);
+    }
+    // RandomLottoNumberGenerator 테스트 커버리지 0인걸 통과하려고 추가한 테스트입니다..
+    // 의미가 있는 테스트인지 솔직히 모르겠습니다.
 }

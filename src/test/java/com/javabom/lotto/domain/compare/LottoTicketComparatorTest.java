@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.javabom.lotto.domain.compare.LottoResult.FIRST_PRIZE;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -18,15 +19,13 @@ class LottoTicketComparatorTest {
     @Test
     void getLottoResults() {
         // given
-        List<LottoNumber> stubLottoNumbers = Arrays.asList(
-                new LottoNumber(1),
-                new LottoNumber(2),
-                new LottoNumber(3),
-                new LottoNumber(4),
-                new LottoNumber(5),
-                new LottoNumber(6));
+        List<Integer> LottoIntegerNumbers = Arrays.asList(1, 2, 3, 4, 5, 6);
+        List<LottoNumber> stubLottoNumbers = LottoIntegerNumbers.stream()
+                .map(LottoNumber::new)
+                .collect(Collectors.toList());
+
         LottoNumber bonusNumber = new LottoNumber(7);
-        LottoBasicLuckyNumbers basicLuckyNumbers = new LottoBasicLuckyNumbers(stubLottoNumbers);
+        LottoBasicLuckyNumbers basicLuckyNumbers = new LottoBasicLuckyNumbers(LottoIntegerNumbers);
 
         LottoLuckyNumbers lottoLuckyNumbers = new LottoLuckyNumbers(basicLuckyNumbers, bonusNumber);
         LottoTicketComparator lottoTicketComparator = new LottoTicketComparator(lottoLuckyNumbers);

@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -15,15 +16,12 @@ class LottoLuckyNumbersTest {
     @Test
     void getBasicNumbers() {
         // given
-        List<LottoNumber> expectedLottoNumbers = Arrays.asList(
-                new LottoNumber(1),
-                new LottoNumber(2),
-                new LottoNumber(3),
-                new LottoNumber(4),
-                new LottoNumber(5),
-                new LottoNumber(6));
+        List<Integer> stubLottoNumbers = Arrays.asList(1, 2, 3, 4, 5, 6);
+        List<LottoNumber> expectedLottoNumbers = stubLottoNumbers.stream()
+                .map(LottoNumber::new)
+                .collect(Collectors.toList());
         LottoNumber bonusNumber = new LottoNumber(7);
-        LottoBasicLuckyNumbers basicLuckyNumbers = new LottoBasicLuckyNumbers(expectedLottoNumbers);
+        LottoBasicLuckyNumbers basicLuckyNumbers = new LottoBasicLuckyNumbers(stubLottoNumbers);
 
         LottoLuckyNumbers lottoLuckyNumbers = new LottoLuckyNumbers(basicLuckyNumbers, bonusNumber);
 
@@ -38,13 +36,7 @@ class LottoLuckyNumbersTest {
     @Test
     void getBonusNumber() {
         // given
-        List<LottoNumber> stubLottoNumbers = Arrays.asList(
-                new LottoNumber(1),
-                new LottoNumber(2),
-                new LottoNumber(3),
-                new LottoNumber(4),
-                new LottoNumber(5),
-                new LottoNumber(6));
+        List<Integer> stubLottoNumbers = Arrays.asList(1, 2, 3, 4, 5, 6);
         LottoNumber bonusNumber = new LottoNumber(7);
         LottoBasicLuckyNumbers basicLuckyNumbers = new LottoBasicLuckyNumbers(stubLottoNumbers);
 

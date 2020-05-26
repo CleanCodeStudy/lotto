@@ -44,7 +44,7 @@ class LottoResultsTest {
                 .sum();
 
         // then
-        assertThat(lottoResults.getTotalPrizeMoney())
+        assertThat(lottoResults.getTotalPrizeMoney().get())
                 .isEqualTo(expectedTotalPrizeMoney);
     }
 }

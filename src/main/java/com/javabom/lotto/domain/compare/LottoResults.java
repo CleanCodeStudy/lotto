@@ -1,5 +1,7 @@
 package com.javabom.lotto.domain.compare;
 
+import com.javabom.lotto.domain.ticket.Money;
+
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -18,10 +20,11 @@ public class LottoResults {
                 .collect(Collectors.toList());
     }
 
-    public long getTotalPrizeMoney() {
-        return lottoResults.stream()
+    public Money getTotalPrizeMoney() {
+        long sum = lottoResults.stream()
                 .mapToLong(LottoResult::getPrice)
                 .sum();
+        return new Money(sum);
     }
 
     @Override
