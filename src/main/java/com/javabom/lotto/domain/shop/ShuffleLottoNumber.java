@@ -3,7 +3,6 @@ package com.javabom.lotto.domain.shop;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class ShuffleLottoNumber implements GenerateLottoNumbers {
     private static final List<Integer> LOTTO_NUMBER = new ArrayList<>();
@@ -19,10 +18,8 @@ public class ShuffleLottoNumber implements GenerateLottoNumbers {
     }
 
     @Override
-    public List<Integer> picked() {
+    public List<Integer> generate() {
         Collections.shuffle(LOTTO_NUMBER);
-        return LOTTO_NUMBER.stream()
-                .limit(6)
-                .collect(Collectors.toList());
+        return Collections.unmodifiableList(LOTTO_NUMBER);
     }
 }
