@@ -1,12 +1,12 @@
-package com.javabom.lotto.util;
+package com.javabom.lotto.domain.shop;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ShuffleLottoNumbers implements PickedLottoNumbers {
-    private static final List<Integer> lottoNumbers = new ArrayList<>();
+public class ShuffleLottoNumber implements GenerateLottoNumbers {
+    private static final List<Integer> LOTTO_NUMBER = new ArrayList<>();
 
     static {
         init();
@@ -14,14 +14,14 @@ public class ShuffleLottoNumbers implements PickedLottoNumbers {
 
     private static void init() {
         for (int number = 1; number <= 45; number++) {
-            lottoNumbers.add(number);
+            LOTTO_NUMBER.add(number);
         }
     }
 
     @Override
     public List<Integer> picked() {
-        Collections.shuffle(lottoNumbers);
-        return lottoNumbers.stream()
+        Collections.shuffle(LOTTO_NUMBER);
+        return LOTTO_NUMBER.stream()
                 .limit(6)
                 .collect(Collectors.toList());
     }

@@ -1,9 +1,9 @@
-package com.javabom.lotto.util;
+package com.javabom.lotto.domain.shop;
 
 import java.util.Arrays;
 import java.util.List;
 
-public class FixedLottoNumber implements PickedLottoNumbers {
+public class FixedGenerateLottoNumber implements GenerateLottoNumbers {
 
     @Override
     public List<Integer> picked() {

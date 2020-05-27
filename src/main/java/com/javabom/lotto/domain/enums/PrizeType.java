@@ -1,4 +1,4 @@
-package com.javabom.lotto.domain;
+package com.javabom.lotto.domain.enums;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -6,40 +6,40 @@ import java.util.Map;
 public enum PrizeType {
     FIRST(6) {
         @Override
-        int calculate(int count) {
-            return 2000000000 * count;
+        public long getPrize() {
+            return 2_000_000_000;
         }
     },
     SECOND(50) {
         @Override
-        int calculate(int count) {
-            return 30000000 * count;
+        public long getPrize() {
+            return 30_000_000;
         }
     },
     THIRD(5) {
         @Override
-        int calculate(int count) {
-            return 15000000 * count;
+        public long getPrize() {
+            return 1_500_000;
         }
     },
     FOURTH(4) {
         @Override
-        int calculate(int count) {
-            return 50000 * count;
+        public long getPrize() {
+            return 50_000;
         }
     },
     FIFTH(3) {
         @Override
-        int calculate(int count) {
-            return 5000 * count;
+        public long getPrize() {
+            return 5_000;
         }
     };
-
-    public final int prizeCount;
 
     PrizeType(int prizeCount) {
         this.prizeCount = prizeCount;
     }
+
+    public final int prizeCount;
 
     private static final Map<Integer, PrizeType> BY_PRIZE = new HashMap<>();
 
@@ -53,5 +53,5 @@ public enum PrizeType {
         return BY_PRIZE.get(prizeCount);
     }
 
-    abstract int calculate(int count);
+    public abstract long getPrize();
 }

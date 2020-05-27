@@ -1,8 +1,12 @@
 package com.javabom.lotto;
 
-import com.javabom.lotto.domain.*;
-import com.javabom.lotto.util.LottoFactory;
-import com.javabom.lotto.util.ShuffleLottoNumbers;
+import com.javabom.lotto.domain.shop.LottoShop;
+import com.javabom.lotto.domain.shop.RandomMachine;
+import com.javabom.lotto.domain.shop.ShuffleLottoNumber;
+import com.javabom.lotto.domain.info.LottoBundle;
+import com.javabom.lotto.domain.info.PrizeNumberInfo;
+import com.javabom.lotto.domain.result.LottoResultBundle;
+import com.javabom.lotto.domain.vo.Money;
 import com.javabom.lotto.view.InputView;
 import com.javabom.lotto.view.OutputView;
 
@@ -13,22 +17,18 @@ public class LottoApplication {
 
     public static void main(String[] args) {
         Money money = new Money(inputView.inputMoney());
-        OutputView.printLottoCount(money.getLottoCount());
 
-        MyLottoBundle myLottoBundle = new MyLottoBundle(
-                LottoFactory.createLotto(money.getLottoCount(), new ShuffleLottoNumbers()));
-        OutputView.printMyLottoBundle(myLottoBundle);
+        LottoShop lottoShop = new LottoShop(new RandomMachine(new ShuffleLottoNumber()));
+        LottoBundle lottoBundle = lottoShop.buyLotto(money);
 
-        PrizeNumbers prizeNumbers = new PrizeNumbers(inputView.inputPrizeNumbers());
-        BonusNumber bonusNumber = new BonusNumber(inputView.inputBonusNumber(), prizeNumbers);
+        OutputView.printLottoCount(lottoShop.getLottoCount(money.get()));
+        OutputView.printMyLottoBundle(lottoBundle);
 
-        MatchedCounts matchedCounts = new MatchedCounts(myLottoBundle.getMatchedCounts(prizeNumbers, bonusNumber));
+        PrizeNumberInfo prizeNumberInfo = new PrizeNumberInfo(
+                inputView.inputPrizeNumbers(), inputView.inputBonusNumber());
 
-        PrizeCounts prizeCounts = new PrizeCounts();
-        prizeCounts.compileStatisticsOfPrize(matchedCounts);
+        LottoResultBundle lottoResultBundle = lottoBundle.confirmLottoResult(prizeNumberInfo);
 
-        PrizeMoneys prizeMoneys = new PrizeMoneys(prizeCounts.getPrizeMoneys());
-
-        OutputView.printResult(prizeCounts, money.getRateOfProfit(prizeMoneys.getAmountOfPrize()));
+        OutputView.printResults(lottoResultBundle, money);
     }
 }
