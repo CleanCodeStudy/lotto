@@ -1,8 +1,6 @@
-package com.javabom.lotto.domain.statistics;
+package com.javabom.lotto.domain.result;
 
-import com.javabom.lotto.domain.ticket.LottoRank;
-import com.javabom.lotto.domain.ticket.LottoResult;
-import com.javabom.lotto.domain.user.UserMoney;
+import com.javabom.lotto.domain.shop.UserMoney;
 
 public class WinningStatistics {
 

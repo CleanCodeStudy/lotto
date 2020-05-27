@@ -1,4 +1,4 @@
-package com.javabom.lotto.domain.lottery;
+package com.javabom.lotto.domain.dto;
 
 import com.javabom.lotto.domain.shop.LottoShop;
 
@@ -17,7 +17,6 @@ public class LottoNumberValidator {
         if (Integer.parseInt(number) < LottoShop.NUMBER_BEGIN || Integer.parseInt(number) > LottoShop.NUMBER_END) {
             throw new IllegalArgumentException("로또 번호가 아닙니다.");
         }
-
     }
 
     public static void validLottoNumber(int number) {

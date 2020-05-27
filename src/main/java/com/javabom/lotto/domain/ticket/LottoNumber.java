@@ -1,4 +1,6 @@
-package com.javabom.lotto.domain.lottery;
+package com.javabom.lotto.domain.ticket;
+
+import com.javabom.lotto.domain.dto.LottoNumberValidator;
 
 import java.util.Objects;
 
@@ -7,6 +9,7 @@ public class LottoNumber {
     private final int number;
 
     public LottoNumber(int number) {
+        LottoNumberValidator.validLottoNumber(number);
         this.number = number;
     }
 

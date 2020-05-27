@@ -3,29 +3,31 @@ package com.javabom.lotto.domain.ticket;
 import com.javabom.lotto.domain.dto.BonusNumberDto;
 import com.javabom.lotto.domain.dto.WinningTicketDto;
 
-import java.util.Collections;
 import java.util.List;
 
-public class WinningLottoNumbers {
+public class WinningTicket {
 
-    private final List<LottoNumber> winningTicket;
+    private final List<LottoNumber> winningNumbers;
 
     private final LottoNumber bonusNumber;
 
-    public WinningLottoNumbers(WinningTicketDto winningTicketDto, BonusNumberDto bonusNumberDto) {
-        this.winningTicket = winningTicketDto.getWinningTicket();
+    public WinningTicket(WinningTicketDto winningTicketDto, BonusNumberDto bonusNumberDto) {
+        this.winningNumbers = winningTicketDto.getWinningTicket();
         this.bonusNumber = bonusNumberDto.getBonusNumber();
+        validDuplicatedNumbers();
     }
 
-    public boolean isSameBonusNumber(final int number) {
-        return bonusNumber.getNumber() == number;
+    private void validDuplicatedNumbers() {
+        if (winningNumbers.contains(bonusNumber)) {
+            throw new IllegalArgumentException("당첨번호에 보너스 번호가 중복된 번호가 존재합니다.");
+        }
     }
 
-    public List<LottoNumber> getWinningTicket() {
-        return Collections.unmodifiableList(winningTicket);
+    public boolean contains(final LottoNumber lottoNumber) {
+        return winningNumbers.contains(lottoNumber);
     }
 
-    public LottoNumber getBonusNumber() {
-        return bonusNumber;
+    public boolean isSameBonusNumber(LottoNumber lottoNumber) {
+        return bonusNumber.equals(lottoNumber);
     }
 }

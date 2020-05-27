@@ -1,20 +1,27 @@
 package com.javabom.lotto;
 
-import com.javabom.lotto.domain.*;
-import com.javabom.lotto.domain.lottery.*;
+import com.javabom.lotto.domain.dto.WinningStatisticsDto;
+import com.javabom.lotto.domain.result.LottoResult;
+import com.javabom.lotto.domain.ticket.LottoTickets;
+import com.javabom.lotto.domain.ticket.WinningTicket;
+import com.javabom.lotto.domain.shop.LottoShop;
 import com.javabom.lotto.domain.shop.LottoNumberShuffler;
+import com.javabom.lotto.domain.shop.UserMoney;
+import com.javabom.lotto.domain.result.WinningStatistics;
 import com.javabom.lotto.view.InputView;
 import com.javabom.lotto.view.OutputView;
 
-import java.util.List;
-
 public class LottoApplication {
     public static void main(String[] args) {
-        int gameMoney = new LottoInformation(InputView.askInputMoney()).getGameMoney();
-        LottoNumbersList lottoNumbersList = new LottoNumbersList(gameMoney, new LottoNumberShuffler());
-        OutputView.printLottoNumbers(lottoNumbersList);
-        List<LottoRank> lottoRanks = lottoNumbersList.findLottoRanks(new WinningNumbers(InputView.askWinningNumber()), new BonusNumber(InputView.askBonusNumber()));
-        WinningStatistics winningStatistics = new WinningStatistics(lottoRanks);
-        OutputView.printWinningStatistics(winningStatistics, gameMoney);
+        UserMoney userMoney = new UserMoney(InputView.askInputMoney());
+        LottoTickets lottoTickets = LottoShop.buyTickets(userMoney, new LottoNumberShuffler());
+
+        OutputView.printLotteryTickets(lottoTickets);
+
+        WinningTicket winningTicket = new WinningTicket(InputView.askWinningTicket(), InputView.askBonusNumber());
+        LottoResult lottoResult = lottoTickets.getLottoResult(winningTicket);
+        WinningStatistics winningStatistics = new WinningStatistics(lottoResult);
+
+        OutputView.printWinningStatistics(new WinningStatisticsDto(winningStatistics, userMoney));
     }
 }

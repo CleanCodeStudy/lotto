@@ -1,8 +1,10 @@
-package com.javabom.lotto.domain.lottery;
+package com.javabom.lotto.domain.ticket;
 
-import java.util.ArrayList;
+import com.javabom.lotto.domain.result.LottoResult;
+
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class LottoTickets {
 
@@ -12,18 +14,10 @@ public class LottoTickets {
         tickets = lottoTickets;
     }
 
-    // TODO 이 부분이랑 LotteryResult 부분 리팩토링 및 구조 다시 보기.
-    public List<LottoRank> findRanks(WinningLottoNumbers winningLottoNumbers) {
-        List<LottoNumber> numbers = winningLottoNumbers.getWinningTicket();
-        LottoNumber bonusNumber = winningLottoNumbers.getBonusNumber();
-        List<LottoRank> lottoRanks = new ArrayList<>();
-        for (LottoTicket lottoTicket : tickets) {
-            int sameCountByWinnerNumbers = lottoTicket.getSameCountByWinnerNumbers(numbers);
-            boolean hasBonusNumber = lottoTicket.hasBonusNumber(bonusNumber);
-            LottoRank lottoRank = LottoRank.findLottoRank(sameCountByWinnerNumbers, hasBonusNumber);
-            lottoRanks.add(lottoRank);
-        }
-        return lottoRanks;
+    public LottoResult getLottoResult(WinningTicket winningTicket) {
+        return new LottoResult(tickets.stream()
+                .map(lottoTicket -> lottoTicket.findLottoRank(winningTicket))
+                .collect(Collectors.toList()));
     }
     public List<LottoTicket> getNumbers() {
         return Collections.unmodifiableList(tickets);

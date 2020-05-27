@@ -1,10 +1,10 @@
 package com.javabom.lotto.domain.shop;
 
-import com.javabom.lotto.domain.lottery.LottoNumber;
+import com.javabom.lotto.domain.ticket.LottoNumber;
 
-import java.util.List;
+import java.util.Set;
 
-public interface NumberShuffler {
+public interface LottoNumberGenerator {
 
-    List<LottoNumber> getNumbers();
+    Set<LottoNumber> generate();
 }

@@ -1,4 +1,4 @@
-package com.javabom.lotto.domain.ticket;
+package com.javabom.lotto.domain.result;
 
 import java.util.Arrays;
 
@@ -37,10 +37,6 @@ public enum LottoRank {
 
     public int getPrizeMoney() {
         return prizeMoney;
-    }
-
-    public int getSameCount() {
-        return sameCount;
     }
 
     public String getRankInfo() {

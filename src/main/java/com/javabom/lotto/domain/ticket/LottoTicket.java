@@ -1,7 +1,8 @@
-package com.javabom.lotto.domain.lottery;
+package com.javabom.lotto.domain.ticket;
+
+import com.javabom.lotto.domain.result.LottoRank;
 
 import java.util.Collections;
-import java.util.List;
 import java.util.Set;
 
 public class LottoTicket {
@@ -12,14 +13,14 @@ public class LottoTicket {
         this.numbers = numbers;
     }
 
-    public int getSameCountByWinnerNumbers(List<LottoNumber> winningNumbers) {
-        return (int) numbers.stream()
-                .filter(winningNumbers::contains)
+    public LottoRank findLottoRank(WinningTicket winningTicket) {
+        int sameCount = (int) numbers.stream()
+                .filter(winningTicket::contains)
                 .count();
-    }
+        boolean hasBonusNumber = numbers.stream()
+                .anyMatch(winningTicket::isSameBonusNumber);
 
-    public boolean hasBonusNumber(LottoNumber bonusNumber) {
-        return numbers.contains(bonusNumber);
+        return LottoRank.findLottoRank(sameCount, hasBonusNumber);
     }
 
     public Set<LottoNumber> getNumbers() {
