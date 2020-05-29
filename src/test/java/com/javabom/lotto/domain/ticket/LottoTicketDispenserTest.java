@@ -16,11 +16,15 @@ class LottoTicketDispenserTest {
     @Test
     void getAutoTickets() {
         // given
-        LottoTicketDispenser lottoTicketDispenser = new LottoTicketDispenser(new FixedLottoNumberGenerator());
-        List<LottoNumber> stubLottoNumbers = IntStream.rangeClosed(1, 6)
-                .boxed()
-                .map(LottoNumber::new)
-                .collect(Collectors.toList());
+        List<LottoNumber> stubLottoNumbers = Arrays.asList(
+                new LottoNumber(1),
+                new LottoNumber(2),
+                new LottoNumber(3),
+                new LottoNumber(4),
+                new LottoNumber(5),
+                new LottoNumber(6)
+        );
+        LottoTicketDispenser lottoTicketDispenser = new LottoTicketDispenser(() -> stubLottoNumbers);
         LottoTicket stubLottoTicket = new LottoTicket(stubLottoNumbers);
         LottoTickets expectedLottoTickets = new LottoTickets(Arrays.asList(stubLottoTicket));
 
@@ -44,8 +48,6 @@ class LottoTicketDispenserTest {
         LottoTickets lottoTickets = lottoTicketDispenser.getAutoTickets(money);
 
         // then
-        assertThat(lottoTickets.get().size()).isEqualTo(expectedTicketQuantity);
+        assertThat(lottoTickets.get()).hasSize(expectedTicketQuantity);
     }
-    // RandomLottoNumberGenerator 테스트 커버리지 0인걸 통과하려고 추가한 테스트입니다..
-    // 의미가 있는 테스트인지 솔직히 모르겠습니다.
 }

@@ -1,4 +1,4 @@
-package com.javabom.lotto.domain.compare;
+package com.javabom.lotto.domain.results;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;

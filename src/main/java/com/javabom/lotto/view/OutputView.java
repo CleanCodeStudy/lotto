@@ -1,7 +1,7 @@
 package com.javabom.lotto.view;
 
-import com.javabom.lotto.domain.compare.LottoResult;
-import com.javabom.lotto.domain.compare.LottoResults;
+import com.javabom.lotto.domain.results.LottoResult;
+import com.javabom.lotto.domain.results.LottoResults;
 import com.javabom.lotto.domain.ticket.LottoTicket;
 import com.javabom.lotto.domain.ticket.LottoTickets;
 import com.javabom.lotto.domain.ticket.Money;
@@ -16,7 +16,7 @@ public class OutputView {
     private static final String NOTICE_PRIZE_MONEY = "(%d원)";
     private static final String NOTICE_MATCH_RESULT_QUANTITY = " - %d개";
     private static final String NOTICE_MATCH_BONUS = "보너스 볼 일치";
-    private static final String NOTICE_EARNING_RATE = "총 수익률은 %d%% 입니다.";
+    private static final String NOTICE_EARNING_RATE = "총 수익률은 %.2f%% 입니다.";
 
     public static void printLottoTickets(LottoTickets lottoTickets) {
         printLineOf(lottoTickets.get().size() + NOTICE_BUY_COMPLETE);
@@ -59,8 +59,8 @@ public class OutputView {
     }
 
     public static void printEarningRate(Money spendMoney, Money earnMoney) {
-        double rate = (double) earnMoney.get() / spendMoney.get() * 100;
-        printLineOf(String.format(NOTICE_EARNING_RATE, (int) rate));
+        double rate = spendMoney.calculateRatioOf(earnMoney);
+        printLineOf(String.format(NOTICE_EARNING_RATE, rate));
     }
 
     private static void printLineOf(String string) {

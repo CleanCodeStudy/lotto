@@ -21,9 +21,14 @@ class LottoTicketTest {
     void getNumbers() {
         // given
         List<Integer> expectedIntegers = Arrays.asList(1, 2, 3, 4, 5, 6);
-        List<LottoNumber> stubLottoNumbers = expectedIntegers.stream()
-                .map(LottoNumber::new)
-                .collect(Collectors.toList());
+        List<LottoNumber> stubLottoNumbers = Arrays.asList(
+                new LottoNumber(1),
+                new LottoNumber(2),
+                new LottoNumber(3),
+                new LottoNumber(4),
+                new LottoNumber(5),
+                new LottoNumber(6)
+        );
         LottoTicket lottoTicket = new LottoTicket(stubLottoNumbers);
 
         // then
@@ -35,10 +40,14 @@ class LottoTicketTest {
     @ParameterizedTest
     void isContain(int matchNumber, boolean isNumberContain) {
         // given
-        List<LottoNumber> stubLottoNumbers = IntStream.rangeClosed(1, 6)
-                .boxed()
-                .map(LottoNumber::new)
-                .collect(Collectors.toList());
+        List<LottoNumber> stubLottoNumbers = Arrays.asList(
+                new LottoNumber(1),
+                new LottoNumber(2),
+                new LottoNumber(3),
+                new LottoNumber(4),
+                new LottoNumber(5),
+                new LottoNumber(6)
+        );
 
         LottoTicket lottoTicket = new LottoTicket(stubLottoNumbers);
         LottoNumber matchLottoNumber = new LottoNumber(matchNumber);

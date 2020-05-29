@@ -1,9 +1,8 @@
 package com.javabom.lotto;
 
-import com.javabom.lotto.domain.compare.LottoBasicLuckyNumbers;
-import com.javabom.lotto.domain.compare.LottoLuckyNumbers;
-import com.javabom.lotto.domain.compare.LottoResults;
-import com.javabom.lotto.domain.compare.LottoTicketComparator;
+import com.javabom.lotto.domain.results.LottoBasicLuckyNumbers;
+import com.javabom.lotto.domain.results.LottoLuckyNumbers;
+import com.javabom.lotto.domain.results.LottoResults;
 import com.javabom.lotto.domain.ticket.*;
 import com.javabom.lotto.view.InputView;
 import com.javabom.lotto.view.OutputView;
@@ -20,8 +19,7 @@ public class LottoApplication {
         LottoNumber bonusNumber = new LottoNumber(InputView.getBonusNumber());
         LottoLuckyNumbers LuckyNumbers = new LottoLuckyNumbers(basicLuckyNumbers, bonusNumber);
 
-        LottoTicketComparator lottoTicketComparator = new LottoTicketComparator(LuckyNumbers);
-        LottoResults lottoResults = lottoTicketComparator.getLottoResults(lottoTickets);
+        LottoResults lottoResults = LuckyNumbers.getLottoResults(lottoTickets);
         OutputView.printLottoResults(lottoResults);
         OutputView.printEarningRate(inputMoney, lottoResults.getTotalPrizeMoney());
     }

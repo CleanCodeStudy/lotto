@@ -1,6 +1,7 @@
 package com.javabom.lotto.domain.ticket;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class LottoTicketDispenser {
 
@@ -13,8 +14,8 @@ public class LottoTicketDispenser {
     }
 
     public LottoTickets getAutoTickets(Money inputMoney) {
-        int quantity = (int) inputMoney.get() / LOTTO_TICKET_PRICE;
-        ArrayList<LottoTicket> tickets = new ArrayList<>();
+        int quantity = inputMoney.calculateQuantityPer(LOTTO_TICKET_PRICE);
+        List<LottoTicket> tickets = new ArrayList<>();
         for (int i = 0; i < quantity; i++) {
             tickets.add(new LottoTicket(lottoNumberGenerator.getLottoNumbers()));
         }

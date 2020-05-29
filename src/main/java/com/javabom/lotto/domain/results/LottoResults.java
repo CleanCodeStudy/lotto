@@ -1,4 +1,4 @@
-package com.javabom.lotto.domain.compare;
+package com.javabom.lotto.domain.results;
 
 import com.javabom.lotto.domain.ticket.Money;
 

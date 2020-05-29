@@ -1,4 +1,4 @@
-package com.javabom.lotto.domain.compare;
+package com.javabom.lotto.domain.results;
 
 import java.util.Arrays;
 import java.util.List;
@@ -34,7 +34,7 @@ public enum LottoResult {
 
     private static void validateMatchCount(int matchCount) {
         if (matchCount < 0 || matchCount > 6) {
-            throw new IllegalArgumentException("로또번호 매치 수는 0~6 사이입니다.");
+            throw new IllegalArgumentException("로또번호 매치 수는 0~6 이외일 수 없습니다.");
         }
     }
 

@@ -1,4 +1,4 @@
-package com.javabom.lotto.domain.compare;
+package com.javabom.lotto.domain.results;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -16,7 +16,7 @@ class LottoResultTest {
         // then
         assertThatThrownBy(() -> LottoResult.find(matchCount, true))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("로또번호 매치 수는 0~6 사이입니다.");
+                .hasMessage("로또번호 매치 수는 0~6 이외일 수 없습니다.");
     }
 
     @DisplayName("로또 번호 매치수와 보너스 매치여부에 따른 로또 결과 확인")

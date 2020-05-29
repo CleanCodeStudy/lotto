@@ -1,5 +1,6 @@
-package com.javabom.lotto.domain.compare;
+package com.javabom.lotto.domain.results;
 
+import com.javabom.lotto.domain.ticket.Money;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -7,8 +8,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.javabom.lotto.domain.compare.LottoResult.FIFTH_PRIZE;
-import static com.javabom.lotto.domain.compare.LottoResult.FOURTH_PRIZE;
+import static com.javabom.lotto.domain.results.LottoResult.FIFTH_PRIZE;
+import static com.javabom.lotto.domain.results.LottoResult.FOURTH_PRIZE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class LottoResultsTest {
@@ -22,9 +23,9 @@ class LottoResultsTest {
                 FOURTH_PRIZE,
                 FIFTH_PRIZE);
         LottoResults lottoResults = new LottoResults(lottoResultList);
-        List<LottoResult> expectedLottoResultList = lottoResultList.stream()
-                .filter(result -> result == FOURTH_PRIZE)
-                .collect(Collectors.toList());
+        List<LottoResult> expectedLottoResultList = Arrays.asList(
+                FOURTH_PRIZE,
+                FOURTH_PRIZE);
 
         // then
         assertThat(lottoResults.findResultsOf(FOURTH_PRIZE))
@@ -34,17 +35,12 @@ class LottoResultsTest {
     @Test
     void getTotalPrizeMoney() {
         // given
-        List<LottoResult> lottoResultList = Arrays.asList(
-                FOURTH_PRIZE,
-                FOURTH_PRIZE,
-                FIFTH_PRIZE);
+        List<LottoResult> lottoResultList = Arrays.asList(FOURTH_PRIZE, FIFTH_PRIZE);
         LottoResults lottoResults = new LottoResults(lottoResultList);
-        long expectedTotalPrizeMoney = lottoResultList.stream()
-                .mapToLong(LottoResult::getPrice)
-                .sum();
+        Money expectedTotalPrizeMoney = new Money(FOURTH_PRIZE.getPrice() + FIFTH_PRIZE.getPrice());
 
         // then
-        assertThat(lottoResults.getTotalPrizeMoney().get())
+        assertThat(lottoResults.getTotalPrizeMoney())
                 .isEqualTo(expectedTotalPrizeMoney);
     }
 }
