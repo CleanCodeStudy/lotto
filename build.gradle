@@ -3,7 +3,7 @@ plugins {
     id 'jacoco'
 }
 
-group 'com.javabom'
+group 'lotto'
 version '1.0-SNAPSHOT'
 
 sourceCompatibility = 1.8
@@ -58,6 +58,7 @@ jacocoTestCoverageVerification {
             }
 
             includes = ['*.domain.*']
+            excludes = ['*Property*']
 
         }
 
@@ -71,6 +72,7 @@ jacocoTestCoverageVerification {
             }
 
             includes = ['*.domain.*']
+            excludes = ['*Property*']
         }
 
     }
