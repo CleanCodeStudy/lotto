@@ -1,6 +1,5 @@
 package com.javabom.lotto;
 
-import com.javabom.lotto.domain.results.LottoBasicLuckyNumbers;
 import com.javabom.lotto.domain.results.LottoLuckyNumbers;
 import com.javabom.lotto.domain.results.LottoResults;
 import com.javabom.lotto.domain.ticket.*;
@@ -15,9 +14,9 @@ public class LottoApplication {
         LottoTickets lottoTickets = lottoTicketDispenser.getAutoTickets(inputMoney);
         OutputView.printLottoTickets(lottoTickets);
 
-        LottoBasicLuckyNumbers basicLuckyNumbers = new LottoBasicLuckyNumbers(InputView.getLottoBasicLuckyNumbers());
+        LottoTicket basicLuckyTicket = new LottoTicket(LottoNumberConverter.convert(InputView.getLottoBasicLuckyNumbers()));
         LottoNumber bonusNumber = new LottoNumber(InputView.getBonusNumber());
-        LottoLuckyNumbers LuckyNumbers = new LottoLuckyNumbers(basicLuckyNumbers, bonusNumber);
+        LottoLuckyNumbers LuckyNumbers = new LottoLuckyNumbers(basicLuckyTicket, bonusNumber);
 
         LottoResults lottoResults = LuckyNumbers.getLottoResults(lottoTickets);
         OutputView.printLottoResults(lottoResults);

@@ -9,11 +9,11 @@ import java.util.List;
 
 public class LottoLuckyNumbers {
 
-    private final LottoBasicLuckyNumbers basicLuckyNumbers;
+    private final LottoTicket basicLuckyTicket;
     private final LottoNumber bonusNumber;
 
-    public LottoLuckyNumbers(LottoBasicLuckyNumbers basicLuckyNumbers, LottoNumber bonusNumber) {
-        this.basicLuckyNumbers = basicLuckyNumbers;
+    public LottoLuckyNumbers(LottoTicket basicLuckyTicket, LottoNumber bonusNumber) {
+        this.basicLuckyTicket = basicLuckyTicket;
         this.bonusNumber = bonusNumber;
     }
 
@@ -26,7 +26,7 @@ public class LottoLuckyNumbers {
     }
 
     private LottoResult getLottoResult(LottoTicket lottoTicket) {
-        int matchCount = basicLuckyNumbers.countMatchingNumbers(lottoTicket);
+        int matchCount = basicLuckyTicket.countMatchingNumbers(lottoTicket);
         boolean isBonusMatched = lottoTicket.isContain(bonusNumber);
         return LottoResult.find(matchCount, isBonusMatched);
     }

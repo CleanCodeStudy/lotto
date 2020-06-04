@@ -29,9 +29,9 @@ class LottoLuckyNumbersTest {
         );
 
         LottoNumber bonusNumber = new LottoNumber(7);
-        LottoBasicLuckyNumbers basicLuckyNumbers = new LottoBasicLuckyNumbers(Arrays.asList(1, 2, 3, 4, 5, 6));
+        LottoTicket basicLuckyTicket = new LottoTicket(stubLottoNumbers);
 
-        LottoLuckyNumbers lottoLuckyNumbers = new LottoLuckyNumbers(basicLuckyNumbers, bonusNumber);
+        LottoLuckyNumbers lottoLuckyNumbers = new LottoLuckyNumbers(basicLuckyTicket, bonusNumber);
 
         // when
         LottoTickets allMatchLottoTicket = new LottoTickets(Arrays.asList(new LottoTicket(stubLottoNumbers)));

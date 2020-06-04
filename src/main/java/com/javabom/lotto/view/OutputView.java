@@ -21,20 +21,8 @@ public class OutputView {
     public static void printLottoTickets(LottoTickets lottoTickets) {
         printLineOf(lottoTickets.get().size() + NOTICE_BUY_COMPLETE);
         for (LottoTicket lottoTicket : lottoTickets.get()) {
-            printLineOf(stringOf(lottoTicket));
+            printLineOf(lottoTicket.toString());
         }
-    }
-
-    private static String stringOf(LottoTicket lottoTicket) {
-        String lottoNumbers = lottoTicket.getNumbers().stream()
-                .map(String::valueOf)
-                .collect(Collectors.joining(", "));
-
-        return new StringBuilder()
-                .append("[")
-                .append(lottoNumbers)
-                .append("]")
-                .toString();
     }
 
     public static void printLottoResults(LottoResults lottoResults) {

@@ -16,25 +16,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class LottoTicketTest {
 
-    @DisplayName("티켓 생성 후 입력 번호 리스트가 제대로 나오는지 확인")
-    @Test
-    void getNumbers() {
-        // given
-        List<Integer> expectedIntegers = Arrays.asList(1, 2, 3, 4, 5, 6);
-        List<LottoNumber> stubLottoNumbers = Arrays.asList(
-                new LottoNumber(1),
-                new LottoNumber(2),
-                new LottoNumber(3),
-                new LottoNumber(4),
-                new LottoNumber(5),
-                new LottoNumber(6)
-        );
-        LottoTicket lottoTicket = new LottoTicket(stubLottoNumbers);
-
-        // then
-        assertThat(lottoTicket.getNumbers()).isEqualTo(expectedIntegers);
-    }
-
     @DisplayName("티켓내에 특정 번호가 들어있는지 확인")
     @CsvSource({"1,true", "7,false"})
     @ParameterizedTest
@@ -67,6 +48,6 @@ class LottoTicketTest {
         // then
         assertThatThrownBy(() -> new LottoTicket(stubLottoNumbers))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("로또 티켓에 6개 숫자를 넣어야 합니다.");
+                .hasMessage("로또 티켓에 6개 숫자를 넣어야 합니다. 입력 size : " + size);
     }
 }

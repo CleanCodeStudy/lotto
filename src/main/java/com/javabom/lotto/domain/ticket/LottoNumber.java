@@ -15,12 +15,8 @@ public class LottoNumber {
 
     private void validateNumber(int number) {
         if (number < MIN_LOTTO_NUM || number > MAX_LOTTO_NUM) {
-            throw new IllegalArgumentException("로또 번호는 1~45이외 일 수 없습니다.");
+            throw new IllegalArgumentException("로또 번호는 1~45이외 일 수 없습니다. 입력 값 : " + number);
         }
-    }
-
-    public int get() {
-        return number;
     }
 
     @Override
@@ -35,4 +31,10 @@ public class LottoNumber {
     public int hashCode() {
         return Objects.hash(number);
     }
+
+    @Override
+    public String toString() {
+        return String.valueOf(number);
+    }
+
 }
