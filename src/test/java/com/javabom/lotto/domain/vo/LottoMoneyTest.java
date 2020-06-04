@@ -9,7 +9,6 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
-import static org.junit.jupiter.api.Assertions.*;
 
 class LottoMoneyTest {
 
@@ -27,7 +26,16 @@ class LottoMoneyTest {
     @CsvSource({"1000, 1", "2499, 2", "14000, 14"})
     void calculateNumberOfTicket(int purchaseAmount, int expectNumberOfTicket) {
         LottoMoney lottoMoney = new LottoMoney(purchaseAmount);
-        assertThat(lottoMoney.getNumberOfTicket()).isEqualTo(expectNumberOfTicket);
+        assertThat(lottoMoney.getNumberOfAutoTicket()).isEqualTo(expectNumberOfTicket);
+    }
+
+    @DisplayName("수동으로 할 티켓의 수가 입력한 금액으로 구매할 수 없으면 IllegalArgumentException throw")
+    @ParameterizedTest
+    @CsvSource({"1000, 2", "3000, 6"})
+    void manualTicketOverPurchaseAmountThrowException(int purchaseAmount, int numberOfManualTicket) {
+        assertThatIllegalArgumentException()
+                .isThrownBy(() -> new LottoMoney(purchaseAmount, numberOfManualTicket))
+                .withMessage("수동으로 구매할 수 있는 개수를 초과했습니다. - " + numberOfManualTicket);
     }
 
     @DisplayName("당첨 총액으로 수익률을 계산")
