@@ -50,4 +50,29 @@ class LottoTicketTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("로또 티켓에 6개 숫자를 넣어야 합니다. 입력 size : " + size);
     }
+
+    @DisplayName("로또 번호 매치 수를 잘 구하는지 확인")
+    @Test
+    void countMatchingNumbers() {
+        // given
+        LottoTicket ticket1 = new LottoTicket(Arrays.asList(
+                new LottoNumber(1),
+                new LottoNumber(2),
+                new LottoNumber(3),
+                new LottoNumber(4),
+                new LottoNumber(5),
+                new LottoNumber(6)
+        ));
+        LottoTicket ticket2 = new LottoTicket(Arrays.asList(
+                new LottoNumber(1),
+                new LottoNumber(2),
+                new LottoNumber(3),
+                new LottoNumber(4),
+                new LottoNumber(7),
+                new LottoNumber(8)
+        ));
+
+        // then
+        assertThat(ticket1.countMatchingNumbers(ticket2)).isEqualTo(4);
+    }
 }
