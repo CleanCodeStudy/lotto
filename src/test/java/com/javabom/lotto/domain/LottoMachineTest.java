@@ -1,24 +1,37 @@
 package com.javabom.lotto.domain;
 
+import com.javabom.lotto.domain.dto.ManualNumbersDto;
 import com.javabom.lotto.domain.ticket.LottoTicket;
 import com.javabom.lotto.domain.vo.LottoMoney;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 class LottoMachineTest {
 
-    @DisplayName("구입 금액에 맞는 로또 티켓을 생성한다.")
-    @ParameterizedTest
-    @CsvSource({"1000, 1", "3500, 3", "14000, 14"})
-    void purchaseLottoTicket(int purchaseAmount, int ticketAmount) {
-        LottoMoney lottoMoney = new LottoMoney(purchaseAmount);
-        LottoBill lottoBill = LottoMachine.purchaseLottoTicket(lottoMoney);
+    private static Stream<Arguments> provideManualLottoNumbersAndNumberOfAutoTicket() {
+        return Stream.of(
+                Arguments.of(new ArrayList<ManualNumbersDto>(), 2, 2),
+                Arguments.of(Arrays.asList(new ManualNumbersDto(new String[]{"1", "2", "3", "4", "5", "6"})), 1, 2)
+        );
+    }
 
-        assertThat(lottoBill.getAllTickets().size()).isEqualTo(ticketAmount);
+    @DisplayName("수동 로또 개수와 자동 로또 개수에 맞는 로또 티켓을 생성한다.")
+    @ParameterizedTest
+    @MethodSource("provideManualLottoNumbersAndNumberOfAutoTicket")
+    void purchaseLottoTicket(List<ManualNumbersDto> manualNumbersDtos, int numberOfAutoTicket, int expectedResult) {
+        LottoBill lottoBill = LottoMachine.purchaseLottoTicket(manualNumbersDtos, numberOfAutoTicket);
+
+        assertThat(lottoBill.getAllTickets().size()).isEqualTo(expectedResult);
     }
 }
