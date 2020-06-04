@@ -41,7 +41,7 @@ class LottoMoneyTest {
     @DisplayName("당첨 총액으로 수익률을 계산")
     @Test
     void calculateRateOfReturn() {
-        LottoMoney lottoMoney = new LottoMoney(2000);
+        LottoMoney lottoMoney = new LottoMoney(2000, 0);
         int sumOfPrize = WinningSheet.FIFTH.getPrize() + WinningSheet.FOURTH.getPrize();
 
         double rateOfReturn = lottoMoney.calculateRateOfReturn(sumOfPrize);

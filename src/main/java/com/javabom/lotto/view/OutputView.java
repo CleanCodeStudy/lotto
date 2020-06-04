@@ -15,7 +15,8 @@ public class OutputView {
     }
 
     public static void printNumberOfTicket(LottoMoney lottoMoney) {
-        System.out.println(String.format("%d개를 구매했습니다.", lottoMoney.getNumberOfAutoTicket()));
+        System.out.println(String.format("수동으로 %d개, 자동으로 %d개를 구매했습니다.", lottoMoney.getNumberOfManualTicket()
+                , lottoMoney.getNumberOfAutoTicket()));
     }
 
     public static void printLottoTickets(List<LottoTicket> lottoTickets) {

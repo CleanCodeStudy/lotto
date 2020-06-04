@@ -12,12 +12,15 @@ import java.util.List;
 
 public class LottoApplication {
     public static void main(String[] args) {
-        LottoMoney lottoMoney = InputView.inputPurchaseAmount();
+        int purchaseAmount = InputView.inputPurchaseAmount();
+        int numberOfManualTicket = InputView.inputNumberOfManualTicket();
 
-        OutputView.printNumberOfTicket(lottoMoney);
+        LottoMoney lottoMoney = new LottoMoney(purchaseAmount, numberOfManualTicket);
+
 
         LottoBill lottoBill = LottoMachine.purchaseLottoTicket(lottoMoney);
 
+        OutputView.printNumberOfTicket(lottoMoney);
         OutputView.printLottoTickets(lottoBill.getAllTickets());
 
         List<Integer> winningNumbers = InputView.inputLastWinningNumbers();
