@@ -1,7 +1,8 @@
 package com.javabom.lotto.domain.shop;
 
+import com.javabom.lotto.domain.dto.LottoNumberValidator;
+import com.javabom.lotto.domain.dto.LottoNumbersValidator;
 import com.javabom.lotto.domain.ticket.LottoNumber;
-import com.javabom.lotto.domain.ticket.LottoNumberSetting;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -18,7 +19,7 @@ class LottoNumberShufflerTest {
     void generateNumberCountTest() {
         LottoNumberShuffler shuffler = new LottoNumberShuffler();
 
-        assertEquals(LottoNumberSetting.MAX_NUMBER_COUNT, shuffler.generate().size());
+        assertEquals(LottoNumbersValidator.MAX_NUMBER_COUNT, shuffler.generate().size());
     }
 
     @Test
@@ -36,7 +37,7 @@ class LottoNumberShufflerTest {
                 .get()
                 .getNumber();
 
-        assertTrue(maxNumber <= LottoNumberSetting.NUMBER_END);
-        assertTrue(minNumber >= LottoNumberSetting.NUMBER_BEGIN);
+        assertTrue(maxNumber <= LottoNumberValidator.NUMBER_END);
+        assertTrue(minNumber >= LottoNumberValidator.NUMBER_BEGIN);
     }
 }

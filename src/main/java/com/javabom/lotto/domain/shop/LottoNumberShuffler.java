@@ -1,7 +1,8 @@
 package com.javabom.lotto.domain.shop;
 
+import com.javabom.lotto.domain.dto.LottoNumberValidator;
+import com.javabom.lotto.domain.dto.LottoNumbersValidator;
 import com.javabom.lotto.domain.ticket.LottoNumber;
-import com.javabom.lotto.domain.ticket.LottoNumberSetting;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -15,7 +16,7 @@ public class LottoNumberShuffler implements LottoNumberGenerator {
     private final List<LottoNumber> lottoNum;
 
     public LottoNumberShuffler() {
-        lottoNum = IntStream.rangeClosed(LottoNumberSetting.NUMBER_BEGIN, LottoNumberSetting.NUMBER_END)
+        lottoNum = IntStream.rangeClosed(LottoNumberValidator.NUMBER_BEGIN, LottoNumberValidator.NUMBER_END)
                 .mapToObj(LottoNumber::new)
                 .collect(Collectors.toList());
     }
@@ -23,7 +24,7 @@ public class LottoNumberShuffler implements LottoNumberGenerator {
     @Override
     public Set<LottoNumber> generate() {
         Collections.shuffle(lottoNum);
-        return new HashSet<>(lottoNum.subList(0, LottoNumberSetting.MAX_NUMBER_COUNT));
+        return new HashSet<>(lottoNum.subList(0, LottoNumbersValidator.MAX_NUMBER_COUNT));
 
     }
 }

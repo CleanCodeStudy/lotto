@@ -1,8 +1,9 @@
 package com.javabom.lotto.domain.dto;
 
-import com.javabom.lotto.domain.ticket.LottoNumberSetting;
-
 public class LottoNumberValidator {
+
+    public final static int NUMBER_BEGIN = 1;
+    public final static int NUMBER_END = 45;
 
     private static void validNumberFormat(String number) {
         try {
@@ -14,13 +15,13 @@ public class LottoNumberValidator {
 
     public static void validLottoNumber(String number) {
         validNumberFormat(number);
-        if (Integer.parseInt(number) < LottoNumberSetting.NUMBER_BEGIN || Integer.parseInt(number) > LottoNumberSetting.NUMBER_END) {
+        if (Integer.parseInt(number) < NUMBER_BEGIN || Integer.parseInt(number) > NUMBER_END) {
             throw new IllegalArgumentException("로또 번호가 아닙니다.");
         }
     }
 
     public static void validLottoNumber(int number) {
-        if (number < LottoNumberSetting.NUMBER_BEGIN || number > LottoNumberSetting.NUMBER_END) {
+        if (number < NUMBER_BEGIN || number > NUMBER_END) {
             throw new IllegalArgumentException("로또 번호가 아닙니다.");
         }
 

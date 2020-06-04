@@ -1,13 +1,14 @@
 package com.javabom.lotto.domain.dto;
 
 import com.javabom.lotto.domain.ticket.LottoNumber;
-import com.javabom.lotto.domain.ticket.LottoNumberSetting;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 public class LottoNumbersValidator {
+
+    public final static int MAX_NUMBER_COUNT = 6;
 
     public static void validDuplicatedNumber(List<LottoNumber> lottoNumbers) {
         Set<LottoNumber> set = new HashSet<>(lottoNumbers);
@@ -17,7 +18,7 @@ public class LottoNumbersValidator {
     }
 
     public static void validLottoNumberCount(List<LottoNumber> lottoNumbers) {
-        if (lottoNumbers.size() != LottoNumberSetting.MAX_NUMBER_COUNT) {
+        if (lottoNumbers.size() != MAX_NUMBER_COUNT) {
             throw new IllegalArgumentException("입력된 로또 번호 수가 6개가 아닙니다.");
         }
     }
