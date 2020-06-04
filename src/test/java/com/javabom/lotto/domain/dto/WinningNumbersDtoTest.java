@@ -6,13 +6,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class WinningNumbersDtoTest {
 
@@ -45,7 +44,7 @@ class WinningNumbersDtoTest {
     public void 당첨번호_중복_존재시_예외() {
         assertThatThrownBy(() -> new WinningNumbersDto("1,2, 3, 4, 5, 5"))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("당첨번호에 중복된 번호가 존재합니다.");
+                .hasMessage("로또번호 중 중복된 번호가 존재합니다.");
 
     }
     @ParameterizedTest
@@ -54,7 +53,7 @@ class WinningNumbersDtoTest {
     public void 당첨번호가_6개가_아닐시_예외(String value) {
         assertThatThrownBy(() -> new WinningNumbersDto(value))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("입력된 당첨 번호 수가 6개가 아닙니다.");
+                .hasMessage("입력된 로또 번호 수가 6개가 아닙니다.");
 
     }
 }
