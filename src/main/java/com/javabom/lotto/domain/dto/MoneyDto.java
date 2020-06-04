@@ -2,11 +2,11 @@ package com.javabom.lotto.domain.dto;
 
 import com.javabom.lotto.domain.shop.LottoShop;
 
-public class UserMoneyDto {
+public class MoneyDto {
 
     private int money;
 
-    public UserMoneyDto(String money) {
+    public MoneyDto(String money) {
         validGameMoney(money);
         this.money = Integer.parseInt(money);
     }

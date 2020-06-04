@@ -10,9 +10,15 @@ import java.util.stream.Collectors;
 
 public class OutputView {
 
-    public static void printLotteryTickets(LottoTickets lottoNumbers) {
-        System.out.println(lottoNumbers.size() + "개를 구매했습니다.");
-        for (LottoTicket number : lottoNumbers.getNumbers()) {
+    public static void printLotteryTickets(LottoTickets automaticTickets, LottoTickets manualTickets) {
+        System.out.println();
+        System.out.println(manualTickets.size() + "장, 자동으로 " + automaticTickets.size() + "개를 구매했습니다.");
+
+        for (LottoTicket ticket : manualTickets.getTickets()) {
+            printLottoNumber(ticket);
+        }
+
+        for (LottoTicket number : automaticTickets.getTickets()) {
             printLottoNumber(number);
         }
     }
@@ -38,8 +44,10 @@ public class OutputView {
 
     private static void printWinningNumberCount(WinningStatisticsDto winningStatisticsDto) {
         Map<LottoRank, Integer> eachLottoRankCount = winningStatisticsDto.getEachLottoRankCount();
-        for (LottoRank lottoRank : eachLottoRankCount.keySet()) {
-            System.out.println(lottoRank.getRankInfo() + "- " + eachLottoRankCount.get(lottoRank) + "개");
-        }
+        System.out.println("3개 일치(" + LottoRank.FIFTH_PLACE.getPrizeMoney() + "원) - " + eachLottoRankCount.get(LottoRank.FIFTH_PLACE) + "개");
+        System.out.println("4개 일치(" + LottoRank.FOURTH_PLACE.getPrizeMoney() + "원) - " + eachLottoRankCount.get(LottoRank.FOURTH_PLACE) + "개");
+        System.out.println("5개 일치(" + LottoRank.THIRD_PLACE.getPrizeMoney() + "원) - " + eachLottoRankCount.get(LottoRank.THIRD_PLACE) + "개");
+        System.out.println("5개 일치, 보너스 볼 일치(" + LottoRank.SECOND_PLACE.getPrizeMoney() + "원) - " + eachLottoRankCount.get(LottoRank.SECOND_PLACE) + "개");
+        System.out.println("6개 일치(" + LottoRank.FIRST_PLACE.getPrizeMoney() + "원) - " + eachLottoRankCount.get(LottoRank.FIRST_PLACE) + "개");
     }
 }

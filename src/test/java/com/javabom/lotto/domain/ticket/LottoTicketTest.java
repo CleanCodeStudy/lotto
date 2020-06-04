@@ -1,7 +1,7 @@
 package com.javabom.lotto.domain.ticket;
 
 import com.javabom.lotto.domain.dto.BonusNumberDto;
-import com.javabom.lotto.domain.dto.WinningTicketDto;
+import com.javabom.lotto.domain.dto.WinningNumbersDto;
 import com.javabom.lotto.domain.result.LottoRank;
 import org.junit.jupiter.api.Test;
 
@@ -16,9 +16,9 @@ class LottoTicketTest {
 
     @Test
     void findLottoRankTest() {
-        WinningTicketDto winningTicketDto = new WinningTicketDto("1,2,3,4,5,6");
+        WinningNumbersDto winningNumbersDto = new WinningNumbersDto("1,2,3,4,5,6");
         BonusNumberDto bonusNumberDto = new BonusNumberDto("11");
-        WinningTicket winningTicket = new WinningTicket(winningTicketDto, bonusNumberDto);
+        WinningTicket winningTicket = new WinningTicket(winningNumbersDto, bonusNumberDto);
         Set<LottoNumber> lottoNumbers = new HashSet<>(Arrays.asList(1, 2, 3, 4, 5, 6)).stream()
                 .map(LottoNumber::new)
                 .collect(Collectors.toSet());

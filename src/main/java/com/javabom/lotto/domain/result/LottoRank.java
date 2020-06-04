@@ -3,21 +3,19 @@ package com.javabom.lotto.domain.result;
 import java.util.Arrays;
 
 public enum LottoRank {
-    FIFTH_PLACE(5000, 3, "3개 일치 (5000원)"),
-    FOURTH_PLACE(50000, 4, "4개 일치 (500000원)"),
-    THIRD_PLACE(1500000, 5, "5개 일치 (1500000원)"),
-    SECOND_PLACE(30000000, 5, "5개 일치, 보너스 볼 일치 (30000000원)"),
-    FIRST_PLACE(2000000000, 6, "6개 일치 (20000000000원)"),
-    FAIL(0, 0, "꽝");
+    FIFTH_PLACE(5000, 3),
+    FOURTH_PLACE(50000, 4),
+    THIRD_PLACE(1500000, 5),
+    SECOND_PLACE(30000000, 5),
+    FIRST_PLACE(2000000000, 6),
+    FAIL(0, 0);
 
     private int prizeMoney;
     private int sameCount;
-    private String rankInfo;
 
-    LottoRank(int prizeMoney, int sameCount, String rankInfo) {
+    LottoRank(int prizeMoney, int sameCount) {
         this.prizeMoney = prizeMoney;
         this.sameCount = sameCount;
-        this.rankInfo = rankInfo;
     }
 
     public static LottoRank findBySameCount(int sameCount) {
@@ -39,7 +37,4 @@ public enum LottoRank {
         return prizeMoney;
     }
 
-    public String getRankInfo() {
-        return rankInfo;
-    }
 }

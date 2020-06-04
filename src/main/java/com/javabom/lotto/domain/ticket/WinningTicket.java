@@ -1,18 +1,18 @@
 package com.javabom.lotto.domain.ticket;
 
 import com.javabom.lotto.domain.dto.BonusNumberDto;
-import com.javabom.lotto.domain.dto.WinningTicketDto;
+import com.javabom.lotto.domain.dto.WinningNumbersDto;
 
-import java.util.List;
+import java.util.Set;
 
 public class WinningTicket {
 
-    private final List<LottoNumber> winningNumbers;
+    private final Set<LottoNumber> winningNumbers;
 
     private final LottoNumber bonusNumber;
 
-    public WinningTicket(WinningTicketDto winningTicketDto, BonusNumberDto bonusNumberDto) {
-        this.winningNumbers = winningTicketDto.getWinningTicket();
+    public WinningTicket(WinningNumbersDto winningNumbersDto, BonusNumberDto bonusNumberDto) {
+        this.winningNumbers = winningNumbersDto.getWinningNumbers();
         this.bonusNumber = bonusNumberDto.getBonusNumber();
         validDuplicatedNumbers();
     }

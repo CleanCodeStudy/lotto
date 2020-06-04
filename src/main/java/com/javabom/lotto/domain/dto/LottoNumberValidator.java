@@ -1,6 +1,6 @@
 package com.javabom.lotto.domain.dto;
 
-import com.javabom.lotto.domain.shop.LottoShop;
+import com.javabom.lotto.domain.ticket.LottoNumberSetting;
 
 public class LottoNumberValidator {
 
@@ -14,13 +14,13 @@ public class LottoNumberValidator {
 
     public static void validLottoNumber(String number) {
         validNumberFormat(number);
-        if (Integer.parseInt(number) < LottoShop.NUMBER_BEGIN || Integer.parseInt(number) > LottoShop.NUMBER_END) {
+        if (Integer.parseInt(number) < LottoNumberSetting.NUMBER_BEGIN || Integer.parseInt(number) > LottoNumberSetting.NUMBER_END) {
             throw new IllegalArgumentException("로또 번호가 아닙니다.");
         }
     }
 
     public static void validLottoNumber(int number) {
-        if (number < LottoShop.NUMBER_BEGIN || number > LottoShop.NUMBER_END) {
+        if (number < LottoNumberSetting.NUMBER_BEGIN || number > LottoNumberSetting.NUMBER_END) {
             throw new IllegalArgumentException("로또 번호가 아닙니다.");
         }
 

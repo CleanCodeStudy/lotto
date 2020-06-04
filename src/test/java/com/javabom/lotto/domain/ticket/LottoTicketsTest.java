@@ -1,7 +1,7 @@
 package com.javabom.lotto.domain.ticket;
 
 import com.javabom.lotto.domain.dto.BonusNumberDto;
-import com.javabom.lotto.domain.dto.WinningTicketDto;
+import com.javabom.lotto.domain.dto.WinningNumbersDto;
 import com.javabom.lotto.domain.result.LottoRank;
 import com.javabom.lotto.domain.result.LottoResult;
 import org.junit.jupiter.api.DisplayName;
@@ -18,10 +18,10 @@ class LottoTicketsTest {
     @DisplayName("로또 당첨 결과 반환 테스트.")
     void getLottoResult() {
         LottoTickets lottoTickets = createLottoTickets();
-        WinningTicketDto winningTicketDto = new WinningTicketDto("1,2,3,4,5,6");
+        WinningNumbersDto winningNumbersDto = new WinningNumbersDto("1,2,3,4,5,6");
         BonusNumberDto bonusNumberDto = new BonusNumberDto("7");
 
-        WinningTicket winningTicket = new WinningTicket(winningTicketDto, bonusNumberDto);
+        WinningTicket winningTicket = new WinningTicket(winningNumbersDto, bonusNumberDto);
         LottoResult lottoResult = lottoTickets.getLottoResult(winningTicket);
         List<LottoRank> lottoRanks = new ArrayList<>();
         lottoRanks.add(LottoRank.FIRST_PLACE);
@@ -51,5 +51,15 @@ class LottoTicketsTest {
     void sizeTest() {
         LottoTickets lottoTickets = createLottoTickets();
         assertEquals(2, lottoTickets.size());
+    }
+
+    @Test
+    @DisplayName("매개변수로 받은 티켓을 합쳐 반환하는지 확인.")
+    public void joinTicketsTest() {
+        LottoTickets lottoTickets1 = createLottoTickets();
+        LottoTickets lottoTickets2 = createLottoTickets();
+        LottoTickets joinTickets = lottoTickets1.joinTickets(lottoTickets2);
+
+        assertEquals(4, joinTickets.size());
     }
 }

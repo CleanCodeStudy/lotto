@@ -1,25 +1,26 @@
 package com.javabom.lotto.domain.shop;
 
+import com.javabom.lotto.domain.ticket.LottoNumber;
 import com.javabom.lotto.domain.ticket.LottoTicket;
-import com.javabom.lotto.domain.ticket.LottoTickets;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class LottoShop {
-    public final static int NUMBER_BEGIN = 1;
-    public final static int NUMBER_END = 45;
-    public final static int MAX_NUMBER_COUNT = 6;
-    public static final int TICKET_PRICE = 1000;
 
-    public static LottoTickets buyTickets(UserMoney userMoney, LottoNumberGenerator shuffler) {
-        int lottoCount = userMoney.getMoney() / TICKET_PRICE;
-        List<LottoTicket> lottoNumbers = new ArrayList<>();
+    public final static int TICKET_PRICE = 1000;
+    private final LottoNumberGenerator numberGenerator;
 
-        for (int i = 0; i < lottoCount; i++) {
-            lottoNumbers.add(new LottoTicket(shuffler.generate()));
-        }
-
-        return new LottoTickets(lottoNumbers);
+    public LottoShop(LottoNumberGenerator generator) {
+        this.numberGenerator = generator;
     }
+
+    public LottoTicket giveLottoTicket(Set<LottoNumber> lottoNumbers) {
+        return new LottoTicket(new HashSet<>(lottoNumbers));
+    }
+
+    public LottoTicket generateTicket() {
+        return new LottoTicket(numberGenerator.generate());
+    }
+
 }

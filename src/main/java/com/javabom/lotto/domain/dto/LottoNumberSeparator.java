@@ -12,10 +12,13 @@ public class LottoNumberSeparator {
 
     public static List<LottoNumber> separate(String numbers) {
         checkEachNumber(numbers);
-        return Arrays.stream(numbers.split(DELIMITER))
+        List<LottoNumber> lottoNumbers = Arrays.stream(numbers.split(DELIMITER))
                 .map(String::trim)
                 .map(number -> new LottoNumber(Integer.parseInt(number)))
                 .collect(Collectors.toList());
+        LottoNumbersValidator.validDuplicatedNumber(lottoNumbers);
+        LottoNumbersValidator.validLottoNumberCount(lottoNumbers);
+        return lottoNumbers;
     }
 
     private static void checkEachNumber(String numbers) {
