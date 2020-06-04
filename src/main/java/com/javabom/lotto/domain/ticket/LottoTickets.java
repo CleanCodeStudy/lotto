@@ -1,5 +1,6 @@
 package com.javabom.lotto.domain.ticket;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -14,6 +15,13 @@ public class LottoTickets {
 
     public List<LottoTicket> get() {
         return Collections.unmodifiableList(tickets);
+    }
+
+    public LottoTickets add(LottoTickets lottoTickets) {
+        List<LottoTicket> newTickets = new ArrayList<>();
+        newTickets.addAll(this.tickets);
+        newTickets.addAll(lottoTickets.tickets);
+        return new LottoTickets(newTickets);
     }
 
     @Override

@@ -6,11 +6,9 @@ import com.javabom.lotto.domain.ticket.LottoTicket;
 import com.javabom.lotto.domain.ticket.LottoTickets;
 import com.javabom.lotto.domain.ticket.Money;
 
-import java.util.stream.Collectors;
-
 public class OutputView {
 
-    private static final String NOTICE_BUY_COMPLETE = "개를 구매했습니다.";
+    private static final String NOTICE_BUY_COMPLETE = "수동으로 %d장, 자동으로 %d개를 구매했습니다.";
     private static final String NOTICE_WINNING_STATISTICS = "당첨 통계";
     private static final String NOTICE_MATCH_QUANTITY = "%d개 일치, ";
     private static final String NOTICE_PRIZE_MONEY = "(%d원)";
@@ -18,9 +16,12 @@ public class OutputView {
     private static final String NOTICE_MATCH_BONUS = "보너스 볼 일치";
     private static final String NOTICE_EARNING_RATE = "총 수익률은 %.2f%% 입니다.";
 
-    public static void printLottoTickets(LottoTickets lottoTickets) {
-        printLineOf(lottoTickets.get().size() + NOTICE_BUY_COMPLETE);
-        for (LottoTicket lottoTicket : lottoTickets.get()) {
+    public static void printLottoTickets(LottoTickets manualLottoTickets, LottoTickets autoLottoTickets) {
+        printLineOf(String.format(NOTICE_BUY_COMPLETE, manualLottoTickets.get().size(), autoLottoTickets.get().size()));
+        for (LottoTicket lottoTicket : manualLottoTickets.get()) {
+            printLineOf(lottoTicket.toString());
+        }
+        for (LottoTicket lottoTicket : autoLottoTickets.get()) {
             printLineOf(lottoTicket.toString());
         }
     }

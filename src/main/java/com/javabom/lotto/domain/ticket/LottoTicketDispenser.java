@@ -2,10 +2,11 @@ package com.javabom.lotto.domain.ticket;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class LottoTicketDispenser {
 
-    private static final int LOTTO_TICKET_PRICE = 1_000;
+    public static final Money LOTTO_TICKET_PRICE = new Money(1_000);
 
     private final LottoNumberGenerator lottoNumberGenerator;
 
@@ -20,5 +21,11 @@ public class LottoTicketDispenser {
             tickets.add(new LottoTicket(lottoNumberGenerator.getLottoNumbers()));
         }
         return new LottoTickets(tickets);
+    }
+
+    public LottoTickets getManualTickets(List<ManualLottoNumbers> manualNumbers) {
+        return new LottoTickets(manualNumbers.stream()
+                .map(ManualLottoNumbers::toLottoTicket)
+                .collect(Collectors.toList()));
     }
 }

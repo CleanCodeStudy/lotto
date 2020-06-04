@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static com.javabom.lotto.domain.results.LottoResult.FIFTH_PRIZE;
 import static com.javabom.lotto.domain.results.LottoResult.FOURTH_PRIZE;
