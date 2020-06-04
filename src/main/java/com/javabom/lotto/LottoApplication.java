@@ -1,9 +1,9 @@
 package com.javabom.lotto;
 
-import com.javabom.lotto.domain.DrawingMachine;
+import com.javabom.lotto.domain.LottoBill;
 import com.javabom.lotto.domain.LottoMachine;
 import com.javabom.lotto.domain.LottoResult;
-import com.javabom.lotto.domain.LottoTicket;
+import com.javabom.lotto.domain.ticket.LottoWinningTicket;
 import com.javabom.lotto.domain.vo.LottoMoney;
 import com.javabom.lotto.view.InputView;
 import com.javabom.lotto.view.OutputView;
@@ -16,16 +16,17 @@ public class LottoApplication {
 
         OutputView.printNumberOfTicket(lottoMoney);
 
-        List<LottoTicket> lottoTickets = LottoMachine.purchaseLottoTicket(lottoMoney);
+        LottoBill lottoBill = LottoMachine.purchaseLottoTicket(lottoMoney);
 
-        OutputView.printLottoTickets(lottoTickets);
+        OutputView.printLottoTickets(lottoBill.getAllTickets());
 
         List<Integer> winningNumbers = InputView.inputLastWinningNumbers();
+        int bonusNumber = InputView.inputBonusNumber();
 
-        DrawingMachine drawingMachine = new DrawingMachine(winningNumbers);
+        LottoWinningTicket lottoWinningTicket = new LottoWinningTicket(winningNumbers, bonusNumber);
 
-        LottoResult lottoResult = new LottoResult(lottoMoney, drawingMachine.drawAllLottoTicket(lottoTickets));
+        LottoResult lottoResult = lottoBill.drawAllLotto(lottoWinningTicket);
 
-        OutputView.printWinningStatistics(lottoResult);
+        OutputView.printWinningStatistics(lottoResult, lottoMoney);
     }
 }

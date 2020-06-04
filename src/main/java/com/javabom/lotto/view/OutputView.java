@@ -1,13 +1,12 @@
 package com.javabom.lotto.view;
 
 import com.javabom.lotto.domain.LottoResult;
-import com.javabom.lotto.domain.LottoTicket;
+import com.javabom.lotto.domain.ticket.LottoTicket;
 import com.javabom.lotto.domain.WinningSheet;
 import com.javabom.lotto.domain.vo.LottoMoney;
 
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class OutputView {
     private static final int NOT_LOSE_RATE = 1;
@@ -20,33 +19,25 @@ public class OutputView {
     }
 
     public static void printLottoTickets(List<LottoTicket> lottoTickets) {
-        lottoTickets.stream()
-                .forEach(OutputView::printOneLottoTicket);
+        lottoTickets.forEach(lottoTicket -> System.out.println(lottoTicket.getLottoNumbers()));
     }
 
-    private static void printOneLottoTicket(LottoTicket lottoTicket) {
-        String lottoNumbers = lottoTicket.getLottoNumbers().stream()
-                .map(String::valueOf)
-                .collect(Collectors.joining(", ", "[", "]"));
-
-        System.out.println(lottoNumbers);
-    }
-
-    public static void printWinningStatistics(LottoResult lottoResult) {
+    public static void printWinningStatistics(LottoResult lottoResult, LottoMoney lottoMoney) {
         System.out.println("당첨 통계");
+
         System.out.println("----------");
 
-        Map<WinningSheet, Long> winningStatistics = lottoResult.getWinningStatistics();
-
-        for (Map.Entry<WinningSheet, Long> statistics : winningStatistics.entrySet()) {
+        for (Map.Entry<WinningSheet, Integer> statistics : lottoResult.getWinningStatistics().entrySet()) {
             WinningSheet winningSheet = statistics.getKey();
 
-            System.out.println(String.format("%d개 일치 (%d원)- %d개", winningSheet.getMatchCount(),
-                    winningSheet.getPrice(),
-                    statistics.getValue()));
+            String format = winningSheet.equals(WinningSheet.SECOND) ? "%d개 일치 보너스 볼 일치(%d원)- %d개" :
+                    "%d개 일치 (%d원)- %d개";
+
+            System.out.println(String.format(format, winningSheet.getMatchCount()
+                    , winningSheet.getPrize(), statistics.getValue()));
         }
 
-        printRateOfReturn(lottoResult.calculateRateOfReturn());
+        printRateOfReturn(lottoMoney.calculateRateOfReturn(lottoResult.sumAllPrize()));
     }
 
     private static void printRateOfReturn(double rateOfReturn) {
