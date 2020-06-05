@@ -13,7 +13,7 @@ public class LottoMoney {
     }
 
     public double calculateRateOfReturn(int profit) {
-        int purchaseAmount = (numberOfAutoTicket + numberOfManualTicket) * LOTTO_PRICE;
+        double purchaseAmount = (numberOfAutoTicket + numberOfManualTicket) * LOTTO_PRICE;
 
         return profit / purchaseAmount;
     }
