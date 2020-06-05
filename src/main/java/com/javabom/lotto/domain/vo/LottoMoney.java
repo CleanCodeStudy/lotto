@@ -5,11 +5,6 @@ public class LottoMoney {
     private int numberOfAutoTicket;
     private int numberOfManualTicket;
 
-    public LottoMoney(int purchaseAmount) {
-        validatePurchaseAmount(purchaseAmount);
-        this.numberOfAutoTicket = purchaseAmount / LOTTO_PRICE;
-    }
-
     public LottoMoney(int purchaseAmount, int numberOfManualTicket) {
         validatePurchaseAmount(purchaseAmount);
         validateNumberOfManualTicket(purchaseAmount, numberOfManualTicket);
