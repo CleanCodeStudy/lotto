@@ -1,15 +1,19 @@
 package lotto.view;
 
 import lotto.domain.LottoNumber;
-import lotto.dto.ManualLottoNumberRequestDto;
-import lotto.dto.ManualLottoNumbers;
+import lotto.domain.ticket.LottoTicket;
+import lotto.domain.ticket.LottoTickets;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Scanner;
+
+import static java.util.stream.Collectors.toList;
 
 public class InputView {
-    public static final Scanner SCANNER = new Scanner(System.in);
     private static final String LOTTO_NUMBER_DELIMITER = ",";
+    public static final Scanner SCANNER = new Scanner(System.in);
 
     private InputView() {
     }
@@ -24,24 +28,29 @@ public class InputView {
         return Integer.parseInt(SCANNER.nextLine());
     }
 
-    public static ManualLottoNumberRequestDto askManualTicketNumbers(int numberOfManualLottoTicket) {
-        List<ManualLottoNumbers> manualLottoNumbers = new ArrayList<>();
-        if (numberOfManualLottoTicket > 0) {
-            System.out.println("수동으로 구매할 번호를 입력해 주세요.");
+    public static LottoTickets askManualTicketNumbers(int numberOfManualLottoTicket) {
+        List<LottoTicket> lottoTickets = new ArrayList<>();
+        if (numberOfManualLottoTicket <= 0) {
+            return new LottoTickets(lottoTickets);
         }
+        System.out.println("수동으로 구매할 번호를 입력해 주세요.");
         for (int i = 0; i < numberOfManualLottoTicket; i++) {
-            manualLottoNumbers.add(new ManualLottoNumbers(SCANNER.nextLine()));
+            List<LottoNumber> lottoNumbers = Arrays.stream(SCANNER.nextLine().split(LOTTO_NUMBER_DELIMITER))
+                    .map(number -> Integer.parseInt(number.trim()))
+                    .map(LottoNumber::of)
+                    .collect(toList());
+            lottoTickets.add(new LottoTicket(lottoNumbers));
         }
-        return new ManualLottoNumberRequestDto(manualLottoNumbers);
+        return new LottoTickets(lottoTickets);
     }
 
-    public static Set<LottoNumber> askLastWeekWinningNumbers() {
+    public static List<LottoNumber> askLastWeekWinningNumbers() {
         System.out.println("지난주 당첨번호를 입력해주세요.");
         String winningNumbers = SCANNER.nextLine();
         return Arrays.stream(winningNumbers.split(LOTTO_NUMBER_DELIMITER))
                 .map(winningNumber -> Integer.valueOf(winningNumber.trim()))
                 .map(LottoNumber::of)
-                .collect(Collectors.toSet());
+                .collect(toList());
     }
 
     public static int askBonusNumber() {

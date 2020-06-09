@@ -18,11 +18,11 @@ public class LottoGameApplication {
 
         Money budget = Money.of(InputView.askTotalMoney());
         int numberOfManualLottoTicket = InputView.askNumberOfManualLottoTicket();
-        LottoTickets manualLottoTickets = InputView.askManualTicketNumbers(numberOfManualLottoTicket).toLottoTickets();
+        LottoTickets manualLottoTickets = InputView.askManualTicketNumbers(numberOfManualLottoTicket);
 
         LottoTickets lottoTickets = lottoStore.buy(budget, manualLottoTickets);
 
-        OutputView.printLottoTicketNumbers(lottoTickets);
+        OutputView.printLottoTicketNumbers(lottoTickets, manualLottoTickets.count());
 
         WinningTicket winningTicket = makeWinningTicket();
         LottoResult lottoResult = lottoTickets.getLottoResult(winningTicket);

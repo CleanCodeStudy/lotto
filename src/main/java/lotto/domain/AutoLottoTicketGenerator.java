@@ -2,10 +2,9 @@ package lotto.domain;
 
 import lotto.domain.ticket.LottoTicket;
 
+import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.IntStream;
 
 import static java.util.stream.Collectors.toList;
@@ -26,9 +25,9 @@ public class AutoLottoTicketGenerator {
         return new LottoTicket(generateLottoNumbers());
     }
 
-    private Set<LottoNumber> generateLottoNumbers() {
+    private List<LottoNumber> generateLottoNumbers() {
         Collections.shuffle(lottoBalls);
-        return Collections.unmodifiableSet(new HashSet<>(pickLottoBalls()));
+        return Collections.unmodifiableList(new ArrayList<>(pickLottoBalls()));
     }
 
     private List<LottoNumber> pickLottoBalls() {

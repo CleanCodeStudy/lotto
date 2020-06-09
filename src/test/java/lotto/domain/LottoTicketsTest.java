@@ -9,8 +9,8 @@ import lotto.support.LottoNumberConverter;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -38,13 +38,13 @@ class LottoTicketsTest {
         List<LottoNumber> lottoNumbers = Stream.of(1, 2, 3, 4, 5, 6)
                 .map(LottoNumber::of)
                 .collect(Collectors.toList());
-        LottoTicket winningLottoTicket = new LottoTicket(new HashSet<>(lottoNumbers));
+        LottoTicket winningLottoTicket = new LottoTicket(new ArrayList<>(lottoNumbers));
         return new WinningTicket(winningLottoTicket, LottoNumber.of(7));
     }
 
     private LottoTickets createLottoTickets() {
-        LottoTicket lottoTicket1 = new LottoTicket(LottoNumberConverter.of(Arrays.asList(1, 2, 3, 4, 5, 6))); // 6
-        LottoTicket lottoTicket2 = new LottoTicket(LottoNumberConverter.of(Arrays.asList(7, 1, 2, 4, 5, 6))); // 5, bonus
+        LottoTicket lottoTicket1 = new LottoTicket(LottoNumberConverter.of(Arrays.asList(1, 2, 3, 4, 5, 6))); // 1등
+        LottoTicket lottoTicket2 = new LottoTicket(LottoNumberConverter.of(Arrays.asList(1, 2, 3, 4, 5, 7))); // 2등,
         LottoTicket lottoTicket3 = new LottoTicket(LottoNumberConverter.of(Arrays.asList(1, 21, 3, 43, 12, 6))); // 3
 
         return new LottoTickets(Arrays.asList(lottoTicket1, lottoTicket2, lottoTicket3));
