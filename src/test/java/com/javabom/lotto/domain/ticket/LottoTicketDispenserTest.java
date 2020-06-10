@@ -3,10 +3,12 @@ package com.javabom.lotto.domain.ticket;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class LottoTicketDispenserTest {
 
@@ -47,5 +49,48 @@ class LottoTicketDispenserTest {
 
         // then
         assertThat(lottoTickets.get()).hasSize(expectedTicketQuantity);
+    }
+
+    @DisplayName("돈이 발급 해야할 티켓보다 적을 경우")
+    @Test
+    void validateEnoughMoney() {
+        // given
+        Money money = new Money(1_000);
+        List<ManualLottoNumbers> stubManualNumbers = Arrays.asList(
+                new ManualLottoNumbers(Arrays.asList(1, 2, 3, 4, 5, 6)),
+                new ManualLottoNumbers(Arrays.asList(1, 2, 3, 4, 5, 6))
+        );
+        LottoTicketDispenser dispenser = new LottoTicketDispenser(new RandomLottoTicketGenerator());
+
+        // then
+        assertThatThrownBy(() -> dispenser.getManualTickets(money, stubManualNumbers))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("2개의 티켓을 사기에 돈이 모자랍니다. 넣은 금액 : 1000");
+    }
+
+    @DisplayName("수동 티켓 발급 테스트")
+    @Test
+    void getManualTickets() {
+        // given
+        Money money = new Money(1_000);
+        List<ManualLottoNumbers> stubManualNumbers = Arrays.asList(
+                new ManualLottoNumbers(Arrays.asList(1, 2, 3, 4, 5, 6))
+        );
+        LottoTicket stubTicket = new LottoTicket(Arrays.asList(
+                new LottoNumber(1),
+                new LottoNumber(2),
+                new LottoNumber(3),
+                new LottoNumber(4),
+                new LottoNumber(5),
+                new LottoNumber(6)
+        ));
+        LottoTickets expectedTickets = new LottoTickets(Arrays.asList(stubTicket));
+        LottoTicketDispenser dispenser = new LottoTicketDispenser(new RandomLottoTicketGenerator());
+
+        // when
+        LottoTickets manualTickets = dispenser.getManualTickets(money, stubManualNumbers);
+
+        // then
+        assertThat(manualTickets).isEqualTo(expectedTickets);
     }
 }
