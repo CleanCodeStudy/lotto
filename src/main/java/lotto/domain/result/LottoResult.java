@@ -2,7 +2,6 @@ package lotto.domain.result;
 
 import lotto.vo.Money;
 
-import java.util.Collections;
 import java.util.List;
 
 import static lotto.domain.LottoGameProperty.LOTTO_TICKET_PRICE;
@@ -28,9 +27,5 @@ public class LottoResult {
         return lottoStatistics.stream()
                 .map(LottoPrize::getReward)
                 .reduce(Money.of(0), Money::add);
-    }
-
-    public List<LottoPrize> getLottoStatistics() {
-        return Collections.unmodifiableList(lottoStatistics);
     }
 }

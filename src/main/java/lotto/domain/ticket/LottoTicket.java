@@ -7,6 +7,7 @@ import java.util.List;
 import static lotto.domain.LottoGameProperty.COUNT_OF_LOTTO_NUMBER;
 
 public class LottoTicket {
+    private static final int BONUS_NUMBER_INDEX = 5;
     private final List<LottoNumber> lottoNumbers;
 
     public LottoTicket(final List<LottoNumber> lottoNumbers) {
@@ -31,7 +32,7 @@ public class LottoTicket {
     }
 
     public boolean hasBonusNumber(LottoNumber lottoNumber) {
-        return lottoNumbers.get(COUNT_OF_LOTTO_NUMBER - 1).equals(lottoNumber);
+        return lottoNumbers.get(BONUS_NUMBER_INDEX).equals(lottoNumber);
     }
 
     @Override

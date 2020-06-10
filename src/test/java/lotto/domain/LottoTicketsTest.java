@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 class LottoTicketsTest {
 
@@ -25,13 +26,17 @@ class LottoTicketsTest {
         //given
         LottoTickets userTickets = createLottoTickets();
         WinningTicket winningTicket = createWinningTicket();
-        List<LottoPrize> expectedLottoPrizes = Arrays.asList(LottoPrize.FIRST, LottoPrize.SECOND, LottoPrize.FIFTH);
 
         //when
         LottoResult lottoResult = userTickets.getLottoResult(winningTicket);
 
         //then
-        assertThat(lottoResult.getLottoStatistics()).isEqualTo(expectedLottoPrizes);
+        assertAll(
+                () -> assertThat(lottoResult.countTicketsBy(LottoPrize.FIRST)).isEqualTo(1),
+                () -> assertThat(lottoResult.countTicketsBy(LottoPrize.SECOND)).isEqualTo(1),
+                () -> assertThat(lottoResult.countTicketsBy(LottoPrize.FIFTH)).isEqualTo(1),
+                () -> assertThat(lottoResult.getRateOfProfit()).isEqualTo(676668.3333333334)
+        );
     }
 
     private WinningTicket createWinningTicket() {
