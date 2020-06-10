@@ -1,9 +1,14 @@
 package com.javabom.lotto.domain.ticket;
 
+import com.javabom.lotto.domain.results.LottoLuckyNumbers;
+import com.javabom.lotto.domain.results.LottoResult;
+import com.javabom.lotto.domain.results.LottoResults;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class LottoTickets {
 
@@ -22,6 +27,12 @@ public class LottoTickets {
         newTickets.addAll(this.tickets);
         newTickets.addAll(lottoTickets.tickets);
         return new LottoTickets(newTickets);
+    }
+
+    public LottoResults getLottoResults(LottoLuckyNumbers lottoLuckyNumbers) {
+        return new LottoResults(tickets.stream()
+                .map(lottoLuckyNumbers::getLottoResult)
+                .collect(Collectors.toList()));
     }
 
     @Override

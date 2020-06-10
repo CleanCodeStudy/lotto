@@ -22,8 +22,8 @@ class LottoTicketDispenserTest {
                 new LottoNumber(5),
                 new LottoNumber(6)
         );
-        LottoTicketDispenser lottoTicketDispenser = new LottoTicketDispenser(() -> stubLottoNumbers);
         LottoTicket stubLottoTicket = new LottoTicket(stubLottoNumbers);
+        LottoTicketDispenser lottoTicketDispenser = new LottoTicketDispenser(() -> stubLottoTicket);
         LottoTickets expectedLottoTickets = new LottoTickets(Arrays.asList(stubLottoTicket));
 
         // when
@@ -38,7 +38,7 @@ class LottoTicketDispenserTest {
     @Test
     void name() {
         // given
-        LottoTicketDispenser lottoTicketDispenser = new LottoTicketDispenser(new RandomLottoNumberGenerator());
+        LottoTicketDispenser lottoTicketDispenser = new LottoTicketDispenser(new RandomLottoTicketGenerator());
 
         // when
         int expectedTicketQuantity = 1;

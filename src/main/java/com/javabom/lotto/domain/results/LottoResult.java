@@ -1,8 +1,6 @@
 package com.javabom.lotto.domain.results;
 
 import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public enum LottoResult {
 
@@ -14,38 +12,39 @@ public enum LottoResult {
     LOSE(-1, 0);
 
     private final int matchCount;
-    private final long price;
+    private final long prize;
 
-    LottoResult(int matchCount, long price) {
+    LottoResult(int matchCount, long prize) {
         this.matchCount = matchCount;
-        this.price = price;
+        this.prize = prize;
     }
 
-    public static LottoResult find(int matchCount, boolean isBonusMatched) {
+    public static LottoResult find(final int matchCount, final boolean isBonusMatched) {
         validateMatchCount(matchCount);
-        if (matchCount == SECOND_PRIZE.matchCount && isBonusMatched) {
-            return SECOND_PRIZE;
+        if (matchCount == SECOND_PRIZE.matchCount) {
+            return findByBonus(isBonusMatched);
         }
-        return valuesWithoutSecond().stream()
+        return Arrays.stream(values())
                 .filter(result -> result.matchCount == matchCount)
                 .findFirst()
                 .orElse(LOSE);
     }
 
-    private static void validateMatchCount(int matchCount) {
+    private static void validateMatchCount(final int matchCount) {
         if (matchCount < 0 || matchCount > 6) {
             throw new IllegalArgumentException("로또번호 매치 수는 0~6 이외일 수 없습니다.");
         }
     }
 
-    private static List<LottoResult> valuesWithoutSecond() {
-        return Arrays.stream(values())
-                .filter(result -> result != SECOND_PRIZE)
-                .collect(Collectors.toList());
+    private static LottoResult findByBonus(final boolean isBonusMatched) {
+        if (isBonusMatched) {
+            return SECOND_PRIZE;
+        }
+        return THIRD_PRIZE;
     }
 
-    public long getPrice() {
-        return price;
+    public long getPrize() {
+        return prize;
     }
 
     public int getMatchCount() {

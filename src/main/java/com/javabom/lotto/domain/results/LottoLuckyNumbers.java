@@ -2,10 +2,6 @@ package com.javabom.lotto.domain.results;
 
 import com.javabom.lotto.domain.ticket.LottoNumber;
 import com.javabom.lotto.domain.ticket.LottoTicket;
-import com.javabom.lotto.domain.ticket.LottoTickets;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class LottoLuckyNumbers {
 
@@ -15,19 +11,21 @@ public class LottoLuckyNumbers {
     public LottoLuckyNumbers(LottoTicket basicLuckyTicket, LottoNumber bonusNumber) {
         this.basicLuckyTicket = basicLuckyTicket;
         this.bonusNumber = bonusNumber;
+        validateDuplicatedBonusNumber();
     }
 
-    public LottoResults getLottoResults(LottoTickets lottoTickets) {
-        List<LottoResult> lottoResults = new ArrayList<>();
-        for (LottoTicket ticket : lottoTickets.get()) {
-            lottoResults.add(getLottoResult(ticket));
+    private void validateDuplicatedBonusNumber() {
+        if (this.basicLuckyTicket.isContain(bonusNumber)) {
+            throw new IllegalStateException(
+                    String.format("보너스 숫자 %s는 기본 당첨번호와 중복 될 수 없습니다.", bonusNumber.toString())
+            );
         }
-        return new LottoResults(lottoResults);
     }
 
-    private LottoResult getLottoResult(LottoTicket lottoTicket) {
-        int matchCount = basicLuckyTicket.countMatchingNumbers(lottoTicket);
+    public LottoResult getLottoResult(LottoTicket lottoTicket) {
+        int matchCounts = lottoTicket.countMatchingNumbers(basicLuckyTicket);
         boolean isBonusMatched = lottoTicket.isContain(bonusNumber);
-        return LottoResult.find(matchCount, isBonusMatched);
+        return LottoResult.find(matchCounts, isBonusMatched);
     }
+
 }

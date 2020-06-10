@@ -35,7 +35,7 @@ class LottoLuckyNumbersTest {
 
         // when
         LottoTickets allMatchLottoTicket = new LottoTickets(Arrays.asList(new LottoTicket(stubLottoNumbers)));
-        LottoResults lottoResults = lottoLuckyNumbers.getLottoResults(allMatchLottoTicket);
+        LottoResults lottoResults = allMatchLottoTicket.getLottoResults(lottoLuckyNumbers);
         LottoResults expectedLottoResults = new LottoResults(Arrays.asList(FIRST_PRIZE));
 
         // then

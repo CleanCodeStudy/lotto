@@ -21,6 +21,10 @@ public class Money {
         return new Money(this.value * value);
     }
 
+    public boolean isBiggerThan(Money money) {
+        return this.value > money.value;
+    }
+
     public Money spend(Money money) {
         validateCanSpendMoney(money);
         return new Money(this.value - money.value);
@@ -28,7 +32,7 @@ public class Money {
 
     private void validateCanSpendMoney(Money money) {
         if (money.value > this.value) {
-            throw new IllegalArgumentException("현재 값 (" + value + ") 보다 사용하려는 금액 (" + money.value + ") 이 더 많습니다.");
+            throw new IllegalArgumentException(String.format("현재 값 (%d) 보다 사용하려는 금액 (%d) 이 더 많습니다.", value, money.value));
         }
     }
 
@@ -51,5 +55,10 @@ public class Money {
     @Override
     public int hashCode() {
         return Objects.hash(value);
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(value);
     }
 }

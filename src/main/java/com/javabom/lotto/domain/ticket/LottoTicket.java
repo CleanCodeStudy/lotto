@@ -2,7 +2,6 @@ package com.javabom.lotto.domain.ticket;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class LottoTicket {
 
@@ -17,14 +16,16 @@ public class LottoTicket {
 
     private void validateLottoNumbers(List<LottoNumber> numbers) {
         if (numbers.size() != LOTTO_NUM_PICK_SIZE) {
-            throw new IllegalArgumentException("로또 티켓에 6개 숫자를 넣어야 합니다. 입력 size : " + numbers.size());
+            throw new IllegalArgumentException(String.format("로또 티켓에 6개 숫자를 넣어야 합니다. 입력 size : %d", numbers.size()));
         }
     }
 
     public int countMatchingNumbers(LottoTicket lottoTicket) {
-        return (int) lottoTicket.numbers.stream()
-                .filter(this.numbers::contains)
-                .count();
+        int count = 0;
+        for (int i = 0; i < LOTTO_NUM_PICK_SIZE; i++) {
+            if (this.numbers.get(i).equals(lottoTicket.numbers.get(i))) count++;
+        }
+        return count;
     }
 
     public boolean isContain(LottoNumber number) {

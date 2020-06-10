@@ -36,7 +36,7 @@ class LottoResultsTest {
         // given
         List<LottoResult> lottoResultList = Arrays.asList(FOURTH_PRIZE, FIFTH_PRIZE);
         LottoResults lottoResults = new LottoResults(lottoResultList);
-        Money expectedTotalPrizeMoney = new Money(FOURTH_PRIZE.getPrice() + FIFTH_PRIZE.getPrice());
+        Money expectedTotalPrizeMoney = new Money(FOURTH_PRIZE.getPrize() + FIFTH_PRIZE.getPrize());
 
         // then
         assertThat(lottoResults.getTotalPrizeMoney())

@@ -15,17 +15,18 @@ public class LottoApplication {
         int manualLottoAmount = InputView.getManualLottoAmount();
         List<ManualLottoNumbers> manualLottoNumbers = InputView.getManualLottoNumbers(manualLottoAmount);
 
-        LottoTicketDispenser lottoTicketDispenser = new LottoTicketDispenser(new RandomLottoNumberGenerator());
-        LottoTickets manualLottoTickets = lottoTicketDispenser.getManualTickets(manualLottoNumbers);
-        Money restMoney = inputMoney.spend(LottoTicketDispenser.LOTTO_TICKET_PRICE.multiply(manualLottoAmount));
+        LottoTicketDispenser lottoTicketDispenser = new LottoTicketDispenser(new RandomLottoTicketGenerator());
+        LottoTickets manualLottoTickets = lottoTicketDispenser.getManualTickets(inputMoney, manualLottoNumbers);
+        Money restMoney = inputMoney.spend(LottoTicketDispenser.getTotalTicketPrice(manualLottoAmount));
         LottoTickets autoLottoTickets = lottoTicketDispenser.getAutoTickets(restMoney);
         OutputView.printLottoTickets(manualLottoTickets, autoLottoTickets);
 
         LottoTicket basicLuckyTicket = new LottoTicket(LottoNumberConverter.convert(InputView.getLottoBasicLuckyNumbers()));
         LottoNumber bonusNumber = new LottoNumber(InputView.getBonusNumber());
-        LottoLuckyNumbers LuckyNumbers = new LottoLuckyNumbers(basicLuckyTicket, bonusNumber);
+        LottoLuckyNumbers luckyNumbers = new LottoLuckyNumbers(basicLuckyTicket, bonusNumber);
 
-        LottoResults lottoResults = LuckyNumbers.getLottoResults(autoLottoTickets.add(manualLottoTickets));
+        LottoTickets wholeLottoTickets = autoLottoTickets.add(manualLottoTickets);
+        LottoResults lottoResults = wholeLottoTickets.getLottoResults(luckyNumbers);
         OutputView.printLottoResults(lottoResults);
         OutputView.printEarningRate(inputMoney, lottoResults.getTotalPrizeMoney());
     }

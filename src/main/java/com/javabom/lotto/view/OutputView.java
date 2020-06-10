@@ -42,7 +42,7 @@ public class OutputView {
             stringBuilder.append(NOTICE_MATCH_BONUS);
         }
         stringBuilder
-                .append(String.format(NOTICE_PRIZE_MONEY, result.getPrice()))
+                .append(String.format(NOTICE_PRIZE_MONEY, result.getPrize()))
                 .append(String.format(NOTICE_MATCH_RESULT_QUANTITY, resultSize));
         printLineOf(stringBuilder.toString());
     }
