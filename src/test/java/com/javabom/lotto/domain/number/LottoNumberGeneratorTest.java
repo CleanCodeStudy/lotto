@@ -17,18 +17,18 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class LottoNumberGeneratorTest {
 
-    @DisplayName("인자로 받은 개수 만큼 LottoNumber의 Set을 반환한다.")
+    @DisplayName("인자로 받은 개수 만큼 LottoNumber의 List를 반환한다.")
     @ParameterizedTest
     @ValueSource(ints = {1, 2, 3, 4, 5})
     void generateRandomNumber(int size) {
-        Set<LottoNumber> lottoNumbers = LottoNumberGenerator.generateRandomNumber(size, (min, max) -> IntStream.rangeClosed(1, size)
+        List<LottoNumber> lottoNumbers = LottoNumberGenerator.generateRandomNumber(size, (min, max) -> IntStream.rangeClosed(1, 45)
                 .boxed()
                 .collect(Collectors.toList()));
 
         assertThat(lottoNumbers.size()).isEqualTo(size);
     }
 
-    @DisplayName("인자로 받은 숫자 리스트를 LottoNumber로 변환하여 Set으로 반환한다.")
+    @DisplayName("인자로 받은 숫자 리스트를 LottoNumber로 변환하여 List으로 반환한다.")
     @Test
     void generateFixedNumber() {
         List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5, 6);

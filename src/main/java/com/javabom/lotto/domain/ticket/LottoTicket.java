@@ -5,15 +5,16 @@ import com.javabom.lotto.domain.number.LottoNumberGenerator;
 import com.javabom.lotto.domain.number.NumberGenerator;
 import com.javabom.lotto.domain.number.ShuffledNumberGenerator;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 public class LottoTicket {
     private static final int LOTTO_NUMBERS_SIZE = 6;
-    private final Set<LottoNumber> lottoNumbers;
+    private final List<LottoNumber> lottoNumbers;
 
-    private LottoTicket(Set<LottoNumber> lottoNumbers) {
+    private LottoTicket(List<LottoNumber> lottoNumbers) {
         validateDuplicateNumbers(lottoNumbers);
         this.lottoNumbers = lottoNumbers;
     }
@@ -43,8 +44,11 @@ public class LottoTicket {
         return lottoNumbers.contains(lottoNumber);
     }
 
-    private static void validateDuplicateNumbers(Set<LottoNumber> lottoNumbers) {
-        if (lottoNumbers.size() < LOTTO_NUMBERS_SIZE) {
+    private static void validateDuplicateNumbers(List<LottoNumber> lottoNumbers) {
+        Set<Integer> duplicateNumbers = lottoNumbers.stream()
+                .map(LottoNumber::getNumber)
+                .collect(Collectors.toSet());
+        if (duplicateNumbers.size() < LOTTO_NUMBERS_SIZE) {
             throw new IllegalArgumentException("로또 번호는 중복 될 수 없습니다. - " + lottoNumbers);
         }
     }

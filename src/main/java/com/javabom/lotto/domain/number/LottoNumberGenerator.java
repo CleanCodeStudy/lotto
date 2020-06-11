@@ -13,20 +13,19 @@ import static com.javabom.lotto.domain.number.LottoNumber.LOTTO_NUMBER_UPPER_BOU
 public class LottoNumberGenerator {
     private static final int FIRST_ELEMENT = 0;
 
-    public static Set<LottoNumber> generateRandomNumber(int size, NumberGenerator numberGenerator) {
+    public static List<LottoNumber> generateRandomNumber(int size, NumberGenerator numberGenerator) {
         List<Integer> numbers = numberGenerator.generate(LOTTO_NUMBER_UNDER_BOUND, LOTTO_NUMBER_UPPER_BOUND);
 
         return convertIntegerToLottoNumber(numbers.subList(FIRST_ELEMENT, size));
     }
 
-    public static Set<LottoNumber> generateFixedNumber(List<Integer> numbers) {
+    public static List<LottoNumber> generateFixedNumber(List<Integer> numbers) {
         return convertIntegerToLottoNumber(numbers);
     }
 
-    private static Set<LottoNumber> convertIntegerToLottoNumber(List<Integer> numbers) {
+    private static List<LottoNumber> convertIntegerToLottoNumber(List<Integer> numbers) {
         return numbers.stream()
-                .sorted()
                 .map(LottoNumber::valueOf)
-                .collect(Collectors.toCollection(TreeSet::new));
+                .collect(Collectors.toList());
     }
 }
