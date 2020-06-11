@@ -1,6 +1,7 @@
 package com.javabom.lotto.domain.ticket;
 
 import com.javabom.lotto.domain.number.LottoNumber;
+import com.javabom.lotto.domain.number.NumberGenerator;
 import com.javabom.lotto.domain.ticket.LottoTicket;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,6 +16,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 class LottoTicketTest {
+
+    @DisplayName("1 ~ 45 사이의 자동 티켓 생성")
+    @Test
+    void lottoTicketOfAuto() {
+        NumberGenerator testNumberGenerator = (min, max) -> Arrays.asList(1, 2, 3, 4, 5, 6);
+
+        LottoTicket lottoTicket = LottoTicket.ofAuto(testNumberGenerator);
+
+        assertThat(lottoTicket.getLottoNumbers()).containsExactly(1, 2, 3, 4, 5, 6);
+    }
 
     @DisplayName("LottoNumber 리스트의 크기가 6이 아니면 IllegalArgumentException Throw")
     @Test

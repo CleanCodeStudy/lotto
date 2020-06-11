@@ -2,6 +2,8 @@ package com.javabom.lotto.domain.ticket;
 
 import com.javabom.lotto.domain.number.LottoNumber;
 import com.javabom.lotto.domain.number.LottoNumberGenerator;
+import com.javabom.lotto.domain.number.NumberGenerator;
+import com.javabom.lotto.domain.number.ShuffledNumberGenerator;
 
 import java.util.List;
 import java.util.Set;
@@ -21,8 +23,8 @@ public class LottoTicket {
         return new LottoTicket(LottoNumberGenerator.generateFixedNumber(numbers));
     }
 
-    public static LottoTicket ofAuto() {
-        return new LottoTicket(LottoNumberGenerator.generateRandomNumber(LOTTO_NUMBERS_SIZE));
+    public static LottoTicket ofAuto(NumberGenerator numberGenerator) {
+        return new LottoTicket(LottoNumberGenerator.generateRandomNumber(LOTTO_NUMBERS_SIZE, numberGenerator));
     }
 
     public List<Integer> getLottoNumbers() {

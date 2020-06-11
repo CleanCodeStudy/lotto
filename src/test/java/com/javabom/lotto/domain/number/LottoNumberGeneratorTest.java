@@ -8,6 +8,8 @@ import org.junit.jupiter.params.provider.ValueSource;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
@@ -19,7 +21,9 @@ class LottoNumberGeneratorTest {
     @ParameterizedTest
     @ValueSource(ints = {1, 2, 3, 4, 5})
     void generateRandomNumber(int size) {
-        Set<LottoNumber> lottoNumbers = LottoNumberGenerator.generateRandomNumber(size);
+        Set<LottoNumber> lottoNumbers = LottoNumberGenerator.generateRandomNumber(size, (min, max) -> IntStream.rangeClosed(1, size)
+                .boxed()
+                .collect(Collectors.toList()));
 
         assertThat(lottoNumbers.size()).isEqualTo(size);
     }

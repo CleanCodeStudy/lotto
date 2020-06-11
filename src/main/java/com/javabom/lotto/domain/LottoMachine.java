@@ -1,6 +1,7 @@
 package com.javabom.lotto.domain;
 
 import com.javabom.lotto.domain.dto.ManualNumbersDto;
+import com.javabom.lotto.domain.number.ShuffledNumberGenerator;
 import com.javabom.lotto.domain.ticket.LottoTicket;
 
 import java.util.List;
@@ -16,7 +17,7 @@ public class LottoMachine {
                 .collect(Collectors.toList());
 
         for (int i = 0; i < numberOfAutoTicket; i++) {
-            lottoTickets.add(LottoTicket.ofAuto());
+            lottoTickets.add(LottoTicket.ofAuto(new ShuffledNumberGenerator()));
         }
 
         return new LottoTickets(lottoTickets);

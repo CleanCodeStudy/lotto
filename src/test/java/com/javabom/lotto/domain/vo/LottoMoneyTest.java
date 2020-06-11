@@ -46,6 +46,6 @@ class LottoMoneyTest {
 
         double rateOfReturn = lottoMoney.calculateRateOfReturn(sumOfPrize);
 
-        assertThat(rateOfReturn).isEqualTo(sumOfPrize / 2000);
+        assertThat(rateOfReturn).isEqualTo(sumOfPrize / 2000D);
     }
 }
