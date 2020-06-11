@@ -43,7 +43,7 @@ class WinningTicketTest {
                 .collect(Collectors.toList());
         LottoNumber bonusNumber = new LottoNumber(7);
         WinningTicket winningTicket = new WinningTicket(winningNumbers, bonusNumber);
-        LottoNumber lottoNumber = new LottoNumber(11);
+        LottoNumber lottoNumber = new LottoNumber(7);
         assertTrue(winningTicket.isSameBonusNumber(lottoNumber));
     }
 }

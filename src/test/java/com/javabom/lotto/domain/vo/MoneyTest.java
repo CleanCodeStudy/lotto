@@ -23,7 +23,7 @@ class MoneyTest {
     void spendMoneyTest() {
         Money money = new Money(5000);
         Money remainMoney = money.spendMoney(new Money(3000));
-        assertEquals(new Money(2000), remainMoney);
+        assertEquals(new Money(2000).getValue(), remainMoney.getValue());
     }
 
     @Test

@@ -13,6 +13,6 @@ class LottoNumberTest {
         // given
         assertThatThrownBy(() -> new LottoNumber(number))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("로또 번호가 아닙니다.");
+                .hasMessage(String.format("로또 번호가 아닙니다. - %d", number));
     }
 }
