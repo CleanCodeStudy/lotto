@@ -1,17 +1,13 @@
 package com.javabom.lotto.domain;
 
 import com.javabom.lotto.domain.dto.ManualNumbersDto;
-import com.javabom.lotto.domain.ticket.LottoTicket;
-import com.javabom.lotto.domain.vo.LottoMoney;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -30,8 +26,8 @@ class LottoMachineTest {
     @ParameterizedTest
     @MethodSource("provideManualLottoNumbersAndNumberOfAutoTicket")
     void purchaseLottoTicket(List<ManualNumbersDto> manualNumbersDtos, int numberOfAutoTicket, int expectedResult) {
-        LottoBill lottoBill = LottoMachine.purchaseLottoTicket(manualNumbersDtos, numberOfAutoTicket);
+        LottoTickets lottoTickets = LottoMachine.purchaseLottoTicket(manualNumbersDtos, numberOfAutoTicket);
 
-        assertThat(lottoBill.getAllTickets().size()).isEqualTo(expectedResult);
+        assertThat(lottoTickets.getAllTickets().size()).isEqualTo(expectedResult);
     }
 }

@@ -8,9 +8,8 @@ import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
-class LottoBillTest {
+class LottoTicketsTest {
     @DisplayName("모든 로또 티켓과 당첨 번호를 비교하여 추첨 결과를 반환한다.")
     @Test
     void drawAllLotto() {
@@ -20,9 +19,9 @@ class LottoBillTest {
 
         LottoWinningTicket lottoWinningTicket = new LottoWinningTicket(Arrays.asList(1, 2, 3, 4, 5, 6), 7);
 
-        LottoBill lottoBill = new LottoBill(Arrays.asList(ticket1, ticket2, ticket3));
+        LottoTickets lottoTickets = new LottoTickets(Arrays.asList(ticket1, ticket2, ticket3));
 
-        LottoResult lottoResult = lottoBill.drawAllLotto(lottoWinningTicket);
+        LottoResult lottoResult = lottoTickets.matchAllLotto(lottoWinningTicket);
 
         LottoResult expectedResult = new LottoResult(Arrays.asList(WinningSheet.FIRST, WinningSheet.SECOND
                 , WinningSheet.THIRD));

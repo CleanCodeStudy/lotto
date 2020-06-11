@@ -1,6 +1,6 @@
 package com.javabom.lotto;
 
-import com.javabom.lotto.domain.LottoBill;
+import com.javabom.lotto.domain.LottoTickets;
 import com.javabom.lotto.domain.LottoMachine;
 import com.javabom.lotto.domain.LottoResult;
 import com.javabom.lotto.domain.dto.ManualNumbersDto;
@@ -21,11 +21,11 @@ public class LottoApplication {
 
         List<ManualNumbersDto> manualNumbersDtos = InputView.inputManualNumber(lottoMoney.getNumberOfManualTicket());
 
-        LottoBill lottoBill = LottoMachine.purchaseLottoTicket(manualNumbersDtos, lottoMoney.getNumberOfAutoTicket());
+        LottoTickets lottoTickets = LottoMachine.purchaseLottoTicket(manualNumbersDtos, lottoMoney.getNumberOfAutoTicket());
 
         OutputView.printNumberOfTicket(lottoMoney);
 
-        OutputView.printLottoTickets(lottoBill.getAllTickets());
+        OutputView.printLottoTickets(lottoTickets.getAllTickets());
 
         List<Integer> winningNumbers = InputView.inputLastWinningNumbers();
 
@@ -33,7 +33,7 @@ public class LottoApplication {
 
         LottoWinningTicket lottoWinningTicket = new LottoWinningTicket(winningNumbers, bonusNumber);
 
-        LottoResult lottoResult = lottoBill.drawAllLotto(lottoWinningTicket);
+        LottoResult lottoResult = lottoTickets.matchAllLotto(lottoWinningTicket);
 
         OutputView.printWinningStatistics(lottoResult, lottoMoney);
     }
