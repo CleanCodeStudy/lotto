@@ -3,6 +3,7 @@ package lotto.domain.ticket;
 import lotto.domain.LottoNumber;
 
 import java.util.List;
+import java.util.stream.IntStream;
 
 import static lotto.domain.LottoGameProperty.COUNT_OF_LOTTO_NUMBER;
 
@@ -22,17 +23,17 @@ public class LottoTicket {
     }
 
     public int getMatchCount(LottoTicket lottoTicket) {
-        int matchCount = 0;
-        for (int i = 0; i < COUNT_OF_LOTTO_NUMBER; i++) {
-            if (lottoTicket.lottoNumbers.get(i).equals(this.lottoNumbers.get(i))) {
-                matchCount++;
-            }
-        }
-        return matchCount;
+        return Math.toIntExact(IntStream.range(0, COUNT_OF_LOTTO_NUMBER)
+                .filter(index -> isSameLottoNumber(index, lottoTicket.lottoNumbers.get(index)))
+                .count());
+    }
+
+    private boolean isSameLottoNumber(int index, LottoNumber lottoNumber) {
+        return lottoNumbers.get(index).equals(lottoNumber);
     }
 
     public boolean hasBonusNumber(LottoNumber lottoNumber) {
-        return lottoNumbers.get(BONUS_NUMBER_INDEX).equals(lottoNumber);
+        return isSameLottoNumber(BONUS_NUMBER_INDEX, lottoNumber);
     }
 
     @Override
