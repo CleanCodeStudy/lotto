@@ -9,6 +9,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class LottoTicket {
     private static final int LOTTO_NUMBERS_SIZE = 6;
@@ -44,6 +45,10 @@ public class LottoTicket {
         return lottoNumbers.contains(lottoNumber);
     }
 
+    private LottoNumber findByIndex(int index) {
+        return lottoNumbers.get(index);
+    }
+
     private static void validateDuplicateNumbers(List<LottoNumber> lottoNumbers) {
         Set<Integer> duplicateNumbers = lottoNumbers.stream()
                 .map(LottoNumber::getNumber)
@@ -53,9 +58,9 @@ public class LottoTicket {
         }
     }
 
-    public int findMatchCount(LottoTicket lottoTicket) {
-        return (int) lottoTicket.lottoNumbers.stream()
-                .filter(this::isContainingLottoNumbers)
+    public int findMatchCount(LottoTicket winningTicket) {
+        return (int) IntStream.range(0, LOTTO_NUMBERS_SIZE)
+                .filter(index -> winningTicket.findByIndex(index).equals(this.findByIndex(index)))
                 .count();
     }
 }

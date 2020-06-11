@@ -73,4 +73,15 @@ class LottoTicketTest {
 
         assertThat(lottoTicket.getLottoNumbers()).containsExactly(1, 2, 3, 4, 5, 6);
     }
+
+    @DisplayName("두 티켓이 번호와 순서까지 일치하는 개수 반환")
+    @Test
+    void findMatchCount() {
+        LottoTicket lottoTicket = LottoTicket.ofFixed(Arrays.asList(1, 3, 2, 5, 6, 4));
+        LottoTicket winningTicket = LottoTicket.ofFixed(Arrays.asList(1, 3, 5, 2, 6, 4));
+
+        int actualCount = lottoTicket.findMatchCount(winningTicket);
+
+        assertThat(actualCount).isEqualTo(4);
+    }
 }
