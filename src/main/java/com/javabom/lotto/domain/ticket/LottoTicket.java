@@ -41,7 +41,7 @@ public class LottoTicket {
     }
 
     private LottoNumber getLastNumber() {
-        return new LinkedList<>(this.lottoNumbers).peek();
+        return getLottoNumbers().get(lottoNumbers.size() - 1);
     }
 
     private int getSameCount(WinningTicket winningTicket) {
