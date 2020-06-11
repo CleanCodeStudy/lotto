@@ -1,34 +1,38 @@
 package com.javabom.lotto;
 
+import com.javabom.lotto.domain.Customer;
+import com.javabom.lotto.domain.shop.AutoLottoNumberGenerator;
 import com.javabom.lotto.domain.shop.LottoShop;
-import com.javabom.lotto.domain.shop.RandomMachine;
-import com.javabom.lotto.domain.shop.ShuffleLottoNumber;
-import com.javabom.lotto.domain.info.LottoBundle;
-import com.javabom.lotto.domain.info.PrizeNumberInfo;
+import com.javabom.lotto.domain.shop.LottoMachine;
+import com.javabom.lotto.domain.number.PrizeNumbersBundle;
 import com.javabom.lotto.domain.result.LottoResultBundle;
-import com.javabom.lotto.domain.vo.Money;
 import com.javabom.lotto.view.InputView;
 import com.javabom.lotto.view.OutputView;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class LottoApplication {
     private static final InputView inputView = new InputView(new Scanner(System.in));
 
     public static void main(String[] args) {
-        Money money = new Money(inputView.inputMoney());
 
-        LottoShop lottoShop = new LottoShop(new RandomMachine(new ShuffleLottoNumber()));
-        LottoBundle lottoBundle = lottoShop.buyLotto(money);
+        int amount = inputView.inputMoney();
+        int manualLottoTicketCount = inputView.inputManualLottoTicketCount();
+        List<List<String>> manualLottoNumbers = inputView.inputManualLottoNumbers(manualLottoTicketCount);
+        Customer customer = new Customer(amount, manualLottoNumbers);
 
-        OutputView.printLottoCount(lottoShop.getLottoCount(money.get()));
-        OutputView.printMyLottoBundle(lottoBundle);
+        LottoShop lottoShop = new LottoShop(new LottoMachine(new AutoLottoNumberGenerator()));
+        lottoShop.enter(customer);
 
-        PrizeNumberInfo prizeNumberInfo = new PrizeNumberInfo(
+        OutputView.printLottoCount(manualLottoNumbers.size(), customer.getAutoLottoTicketCount());
+        OutputView.printLottoBundle(customer.getLottoTicketBundle());
+
+        PrizeNumbersBundle prizeNumberBundle = new PrizeNumbersBundle(
                 inputView.inputPrizeNumbers(), inputView.inputBonusNumber());
 
-        LottoResultBundle lottoResultBundle = lottoBundle.confirmLottoResult(prizeNumberInfo);
+        LottoResultBundle lottoResultBundle = customer.confirmLottoResult(prizeNumberBundle);
 
-        OutputView.printResults(lottoResultBundle, money);
+        OutputView.printResults(lottoResultBundle, amount);
     }
 }

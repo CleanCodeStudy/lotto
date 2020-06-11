@@ -10,9 +10,9 @@ class LottoResultTest {
 
     @DisplayName("로또 결과에 대한 알맞은 상금을 반환하는지 확인한다.")
     @ParameterizedTest
-    @CsvSource({"1,0", "3,5000", "4,50000", "5,1500000", "50,30000000", "6, 2000000000"})
-    void getPrize(int actual, long expected) {
-        LottoResult lottoResult = new LottoResult(actual);
-        assertThat(lottoResult.getPrize()).isEqualTo(expected);
+    @CsvSource({"0,false,FAIL", "3,false,FIFTH", "4,false,FOURTH", "5,false,THIRD", "5,true,SECOND", "6,false,FIRST"})
+    void findLottoResult(int matchedCount, boolean bonusStatus, String expected) {
+        LottoResult actual = LottoResult.findLottoResult(matchedCount, bonusStatus);
+        assertThat(actual).isEqualTo(LottoResult.valueOf(expected));
     }
 }
