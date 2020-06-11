@@ -11,38 +11,50 @@ import org.junit.jupiter.params.provider.CsvSource;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 class LottoTicketTest {
 
-    @DisplayName("1 ~ 45 사이의 자동 티켓 생성")
+    @DisplayName("1 ~ 45 사이의 6개의 로또 번호를 가지는 자동 티켓 생성")
     @Test
     void lottoTicketOfAuto() {
-        NumberGenerator testNumberGenerator = (min, max) -> Arrays.asList(1, 2, 3, 4, 5, 6);
+        NumberGenerator testNumberGenerator = (min, max) -> IntStream.rangeClosed(min, max)
+                .boxed()
+                .collect(Collectors.toList());
 
         LottoTicket lottoTicket = LottoTicket.ofAuto(testNumberGenerator);
 
         assertThat(lottoTicket.getLottoNumbers()).containsExactly(1, 2, 3, 4, 5, 6);
     }
 
-    @DisplayName("LottoNumber 리스트의 크기가 6이 아니면 IllegalArgumentException Throw")
+    @DisplayName("자동 LottoNumber 리스트에 중복된 번호가 있으면 IllegalArgumentExceptionThrow")
     @Test
-    void lottoTicketThrowsExceptionWhenSizeOver() {
+    void autoLottoTicketThrowsExceptionWhenDuplicateNumber() {
+        NumberGenerator testNumberGenerator = (min, max) -> Arrays.asList(1, 2, 3, 4, 5, 5);
+        assertThatIllegalArgumentException()
+                .isThrownBy(() -> LottoTicket.ofAuto(testNumberGenerator))
+                .withMessage("로또 번호는 중복 될 수 없습니다. - " + Arrays.asList(1, 2, 3, 4, 5, 5));
+    }
+
+    @DisplayName("수동 LottoNumber 리스트의 크기가 6이 아니면 IllegalArgumentException Throw")
+    @Test
+    void fixedLottoTicketThrowsExceptionWhenSizeOver() {
         List<Integer> lottoNumbers = Arrays.asList(1, 2, 3, 4, 5, 6, 7);
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> LottoTicket.ofFixed(lottoNumbers))
                 .withMessage("로또 번호는 6개만 가능합니다. - " + lottoNumbers);
     }
 
-    @DisplayName("LottoNumber 리스트에 중복된 번호가 있으면 IllegalArgumentExceptionThrow")
+    @DisplayName("수동 LottoNumber 리스트에 중복된 번호가 있으면 IllegalArgumentExceptionThrow")
     @Test
-    void lottoTicketThrowsExceptionWhenDuplicateNumber() {
+    void fixedLottoTicketThrowsExceptionWhenDuplicateNumber() {
         List<Integer> lottoNumbers = Arrays.asList(1, 2, 3, 4, 5, 5);
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> LottoTicket.ofFixed(lottoNumbers))
-                .withMessageContaining("로또 번호는 중복 될 수 없습니다.");
+                .withMessage("로또 번호는 중복 될 수 없습니다. - " + Arrays.asList(1, 2, 3, 4, 5, 5));
     }
 
     @DisplayName("LottoNumber 리스트에 매개값으로 받은 번호가 존재하는지 판단.")
