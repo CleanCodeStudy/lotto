@@ -2,30 +2,62 @@ package com.javabom.lotto.domain.ticket;
 
 import com.javabom.lotto.domain.result.LottoRank;
 
-import java.util.Collections;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 public class LottoTicket {
 
-    private final Set<LottoNumber> numbers;
+    public static final int LOTTO_NUMBER_COUNT = 6;
 
-    public LottoTicket(Set<LottoNumber> numbers) {
-        this.numbers = numbers;
+    private final List<LottoNumber> lottoNumbers;
+
+    public LottoTicket(List<LottoNumber> lottoNumbers) {
+        this.lottoNumbers = lottoNumbers;
+        validNumbers(this.lottoNumbers);
+    }
+
+    public static void validNumbers(List<LottoNumber> lottoNumbers) {
+        validLottoNumberCount(lottoNumbers);
+        validDuplicatedNumber(lottoNumbers);
+    }
+
+    private static void validDuplicatedNumber(List<LottoNumber> lottoNumbers) {
+        HashSet<LottoNumber> setNumbers = new HashSet<>(lottoNumbers);
+        if (setNumbers.size() < LOTTO_NUMBER_COUNT) {
+            throw new IllegalArgumentException("로또번호 중 중복된 번호가 존재합니다.");
+        }
+    }
+
+    private static void validLottoNumberCount(List<LottoNumber> lottoNumbers) {
+        if (lottoNumbers.size() != LOTTO_NUMBER_COUNT) {
+            throw new IllegalArgumentException("입력된 로또 번호 수가 6개가 아닙니다.");
+        }
     }
 
     public LottoRank findLottoRank(WinningTicket winningTicket) {
-        int sameCount = (int) numbers.stream()
-                .filter(winningTicket::contains)
-                .count();
-        boolean hasBonusNumber = numbers.stream()
-                .anyMatch(winningTicket::isSameBonusNumber);
+        int sameCount = getSameCount(winningTicket);
+        boolean hasBonusNumber = winningTicket.isSameBonusNumber(getLastNumber());
 
         return LottoRank.findLottoRank(sameCount, hasBonusNumber);
     }
 
-    public Set<LottoNumber> getNumbers() {
-        return Collections.unmodifiableSet(numbers);
+    private LottoNumber getLastNumber() {
+        return new LinkedList<>(this.lottoNumbers).peek();
+    }
+
+    private int getSameCount(WinningTicket winningTicket) {
+        int sameCount = 0;
+        List<LottoNumber> winningNumbers = winningTicket.getWinningNumbers();
+
+        for (int i = 0; i < lottoNumbers.size(); i++) {
+            boolean isSame = lottoNumbers.get(i).equals(winningNumbers.get(i));
+            sameCount += (isSame ? 1 : 0);
+        }
+
+        return sameCount;
+    }
+
+    public List<LottoNumber> getLottoNumbers() {
+        return Collections.unmodifiableList(lottoNumbers);
     }
 
     @Override
@@ -33,11 +65,11 @@ public class LottoTicket {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         LottoTicket that = (LottoTicket) o;
-        return Objects.equals(getNumbers(), that.getNumbers());
+        return Objects.equals(getLottoNumbers(), that.getLottoNumbers());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getNumbers());
+        return Objects.hash(getLottoNumbers());
     }
 }

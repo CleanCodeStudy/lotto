@@ -1,19 +1,16 @@
 package com.javabom.lotto.domain.ticket;
 
-import com.javabom.lotto.domain.dto.BonusNumberDto;
-import com.javabom.lotto.domain.dto.WinningNumbersDto;
-
-import java.util.Set;
+import java.util.List;
 
 public class WinningTicket {
 
-    private final Set<LottoNumber> winningNumbers;
+    private final List<LottoNumber> winningNumbers;
 
     private final LottoNumber bonusNumber;
 
-    public WinningTicket(WinningNumbersDto winningNumbersDto, BonusNumberDto bonusNumberDto) {
-        this.winningNumbers = winningNumbersDto.getWinningNumbers();
-        this.bonusNumber = bonusNumberDto.getBonusNumber();
+    public WinningTicket(List<LottoNumber> winningNumbers, LottoNumber bonusNumber) {
+        this.winningNumbers = winningNumbers;
+        this.bonusNumber = bonusNumber;
         validDuplicatedNumbers();
     }
 
@@ -29,5 +26,9 @@ public class WinningTicket {
 
     public boolean isSameBonusNumber(LottoNumber lottoNumber) {
         return bonusNumber.equals(lottoNumber);
+    }
+
+    public List<LottoNumber> getWinningNumbers() {
+        return winningNumbers;
     }
 }

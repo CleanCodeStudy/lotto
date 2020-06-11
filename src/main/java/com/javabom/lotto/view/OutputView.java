@@ -1,6 +1,6 @@
 package com.javabom.lotto.view;
 
-import com.javabom.lotto.domain.dto.WinningStatisticsDto;
+import com.javabom.lotto.dto.WinningStatisticsDto;
 import com.javabom.lotto.domain.result.LottoRank;
 import com.javabom.lotto.domain.ticket.*;
 
@@ -24,7 +24,7 @@ public class OutputView {
     }
 
     public static void printLottoNumber(LottoTicket lottoTicket) {
-        List<String> numbers = lottoTicket.getNumbers().stream()
+        List<String> numbers = lottoTicket.getLottoNumbers().stream()
                 .map(LottoNumber::getNumber)
                 .map(Object::toString)
                 .collect(Collectors.toList());

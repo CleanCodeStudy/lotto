@@ -20,4 +20,8 @@ public class LottoResult {
     public List<LottoRank> getResults() {
         return Collections.unmodifiableList(results);
     }
+
+    public int size() {
+        return results.size();
+    }
 }

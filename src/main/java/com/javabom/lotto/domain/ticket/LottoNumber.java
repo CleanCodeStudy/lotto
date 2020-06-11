@@ -1,20 +1,28 @@
 package com.javabom.lotto.domain.ticket;
 
-import com.javabom.lotto.domain.dto.LottoNumberValidator;
-
 import java.util.Objects;
 
 public class LottoNumber {
 
     private final int number;
+    public final static int NUMBER_BEGIN = 1;
+    public final static int NUMBER_END = 45;
+
 
     public LottoNumber(int number) {
-        LottoNumberValidator.validLottoNumber(number);
         this.number = number;
+        validLottoNumber();
     }
 
     public int getNumber() {
         return this.number;
+    }
+
+    private void validLottoNumber() {
+        if (number < NUMBER_BEGIN || number > NUMBER_END) {
+            throw new IllegalArgumentException(String.format("로또 번호가 아닙니다. - %s", number));
+        }
+
     }
 
     @Override

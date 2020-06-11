@@ -1,11 +1,11 @@
-package com.javabom.lotto.domain.dto;
+package com.javabom.lotto.dto;
 
-import com.javabom.lotto.domain.result.WinningStatistics;
 import com.javabom.lotto.domain.result.LottoRank;
 import com.javabom.lotto.domain.result.LottoResult;
-import com.javabom.lotto.domain.shop.LottoUser;
+import com.javabom.lotto.domain.result.WinningStatistics;
 
-import java.util.*;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 
 public class WinningStatisticsDto {
@@ -14,9 +14,9 @@ public class WinningStatisticsDto {
 
     private final int profitRatio;
 
-    public WinningStatisticsDto(WinningStatistics winningStatistics, LottoUser lottoUser) {
+    public WinningStatisticsDto(WinningStatistics winningStatistics) {
         this.results = winningStatistics.getResults();
-        this.profitRatio = winningStatistics.calculateProfitRatio(lottoUser);
+        this.profitRatio = winningStatistics.calculateProfitRatio();
     }
 
     public Map<LottoRank, Integer> getEachLottoRankCount() {

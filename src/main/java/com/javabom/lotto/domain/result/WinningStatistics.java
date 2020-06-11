@@ -1,7 +1,6 @@
 package com.javabom.lotto.domain.result;
 
-import com.javabom.lotto.domain.shop.LottoUser;
-import com.javabom.lotto.domain.vo.Money;
+import com.javabom.lotto.domain.shop.LottoShop;
 
 public class WinningStatistics {
 
@@ -19,10 +18,13 @@ public class WinningStatistics {
         return revenue;
     }
 
-    public int calculateProfitRatio(LottoUser lottoUser) {
+    public int calculateProfitRatio() {
         long revenue = calculateRevenue();
-        Money money = lottoUser.getMoney();
-        return (int) ((revenue / (double) money.getSpentMoney()) * 100);
+        return (int) ((revenue / (double) calculateCostMoney()) * 100);
+    }
+
+    private long calculateCostMoney() {
+        return results.size() * LottoShop.TICKET_PRICE.getValue();
     }
 
     public LottoResult getResults() {

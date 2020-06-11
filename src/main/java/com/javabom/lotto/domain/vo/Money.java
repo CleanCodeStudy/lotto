@@ -1,36 +1,29 @@
 package com.javabom.lotto.domain.vo;
 
-import com.javabom.lotto.domain.dto.MoneyDto;
-
 public class Money {
 
-    private int money;
-    private int spentMoney;
+    private final int value;
 
-    public Money(MoneyDto moneyDto) {
-        this.money = moneyDto.getMoney();
+    public Money(int value) {
+        this.value = value;
     }
 
-    private void checkSpendMoney(int price) {
-        if (this.getRemainMoney() - price < 0) {
+    private void checkSpendMoney(Money money) {
+        if (this.getValue() < money.getValue()) {
             throw new IllegalArgumentException("잔액이 부족합니다.");
         }
     }
 
-    public void spendMoney(int price) {
+    public Money spendMoney(Money price) {
         checkSpendMoney(price);
-        this.spentMoney += price;
+        return new Money(value - price.getValue());
     }
 
-    public boolean canSpendMoney(int price) {
-        return this.getRemainMoney() - price >= 0;
+    public boolean canSpendMoney(Money price) {
+        return this.getValue() >= price.getValue();
     }
 
-    private int getRemainMoney() {
-        return this.money - this.spentMoney;
-    }
-
-    public int getSpentMoney() {
-        return spentMoney;
+    public int getValue() {
+        return value;
     }
 }
