@@ -1,7 +1,7 @@
 package com.javabom.lotto.domain.shop;
 
 import com.javabom.lotto.domain.ticket.LottoTicket;
-import com.javabom.lotto.domain.number.GameNumber;
+import com.javabom.lotto.domain.number.OrderGameNumber;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,9 +14,9 @@ public class LottoMachine {
         this.lottoNumbersGenerator = lottoNumbersGenerator;
     }
 
-    public List<LottoTicket> createManualLottoTicket(List<List<GameNumber>> manualLottoNumbers) {
+    public List<LottoTicket> createManualLottoTicket(List<List<OrderGameNumber>> manualLottoNumbers) {
         List<LottoTicket> manualLottoTickets = new ArrayList<>();
-        for (List<GameNumber> manualLottoNumber : manualLottoNumbers) {
+        for (List<OrderGameNumber> manualLottoNumber : manualLottoNumbers) {
             LottoTicket manualLottoTicket = new LottoTicket(manualLottoNumber);
             manualLottoTickets.add(manualLottoTicket);
         }

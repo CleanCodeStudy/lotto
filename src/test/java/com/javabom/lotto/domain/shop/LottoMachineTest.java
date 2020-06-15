@@ -1,5 +1,6 @@
 package com.javabom.lotto.domain.shop;
 
+import com.javabom.lotto.domain.number.OrderGameNumber;
 import com.javabom.lotto.domain.ticket.LottoTicket;
 import com.javabom.lotto.domain.number.GameNumber;
 import com.javabom.lotto.domain.utils.GameNumberConverter;
@@ -18,9 +19,9 @@ class LottoMachineTest {
     @Test
     void createManualLottoTicket() {
         List<String> strGameNumbers = (Arrays.asList("1", "2", "3", "4", "5", "6"));
-        List<GameNumber> gameNumbers = GameNumberConverter.convert(strGameNumbers);
+        List<OrderGameNumber> gameNumbers = GameNumberConverter.convert(strGameNumbers);
 
-        List<List<GameNumber>> manualLottoNumbers = new ArrayList<>();
+        List<List<OrderGameNumber>> manualLottoNumbers = new ArrayList<>();
         manualLottoNumbers.add(gameNumbers);
 
         LottoMachine lottoMachine = new LottoMachine(new AutoLottoNumberGenerator());
@@ -38,7 +39,7 @@ class LottoMachineTest {
     @DisplayName("랜덤 로또 번호 값이 잘 들어왔는지 확인한다.")
     @Test
     void createAutoLottoTicket() {
-        LottoMachine lottoMachine = new LottoMachine(new FIxedNumberGenerator());
+        LottoMachine lottoMachine = new LottoMachine(new FixedNumberGenerator());
         List<LottoTicket>lottoTickets = lottoMachine.createAutoLottoTicket(1);
         LottoTicket actual = lottoTickets.get(0);
 

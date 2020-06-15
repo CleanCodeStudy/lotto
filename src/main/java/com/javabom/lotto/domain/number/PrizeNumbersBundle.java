@@ -6,13 +6,14 @@ import com.javabom.lotto.domain.ticket.LottoTicket;
 import java.util.List;
 
 public class PrizeNumbersBundle {
+    private static final int BONUS_ORDER = 7;
 
     private final PrizeNumbers prizeNumbers;
-    private final GameNumber bonusNumber;
+    private final OrderGameNumber bonusNumber;
 
     public PrizeNumbersBundle(List<String> prizeNumbers, String bonusNumber) {
         this.prizeNumbers = new PrizeNumbers(prizeNumbers);
-        this.bonusNumber = GameNumber.valueOf(bonusNumber);
+        this.bonusNumber = OrderGameNumber.of(BONUS_ORDER, bonusNumber);
         checkDuplicate();
     }
 
@@ -22,9 +23,9 @@ public class PrizeNumbersBundle {
         }
     }
 
-    public LottoResult searchResult(LottoTicket lottoTicket) {
-        prizeNumbers.compareTo(lottoTicket);
-        boolean bonusStatus = lottoTicket.contains(bonusNumber);
-        return LottoResult.findLottoResult(lottoTicket.getMatchedCount(), bonusStatus);
+    public LottoResult getLottoResult(LottoTicket lottoTicket) {
+        int matchedCount = prizeNumbers.getMatchedCount(lottoTicket);
+        boolean bonusStatus = lottoTicket.containsBonus(bonusNumber);
+        return LottoResult.findLottoResult(matchedCount, bonusStatus);
     }
 }

@@ -7,6 +7,8 @@ import com.javabom.lotto.domain.result.LottoResultBundle;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 public class LottoTicketBundle {
 
@@ -16,17 +18,12 @@ public class LottoTicketBundle {
         this.lottoTicketBundle = LottoTicketBundle;
     }
 
-    public LottoResultBundle match(PrizeNumbersBundle prizeNumberBundle) {
-        List<LottoResult> lottoResults = new ArrayList<>();
-        for (LottoTicket lottoTicket : lottoTicketBundle) {
-            LottoResult result = prizeNumberBundle.searchResult(lottoTicket);
-            lottoResults.add(result);
-        }
-        return new LottoResultBundle(lottoResults);
-    }
+    public LottoResultBundle getLottoResults(PrizeNumbersBundle prizeNumberBundle) {
+        List<LottoResult> lottoResults = lottoTicketBundle.stream()
+                .map(prizeNumberBundle::getLottoResult)
+                .collect(Collectors.toList());
 
-    public void addLottoTickets(List<LottoTicket> lottoTickets) {
-        lottoTicketBundle.addAll(lottoTickets);
+        return new LottoResultBundle(lottoResults);
     }
 
     public List<LottoTicket> get() {

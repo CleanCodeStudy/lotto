@@ -16,7 +16,7 @@ class LottoTicketBundleTest {
 
     @DisplayName("알맞은 로또 결과를 반환하는지 확인한다.")
     @Test
-    public void match() {
+    public void getLottoResults() {
         LottoTicket lottoTicket1 = new LottoTicket(
                 GameNumberConverter.convert(Arrays.asList("1", "2", "3", "4", "5", "6")));
         LottoTicket lottoTicket2 = new LottoTicket(
@@ -29,7 +29,7 @@ class LottoTicketBundleTest {
         List<String> prizeNumbers = Arrays.asList("1", "2", "4", "7", "9", "11");
         PrizeNumbersBundle prizeNumberBundle = new PrizeNumbersBundle(prizeNumbers, "30");
 
-        LottoResultBundle lottoResultBundle = lottoTicketBundle.match(prizeNumberBundle);
+        LottoResultBundle lottoResultBundle = lottoTicketBundle.getLottoResults(prizeNumberBundle);
         assertThat(lottoResultBundle.valueOf(0)).isEqualTo(LottoResult.FAIL);
         assertThat(lottoResultBundle.valueOf(1)).isEqualTo(LottoResult.FOURTH);
     }

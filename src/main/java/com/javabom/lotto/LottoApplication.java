@@ -6,6 +6,7 @@ import com.javabom.lotto.domain.shop.LottoShop;
 import com.javabom.lotto.domain.shop.LottoMachine;
 import com.javabom.lotto.domain.number.PrizeNumbersBundle;
 import com.javabom.lotto.domain.result.LottoResultBundle;
+import com.javabom.lotto.domain.ticket.LottoTicketBundle;
 import com.javabom.lotto.view.InputView;
 import com.javabom.lotto.view.OutputView;
 
@@ -23,15 +24,15 @@ public class LottoApplication {
         Customer customer = new Customer(amount, manualLottoNumbers);
 
         LottoShop lottoShop = new LottoShop(new LottoMachine(new AutoLottoNumberGenerator()));
-        lottoShop.enter(customer);
+        LottoTicketBundle lottoTicketBundle = lottoShop.buy(customer);
 
         OutputView.printLottoCount(manualLottoNumbers.size(), customer.getAutoLottoTicketCount());
-        OutputView.printLottoBundle(customer.getLottoTicketBundle());
+        OutputView.printLottoBundle(lottoTicketBundle);
 
         PrizeNumbersBundle prizeNumberBundle = new PrizeNumbersBundle(
                 inputView.inputPrizeNumbers(), inputView.inputBonusNumber());
 
-        LottoResultBundle lottoResultBundle = customer.confirmLottoResult(prizeNumberBundle);
+        LottoResultBundle lottoResultBundle = lottoTicketBundle.getLottoResults(prizeNumberBundle);
 
         OutputView.printResults(lottoResultBundle, amount);
     }

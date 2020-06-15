@@ -2,6 +2,7 @@ package com.javabom.lotto.domain.shop;
 
 import com.javabom.lotto.domain.Customer;
 import com.javabom.lotto.domain.ticket.LottoTicket;
+import com.javabom.lotto.domain.ticket.LottoTicketBundle;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,10 +16,10 @@ public class LottoShop {
         this.lottoMachine = lottoMachine;
     }
 
-    public void enter(Customer customer) {
+    public LottoTicketBundle buy(Customer customer) {
         List<LottoTicket> manualLottoTickets = lottoMachine.createManualLottoTicket(customer.getManualLottoNumbers());
         List<LottoTicket> autoLottoTickets = lottoMachine.createAutoLottoTicket(customer.getAutoLottoTicketCount());
-        customer.buy(Stream.concat(manualLottoTickets.stream(), autoLottoTickets.stream())
+        return new LottoTicketBundle(Stream.concat(manualLottoTickets.stream(), autoLottoTickets.stream())
                 .collect(Collectors.toList()));
     }
 }

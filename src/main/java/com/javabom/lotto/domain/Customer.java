@@ -1,10 +1,7 @@
 package com.javabom.lotto.domain;
 
 import com.javabom.lotto.domain.ticket.LottoTicket;
-import com.javabom.lotto.domain.ticket.LottoTicketBundle;
-import com.javabom.lotto.domain.number.PrizeNumbersBundle;
-import com.javabom.lotto.domain.result.LottoResultBundle;
-import com.javabom.lotto.domain.number.GameNumber;
+import com.javabom.lotto.domain.number.OrderGameNumber;
 import com.javabom.lotto.domain.utils.GameNumberConverter;
 
 import java.util.ArrayList;
@@ -13,15 +10,13 @@ import java.util.List;
 
 public class Customer {
     private final int amount;
-    private final List<List<GameNumber>> manualLottoNumbers;
-    private LottoTicketBundle lottoTicketBundle;
+    private final List<List<OrderGameNumber>> manualLottoNumbers;
 
     public Customer(int amount, List<List<String>> strManualLottoNumbers) {
         checkPositive(amount);
         checkBuyManualLottoTicket(amount, strManualLottoNumbers.size());
         this.amount = amount;
         this.manualLottoNumbers = collet(strManualLottoNumbers);
-        this.lottoTicketBundle = null;
     }
 
     private void checkPositive(int amount) {
@@ -37,16 +32,30 @@ public class Customer {
         }
     }
 
-    private List<List<GameNumber>> collet(List<List<String>> strManualLottoNumbers) {
-        List<List<GameNumber>> manualLottoNumbers = new ArrayList<>();
+    private List<List<OrderGameNumber>> collet(List<List<String>> strManualLottoNumbers) {
+        List<List<OrderGameNumber>> manualLottoNumbers = new ArrayList<>();
         for (List<String> eachManualLottoNumbers : strManualLottoNumbers) {
+            checkCount(eachManualLottoNumbers.size());
+
+            List<OrderGameNumber> orderGameNumbers = GameNumberConverter.convert(eachManualLottoNumbers);
+            checkDuplicate(orderGameNumbers.size());
+
             manualLottoNumbers.add(GameNumberConverter.convert(eachManualLottoNumbers));
+
         }
         return manualLottoNumbers;
     }
 
-    public List<List<GameNumber>> getManualLottoNumbers() {
-        return Collections.unmodifiableList(manualLottoNumbers);
+    private void checkCount(int numberCount) {
+        if (numberCount != LottoTicket.COUNT) {
+            throw new IllegalArgumentException(String.format("%d개의 수동 로또 번호를 입력하셨습니다. 수동 로또 번호는 총 6개여야 합니다.", numberCount));
+        }
+    }
+
+    private void checkDuplicate(int gameNumbersSize) {
+        if (gameNumbersSize != LottoTicket.COUNT) {
+            throw new IllegalArgumentException("수동 로또 번호는 모두 달라야 합니다.");
+        }
     }
 
     public int getAutoLottoTicketCount() {
@@ -57,18 +66,7 @@ public class Customer {
         return curAmount / LottoTicket.PRICE;
     }
 
-    public void buy(List<LottoTicket> lottoTickets) {
-        if (lottoTicketBundle != null) {
-            lottoTicketBundle.addLottoTickets(lottoTickets);
-        }
-        lottoTicketBundle = new LottoTicketBundle(lottoTickets);
-    }
-
-    public LottoTicketBundle getLottoTicketBundle() {
-        return new LottoTicketBundle(lottoTicketBundle.get());
-    }
-
-    public LottoResultBundle confirmLottoResult(PrizeNumbersBundle prizeNumberBundle) {
-        return lottoTicketBundle.match(prizeNumberBundle);
+    public List<List<OrderGameNumber>> getManualLottoNumbers() {
+        return Collections.unmodifiableList(this.manualLottoNumbers);
     }
 }

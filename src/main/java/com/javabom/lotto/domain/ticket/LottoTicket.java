@@ -1,53 +1,44 @@
 package com.javabom.lotto.domain.ticket;
 
 import com.javabom.lotto.domain.number.GameNumber;
+import com.javabom.lotto.domain.number.OrderGameNumber;
 
 import java.util.List;
 
 public class LottoTicket {
+    public static final int COUNT = 6;
     public static final int PRICE = 1000;
 
-    private final List<GameNumber> lottoTicket;
-    private int matchedCount;
+    private final List<OrderGameNumber> lottoTicket;
 
-    private LottoTicket(List<GameNumber> lottoTicket, int matchedCount) {
+    public LottoTicket(List<OrderGameNumber> lottoTicket) {
         checkDuplicate(lottoTicket);
         this.lottoTicket = lottoTicket;
-        this.matchedCount = matchedCount;
     }
 
-    public LottoTicket(List<GameNumber> lottoTicket) {
-        this(lottoTicket, 0);
-    }
-
-    private void checkDuplicate(List<GameNumber> maybeLottoTicket) {
+    private void checkDuplicate(List<OrderGameNumber> maybeLottoTicket) {
         int size = getDeduplicationSize(maybeLottoTicket);
-        if (size != GameNumber.COUNT) {
+        if (size != COUNT) {
             throw new IllegalArgumentException(String.format("현재 개수: %d, 로또 번호의 갯수는 6개여야 합니다.", size));
         }
     }
 
-    private int getDeduplicationSize(List<GameNumber> maybeLottoTicket) {
+    private int getDeduplicationSize(List<OrderGameNumber> maybeLottoTicket) {
         return (int) maybeLottoTicket.stream()
                 .distinct()
                 .count();
     }
 
-    public boolean contains(GameNumber gameNumber) {
+    public boolean contains(OrderGameNumber gameNumber) {
         return lottoTicket.contains(gameNumber);
     }
 
-    public GameNumber get(int idx) {
-        return lottoTicket.get(idx);
+    public boolean containsBonus(final OrderGameNumber bonusNumber) {
+        return lottoTicket.stream()
+                .anyMatch(number -> number.equalsOfNumber(bonusNumber));
     }
 
-    public void match(GameNumber prizeNumber, int idx) {
-        if (prizeNumber.equals(lottoTicket.get(idx))) {
-            matchedCount++;
-        }
-    }
-
-    public int getMatchedCount() {
-        return matchedCount;
+    public GameNumber get(final int i) {
+        return lottoTicket.get(i).numberValue();
     }
 }

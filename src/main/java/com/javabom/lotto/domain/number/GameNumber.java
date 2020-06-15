@@ -7,7 +7,6 @@ import java.util.Objects;
 public class GameNumber {
     public static final int MIN_NUMBER = 1;
     public static final int MAX_NUMBER = 45;
-    public static final int COUNT = 6;
 
     private final int gameNumber;
 

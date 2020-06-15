@@ -1,6 +1,7 @@
 package com.javabom.lotto.domain.shop;
 
 import com.javabom.lotto.domain.number.GameNumber;
+import com.javabom.lotto.domain.number.OrderGameNumber;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -14,13 +15,13 @@ public class AutoLottoNumberGeneratorTest {
     @Test
     void generate(){
         AutoLottoNumberGenerator autoLottoNumberGenerator = new AutoLottoNumberGenerator();
-        List<GameNumber> actual = autoLottoNumberGenerator.generate();
+        List<OrderGameNumber> actual = autoLottoNumberGenerator.generate();
 
-        assertTrue(actual.get(0).value() >= GameNumber.MIN_NUMBER && actual.get(0).value() <= GameNumber.MAX_NUMBER);
-        assertTrue(actual.get(1).value() >= GameNumber.MIN_NUMBER && actual.get(1).value() <= GameNumber.MAX_NUMBER);
-        assertTrue(actual.get(2).value() >= GameNumber.MIN_NUMBER && actual.get(2).value() <= GameNumber.MAX_NUMBER);
-        assertTrue(actual.get(3).value() >= GameNumber.MIN_NUMBER && actual.get(3).value() <= GameNumber.MAX_NUMBER);
-        assertTrue(actual.get(4).value() >= GameNumber.MIN_NUMBER && actual.get(4).value() <= GameNumber.MAX_NUMBER);
-        assertTrue(actual.get(5).value() >= GameNumber.MIN_NUMBER && actual.get(5).value() <= GameNumber.MAX_NUMBER);
+        assertTrue(actual.get(0).numberValue().value() >= GameNumber.MIN_NUMBER && actual.get(0).numberValue().value() <= GameNumber.MAX_NUMBER);
+        assertTrue(actual.get(1).numberValue().value() >= GameNumber.MIN_NUMBER && actual.get(1).numberValue().value() <= GameNumber.MAX_NUMBER);
+        assertTrue(actual.get(2).numberValue().value() >= GameNumber.MIN_NUMBER && actual.get(2).numberValue().value() <= GameNumber.MAX_NUMBER);
+        assertTrue(actual.get(3).numberValue().value() >= GameNumber.MIN_NUMBER && actual.get(3).numberValue().value() <= GameNumber.MAX_NUMBER);
+        assertTrue(actual.get(4).numberValue().value() >= GameNumber.MIN_NUMBER && actual.get(4).numberValue().value() <= GameNumber.MAX_NUMBER);
+        assertTrue(actual.get(5).numberValue().value() >= GameNumber.MIN_NUMBER && actual.get(5).numberValue().value() <= GameNumber.MAX_NUMBER);
     }
 }

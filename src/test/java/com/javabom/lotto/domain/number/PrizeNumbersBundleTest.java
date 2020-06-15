@@ -29,14 +29,14 @@ class PrizeNumbersBundleTest {
     @DisplayName("당첨 번호와 보너스 번호의 일치 갯수의 값을 확인한다.")
     @ParameterizedTest
     @CsvSource({"10,SECOND", "20,THIRD"})
-    void searchResult(String bonusNumber, String expected) {
+    void getLottoResult(String bonusNumber, String expected) {
         List<String> prizeNumbers = Arrays.asList("1", "3", "5", "7", "9", "11");
         PrizeNumbersBundle prizeNumberBundle = new PrizeNumbersBundle(prizeNumbers, bonusNumber);
 
         LottoTicket lottoTicket = new LottoTicket(
                 GameNumberConverter.convert(Arrays.asList("1", "3", "5", "7", "9", "10")));
 
-        LottoResult lottoResult = prizeNumberBundle.searchResult(lottoTicket);
+        LottoResult lottoResult = prizeNumberBundle.getLottoResult(lottoTicket);
         assertThat(lottoResult).isEqualTo(LottoResult.valueOf(expected));
     }
 }
